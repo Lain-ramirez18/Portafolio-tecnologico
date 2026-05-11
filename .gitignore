@@ -1,0 +1,18 @@
+# Archivos de respaldo y zips
+*.zip
+*.rar
+*.7z
+
+# Directorios de sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs y temporales
+*.log
+temp_extract/
+
+# Node (por si se usa en el futuro)
+node_modules/
+dist/
