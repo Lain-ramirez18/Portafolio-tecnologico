@@ -374,6 +374,40 @@ function setYear() {
 
 /* SwipeNav removed — free scrolling on mobile is correct UX */
 
+
+/* ══════════════ SECURITY — External link hardening ══════════════ */
+(function lockExternalLinks() {
+  /* Ensure all external links have rel="noopener noreferrer"
+     even if added dynamically — defense-in-depth */
+  document.querySelectorAll('a[target="_blank"]').forEach(a => {
+    const rel = (a.getAttribute('rel') || '').split(' ').filter(Boolean);
+    if (!rel.includes('noopener'))  rel.push('noopener');
+    if (!rel.includes('noreferrer')) rel.push('noreferrer');
+    a.setAttribute('rel', rel.join(' '));
+  });
+
+  /* Clickjacking defense: if somehow framed, break out */
+  if (window.top !== window.self) {
+    try { window.top.location = window.self.location; } catch(e) { /* cross-origin */ }
+  }
+})();
+
+/* ══════════════ PERFORMANCE — Resource hints injected at runtime ══════════════ */
+(function injectPerfHints() {
+  /* Prefetch next likely navigation targets after page is idle */
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      ['https://github.com/Lain-ramirez18', 'https://proassist-r1q6.onrender.com']
+        .forEach(href => {
+          const link = document.createElement('link');
+          link.rel  = 'prefetch';
+          link.href = href;
+          document.head.appendChild(link);
+        });
+    });
+  }
+})();
+
 /* ══════════════ BOOT ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   ThemeManager.init();

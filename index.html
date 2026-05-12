@@ -4,10 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Security headers via meta (HTTPS enforced at hosting level) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
 
   <title>Lain Sthid Ramirez Rueda | Analista y Desarrollador de Software</title>
-  <meta name="description" content="Portfolio de Lain Sthid Ramirez Rueda — Analista y Desarrollador de Software. Especialista en elicitación de requisitos, arquitecturas Full-Stack, automatización con IA y diseño UI/UX de alto impacto." />
-  <meta name="keywords" content="Lain Sthid Ramirez Rueda, analista de software, desarrollador, SENA, Python, React, Node.js, AI, automatización, UI/UX, portfolio, Colombia" />
+  <meta name="description" content="Portfolio de Lain Sthid Ramirez Rueda — Analista y Desarrollador de Software. Especialista en elicitación de requisitos, automatización con IA, Python y diseño UI/UX de alto impacto." />
+  <meta name="keywords" content="Lain Sthid Ramirez Rueda, analista de software, desarrollador, SENA, Python, AI, automatización, UI/UX, elicitación de requisitos, portfolio" />
   <meta name="author" content="Lain Sthid Ramirez Rueda" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://lainramirez.vercel.app/" />
@@ -15,14 +20,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lainramirez.vercel.app/" />
   <meta property="og:title" content="Lain Sthid Ramirez Rueda | Analista y Desarrollador de Software" />
-  <meta property="og:description" content="Analista y Desarrollador de Software. Especialista en elicitación, automatización con IA y arquitecturas Full-Stack." />
+  <meta property="og:description" content="Analista y Desarrollador de Software. Especialista en elicitación de requisitos, automatización con IA y desarrollo web." />
   <meta property="og:image" content="https://lainramirez.vercel.app/assets/img/profile.png" />
   <meta property="og:locale" content="es_CO" />
   <meta property="og:locale:alternate" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Lain Sthid Ramirez Rueda | Analista y Desarrollador de Software" />
-  <meta name="twitter:description" content="Analista y Desarrollador de Software. Especialista en elicitación, automatización con IA y arquitecturas Full-Stack." />
+  <meta name="twitter:description" content="Analista y Desarrollador de Software. Especialista en elicitación de requisitos, automatización con IA y desarrollo web." />
   <meta name="twitter:image" content="https://lainramirez.vercel.app/assets/img/profile.png" />
 
   <script type="application/ld+json">
@@ -33,18 +38,23 @@
     "url": "https://lainramirez.vercel.app/",
     "image": "https://lainramirez.vercel.app/assets/img/profile.png",
     "jobTitle": "Analista y Desarrollador de Software",
-    "description": "Analista y Desarrollador de Software especializado en elicitación de requisitos, arquitecturas Full-Stack, automatización con IA y diseño UI/UX.",
+    "description": "Analista y Desarrollador de Software especializado en elicitación de requisitos, automatización con IA, Python y diseño UI/UX.",
     "sameAs": [
       "https://github.com/Lain-ramirez18",
       "https://www.linkedin.com/in/lain-sthid-ramirez-rueda",
       "https://wa.me/573209735859"
     ],
-    "knowsAbout": ["Python","React.js","Node.js","HTML Living Standard","CSS Material Design 3","Prompt Engineering","AI Automation","UI/UX Design","Requirements Elicitation","Docker","Git"],
+    "knowsAbout": ["Python","HTML Living Standard","CSS Material Design 3","Prompt Engineering","AI Automation","UI/UX Design","Requirements Elicitation","Git","Visual Studio Code","Subagentes de IA"],
     "email": "mailto:lainramirez18@gmail.com",
     "alumniOf": {"@type": "EducationalOrganization", "name": "SENA"}
   }
   </script>
 
+  <!-- Performance: preload critical resources -->
+  <link rel="preload" href="css/style.css" as="style" />
+  <link rel="preload" href="js/main.js" as="script" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Bebas+Neue&display=swap" rel="stylesheet" />
@@ -111,7 +121,7 @@
           </h1>
 
           <p class="hero-subtitle" data-i18n="hero.subtitle">
-            Transformando lógica compleja en interfaces fluidas. Especialista en elicitación de requisitos, arquitecturas Full-Stack y automatización inteligente con IA.
+            Transformando lógica compleja en interfaces fluidas. Especialista en elicitación de requisitos, automatización inteligente con IA y desarrollo web.
           </p>
 
           <div class="hero-cta-group">
@@ -170,8 +180,9 @@
               </div>
             </div>
             <div class="float-chip chip-python" aria-hidden="true"><i class="fa-brands fa-python"></i> Python</div>
-            <div class="float-chip chip-react"  aria-hidden="true"><i class="fa-brands fa-react"></i> React</div>
-            <div class="float-chip chip-node"   aria-hidden="true"><i class="fa-brands fa-node-js"></i> Node.js</div>
+            <div class="float-chip chip-elicit" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-chart"></i> Elicitación</div>
+            <div class="float-chip chip-git"    aria-hidden="true"><i class="fa-brands fa-git-alt"></i> Git</div>
+            <div class="float-chip chip-adapt"  aria-hidden="true"><i class="fa-solid fa-shuffle"></i> Adaptabilidad</div>
           </div>
         </div>
       </div>
@@ -195,7 +206,7 @@
               Arquitecto de<br/>experiencias digitales.
             </h2>
             <p class="about-desc" data-i18n="about.p1">
-              Soy Analista y Desarrollador de Software en formación en el SENA, con un enfoque profundo en la elicitación de requisitos, arquitecturas Full-Stack y el diseño de interfaces de alto impacto. Mi objetivo es siempre equilibrar robustez técnica con experiencias de usuario impecables.
+              Soy Analista y Desarrollador de Software en formación en el SENA, con un enfoque profundo en la elicitación de requisitos y el diseño de interfaces de alto impacto. Me encuentro en proceso de aprendizaje de arquitecturas Full-Stack. Mi objetivo es siempre equilibrar robustez técnica con experiencias de usuario impecables.
             </p>
             <p class="about-desc" data-i18n="about.p2">
               Me apasiona la inteligencia artificial y la automatización de procesos. Trabajo con subagentes de IA, prompt engineering avanzado y herramientas como Claude, Groq, Gemini y GPT para construir soluciones que realmente marcan la diferencia.
@@ -206,7 +217,7 @@
             <div class="about-tags" aria-label="Etiquetas clave">
               <span class="tag" data-i18n="about.tag1">Arquitecto Digital</span>
               <span class="tag" data-i18n="about.tag2">AI Specialist</span>
-              <span class="tag" data-i18n="about.tag3" style="white-space:nowrap">Full-Stack Dev</span>
+              <span class="tag" data-i18n="about.tag3" style="white-space:nowrap">En proceso · Full-Stack</span>
               <span class="tag" data-i18n="about.tag4">UI/UX Design</span>
               <span class="tag" data-i18n="about.tag5">Open Source</span>
             </div>
@@ -224,8 +235,20 @@
               <div class="about-card-icon" aria-hidden="true"><i class="fa-solid fa-certificate"></i></div>
               <h3 data-i18n="about.cert_title">Certificaciones</h3>
               <ul class="cert-list">
-                <li><i class="fa-solid fa-check" aria-hidden="true"></i> <span data-i18n="about.cert1">Desarrollador Front-End — Capacítate para el Empleo</span></li>
-                <li><i class="fa-solid fa-check" aria-hidden="true"></i> <span data-i18n="about.cert2">AI Certification — Anthropic</span></li>
+                <li>
+                  <i class="fa-solid fa-check" aria-hidden="true"></i>
+                  <span data-i18n="about.cert1">Desarrollador Front-End — Capacítate para el Empleo</span>
+                  <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="cert-linkedin-badge" aria-label="Ver certificado en LinkedIn">
+                    <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                  </a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-check" aria-hidden="true"></i>
+                  <span data-i18n="about.cert2">AI Certification — Anthropic</span>
+                  <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="cert-linkedin-badge" aria-label="Ver certificado en LinkedIn">
+                    <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -271,15 +294,7 @@
                   </div>
                 </div>
               </div>
-              <div class="skill-item">
-                <div class="skill-icon"><i class="fa-brands fa-react" aria-hidden="true"></i></div>
-                <div class="skill-info">
-                  <span class="skill-name">React.js</span>
-                  <div class="skill-bar" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="React 78%">
-                    <div class="skill-fill" style="--pct:78%"></div>
-                  </div>
-                </div>
-              </div>
+
               <div class="skill-item">
                 <div class="skill-icon"><i class="fa-brands fa-js" aria-hidden="true"></i></div>
                 <div class="skill-info">
@@ -293,7 +308,7 @@
           </div>
 
           <div class="skill-category reveal reveal-delay">
-            <h3 class="skill-cat-title" data-i18n="skills.cat2">Backend &amp; DevOps</h3>
+            <h3 class="skill-cat-title" data-i18n="skills.cat2">Backend &amp; Scripting</h3>
             <div class="skill-list">
               <div class="skill-item">
                 <div class="skill-icon"><i class="fa-brands fa-python" aria-hidden="true"></i></div>
@@ -304,24 +319,8 @@
                   </div>
                 </div>
               </div>
-              <div class="skill-item">
-                <div class="skill-icon"><i class="fa-brands fa-node-js" aria-hidden="true"></i></div>
-                <div class="skill-info">
-                  <span class="skill-name">Node.js</span>
-                  <div class="skill-bar" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="Node 72%">
-                    <div class="skill-fill" style="--pct:72%"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <div class="skill-icon"><i class="fa-brands fa-docker" aria-hidden="true"></i></div>
-                <div class="skill-info">
-                  <span class="skill-name">Docker</span>
-                  <div class="skill-bar" role="progressbar" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100" aria-label="Docker 74%">
-                    <div class="skill-fill" style="--pct:74%"></div>
-                  </div>
-                </div>
-              </div>
+
+
               <div class="skill-item">
                 <div class="skill-icon"><i class="fa-brands fa-git-alt" aria-hidden="true"></i></div>
                 <div class="skill-info">
@@ -429,7 +428,7 @@
                 Terminal de productividad de alto rendimiento basado en la metodología Deep Work. Algoritmo de eficiencia dinámica, arquitectura 100% offline y experiencia sin distracciones para maximizar el foco cognitivo.
               </p>
               <div class="project-stack">
-                <span class="stack-badge">React.js</span>
+                <span class="stack-badge">JavaScript</span>
                 <span class="stack-badge">Tailwind</span>
                 <span class="stack-badge">Deep Work</span>
                 <span class="stack-badge">Offline-First</span>
