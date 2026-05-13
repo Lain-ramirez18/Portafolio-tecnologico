@@ -809,7 +809,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 1fr 360px;
   gap: var(--space-3xl);
   align-items: start;
 }
@@ -858,67 +858,13 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .about-card p { font-size: 0.82rem; color: var(--clr-on-surface-med); line-height: 1.6; margin-bottom: var(--space-xs); }
 .about-card-badge { font-family: var(--font-mono); font-size: 0.66rem; color: var(--clr-primary); letter-spacing: 0.05em; }
 
-
-/* ──────────── CERTIFICATIONS ──────────── */
-.cert-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-}
-
-.cert-list li {
-  display: grid;
-  grid-template-columns: 14px 1fr auto;
-  grid-template-rows: auto;
-  align-items: start;
-  gap: 6px;
-  font-size: 0.82rem;
-  color: var(--clr-on-surface-med);
-  line-height: 1.5;
-}
-
-/* Columna 1: chulo */
-.cert-list li > .fa-check {
-  color: var(--clr-primary);
-  font-size: 0.75rem;
-  margin-top: 2px;
-  justify-self: center;
-}
-
-/* Columna 2: texto — crece, hace wrap sin problema */
-.cert-list li > span[data-i18n] {
-  display: block;
-  word-break: normal;
-  overflow-wrap: break-word;
-}
-
-/* Columna 3: badge LinkedIn — siempre alineado arriba */
-.cert-linkedin-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  background: #0077B5;
-  color: #fff !important;
-  font-size: 0.65rem;
-  flex-shrink: 0;
-  text-decoration: none;
-  margin-top: 2px;
-  transition: transform var(--dur-fast) var(--ease-spring),
-              box-shadow var(--dur-fast),
-              background var(--dur-fast);
-}
-
-.cert-linkedin-badge:hover {
-  background: #005f94;
-  transform: scale(1.15);
-  box-shadow: 0 2px 8px rgba(0, 119, 181, 0.4);
-}
+.cert-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.cert-list li { display: flex; align-items: flex-start; gap: 7px; font-size: 0.82rem; color: var(--clr-on-surface-med); line-height: 1.5; }
+.cert-list li > i.fa-check { color: var(--clr-primary); font-size: 0.72rem; flex-shrink: 0; margin-top: 3px; }
+/* cert-text: inline container so badge always flows with the text */
+.cert-text { flex: 1; min-width: 0; }
+.cert-text > span[data-i18n] { display: inline; }
+.cert-linkedin-badge { display: inline-flex; }
 
 /* ──────────── 11. SKILLS ──────────── */
 .skills { background: var(--clr-surface); }
@@ -1420,9 +1366,33 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 /* Profile card light */
 [data-theme="light"] .profile-card { background: #fff; }
 
+/* ── Certification LinkedIn badge ── */
 
+.cert-linkedin-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #0077B5;
+  color: #fff;
+  font-size: 0.62rem;
+  flex-shrink: 0;
+  margin-left: 5px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast),
+              background var(--dur-fast);
+}
 
-
+.cert-linkedin-badge:hover {
+  background: #005f94;
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0,119,181,0.4);
+}
 
 /* ── Performance: defer paint of off-screen sections ── */
 .about, .skills, .projects, .contact {
