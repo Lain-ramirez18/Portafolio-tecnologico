@@ -1,18 +1,17 @@
-# Archivos de respaldo y zips
-*.zip
-*.rar
-*.7z
-
-# Directorios de sistema y editores
+# OS files
 .DS_Store
 Thumbs.db
+
+# IDE files
 .vscode/
 .idea/
 
-# Logs y temporales
-*.log
-temp_extract/
-
-# Node (por si se usa en el futuro)
+# Node (in case it's added later)
 node_modules/
-dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Portfolio Specific
+portfolio_v8.zip
+portfolio2/
