@@ -858,41 +858,46 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .about-card p { font-size: 0.82rem; color: var(--clr-on-surface-med); line-height: 1.6; margin-bottom: var(--space-xs); }
 .about-card-badge { font-family: var(--font-mono); font-size: 0.66rem; color: var(--clr-primary); letter-spacing: 0.05em; }
 
-.cert-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-/* li = flex row: [✓] [texto que puede wrap] [badge li] */
+.cert-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* Cada item: fila de 3 piezas — chulo | texto+badge | — */
 .cert-list li {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 6px;
+  align-items: center;
+  gap: 7px;
   font-size: 0.82rem;
   color: var(--clr-on-surface-med);
-  line-height: 1.5;
+  line-height: 1.4;
 }
-/* chulo — fijo arriba-izquierda, nunca se mueve */
-.cert-list li > i.fa-check {
+/* Chulo verde — selector completo para FontAwesome */
+.cert-list li > .fa-solid.fa-check,
+.cert-list li > i[class*="fa-check"] {
   color: var(--clr-primary);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   flex-shrink: 0;
-  margin-top: 3px;
+  display: block;
 }
-/* cert-text — ocupa el espacio restante, puede hacer wrap internamente */
+/* Contenedor texto + badge: flex con wrap solo en el texto */
 .cert-text {
   flex: 1;
   min-width: 0;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   gap: 5px;
 }
-/* el texto ocupa toda la línea que necesite */
+/* El span de texto crece pero badge siempre en la misma "fila flex" */
 .cert-text > span[data-i18n] {
-  display: inline;
-  line-height: 1.5;
+  flex: 1;
+  min-width: 0;
 }
-/* el badge siempre en la misma línea que el final del texto */
-.cert-linkedin-badge { display: inline-flex; flex-shrink: 0; }
 
 /* ──────────── 11. SKILLS ──────────── */
 .skills { background: var(--clr-surface); }
@@ -1404,13 +1409,10 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   height: 20px;
   border-radius: 4px;
   background: #0077B5;
-  color: #fff;
+  color: #fff !important;
   font-size: 0.62rem;
   flex-shrink: 0;
-  margin-left: 5px;
-  vertical-align: middle;
-  position: relative;
-  top: -1px;
+  text-decoration: none;
   transition: transform var(--dur-fast) var(--ease-spring),
               box-shadow var(--dur-fast),
               background var(--dur-fast);
