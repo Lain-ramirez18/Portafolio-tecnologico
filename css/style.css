@@ -965,6 +965,22 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   line-height: 1.2;
 }
 
+.cert-inline-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0077B5;
+  font-size: 0.82rem;
+  margin-left: 6px;
+  vertical-align: middle;
+  transition: transform var(--dur-fast) var(--ease-spring), color var(--dur-fast);
+}
+
+.cert-inline-link:hover {
+  transform: scale(1.2) rotate(-5deg);
+  color: #005f94;
+}
+
 .cert-item-link {
   display: flex;
   align-items: center;
