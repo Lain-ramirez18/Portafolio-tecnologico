@@ -858,9 +858,137 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .about-card p { font-size: 0.82rem; color: var(--clr-on-surface-med); line-height: 1.6; margin-bottom: var(--space-xs); }
 .about-card-badge { font-family: var(--font-mono); font-size: 0.66rem; color: var(--clr-primary); letter-spacing: 0.05em; }
 
-.cert-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.cert-list li { display: flex; align-items: flex-start; gap: 7px; font-size: 0.82rem; color: var(--clr-on-surface-med); line-height: 1.5; }
-.cert-list li i { color: var(--clr-primary); margin-top: 2px; font-size: 0.72rem; flex-shrink: 0; }
+.cert-list-new {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.cert-item-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--clr-surface-3);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--dur-fast),
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast),
+    background var(--dur-fast);
+}
+
+.cert-item-card:hover {
+  border-color: var(--clr-border-hover);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow-sm);
+  background: var(--clr-surface-4);
+}
+
+.cert-item-icon-zone {
+  flex-shrink: 0;
+}
+
+.cert-icon-bg {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+
+.cert-item-card:hover .cert-icon-bg {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Specific theme-based glowing icon backgrounds in dark mode */
+.cert-frontend {
+  background: rgba(0, 229, 195, 0.1);
+  color: var(--clr-primary);
+}
+
+.cert-ai {
+  background: rgba(123, 97, 255, 0.12);
+  color: var(--clr-secondary);
+}
+
+.cert-fullstack {
+  background: rgba(255, 107, 107, 0.12);
+  color: var(--clr-tertiary);
+}
+
+.cert-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0; /* allows text truncation/wrapping */
+}
+
+.cert-badge {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  width: max-content;
+  padding: 1px 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-xs);
+}
+
+.cert-badge-cert {
+  color: var(--clr-primary);
+}
+
+.cert-badge-diploma {
+  color: var(--clr-tertiary);
+}
+
+.cert-item-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--clr-on-surface);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cert-item-issuer {
+  font-size: 0.72rem;
+  color: var(--clr-on-surface-med);
+  line-height: 1.2;
+}
+
+.cert-item-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--clr-on-surface-med);
+  font-size: 0.88rem;
+  flex-shrink: 0;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast),
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.cert-item-link:hover {
+  background: #0077B5;
+  color: #fff;
+  transform: scale(1.12);
+  box-shadow: 0 4px 10px rgba(0, 119, 181, 0.35);
+}
 
 /* ──────────── 11. SKILLS ──────────── */
 .skills { background: var(--clr-surface); }
@@ -1346,11 +1474,17 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 /* Soft card in light mode */
 [data-theme="light"] .soft-card {
-  background: var(--clr-surface-2);
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.015);
   color: #1E2340;
 }
 
-[data-theme="light"] .soft-card:hover { background: var(--clr-surface-3); color: #080A14; }
+[data-theme="light"] .soft-card:hover {
+  background: rgba(0, 107, 97, 0.02);
+  color: #080A14;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
 
 /* Bottom bar light mode */
 [data-theme="light"] .bottom-bar a.bb-item { color: #4A5170; }
@@ -1360,39 +1494,122 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 [data-theme="light"] .scroll-indicator { color: #4A5170; }
 
 /* Profile card light */
-[data-theme="light"] .profile-card { background: #fff; }
-
-/* ── Certification LinkedIn badge ── */
-.cert-list li {
-  position: relative;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: flex-start;
+[data-theme="light"] .profile-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
-.cert-linkedin-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
+/* Card components in light mode */
+[data-theme="light"] .about-card,
+[data-theme="light"] .project-card,
+[data-theme="light"] .contact-link-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.015);
+}
+
+[data-theme="light"] .about-card:hover,
+[data-theme="light"] .project-card:hover,
+[data-theme="light"] .contact-link-card:hover {
+  border-color: var(--clr-primary-dim);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.02);
+  background: #ffffff;
+}
+
+[data-theme="light"] .contact-link-card:hover {
+  background: rgba(0, 107, 97, 0.02);
+}
+
+/* Scrolled Navbar light mode */
+[data-theme="light"] .navbar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Hero background orbs light mode */
+[data-theme="light"] .orb-1 {
+  background: radial-gradient(circle, rgba(0, 107, 97, 0.12) 0%, transparent 70%);
+}
+
+[data-theme="light"] .orb-2 {
+  background: radial-gradient(circle, rgba(74, 50, 212, 0.09) 0%, transparent 70%);
+}
+
+[data-theme="light"] .orb-3 {
+  background: radial-gradient(circle, rgba(0, 107, 97, 0.06) 0%, transparent 70%);
+}
+
+/* Ghost button light mode overrides */
+[data-theme="light"] .btn-ghost {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  color: #1E2340;
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(0, 107, 97, 0.02);
+  border-color: var(--clr-primary-glow);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #080A14;
+}
+
+/* Footer light mode overrides */
+[data-theme="light"] .footer {
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ── Certification Light Mode Overrides ── */
+[data-theme="light"] .cert-item-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.015);
+}
+
+[data-theme="light"] .cert-item-card:hover {
+  background: #ffffff;
+  border-color: rgba(0, 107, 97, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .cert-item-title {
+  color: #080A14;
+}
+
+[data-theme="light"] .cert-item-issuer {
+  color: #1E2340;
+}
+
+[data-theme="light"] .cert-badge {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .cert-item-link {
+  background: rgba(0, 0, 0, 0.03);
+  color: #4A5170;
+}
+
+[data-theme="light"] .cert-item-link:hover {
   background: #0077B5;
   color: #fff;
-  font-size: 0.62rem;
-  flex-shrink: 0;
-  margin-left: 2px;
-  margin-top: 1px;
-  transition: transform var(--dur-fast) var(--ease-spring),
-              box-shadow var(--dur-fast),
-              background var(--dur-fast);
-  vertical-align: middle;
 }
 
-.cert-linkedin-badge:hover {
-  background: #005f94;
-  transform: scale(1.15);
-  box-shadow: 0 2px 8px rgba(0,119,181,0.4);
+[data-theme="light"] .cert-frontend {
+  background: rgba(0, 107, 97, 0.08);
+  color: var(--clr-primary);
+}
+
+[data-theme="light"] .cert-ai {
+  background: rgba(74, 50, 212, 0.08);
+  color: var(--clr-secondary);
+}
+
+[data-theme="light"] .cert-fullstack {
+  background: rgba(192, 57, 43, 0.08);
+  color: var(--clr-tertiary);
 }
 
 /* ── Performance: defer paint of off-screen sections ── */
