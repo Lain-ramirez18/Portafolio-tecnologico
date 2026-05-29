@@ -9,6 +9,7 @@ const translations = {
     "nav.skills":   "Habilidades",
     "nav.projects": "Proyectos",
     "nav.contact":  "Contacto",
+    "nav.skip":     "Saltar al contenido",
 
     "hero.available":    "Disponible para colaborar",
     "hero.role":         "Analista y Desarrollador\nde Software",
@@ -94,6 +95,7 @@ const translations = {
     "nav.skills":   "Skills",
     "nav.projects": "Projects",
     "nav.contact":  "Contact",
+    "nav.skip":     "Skip to main content",
 
     "hero.available":    "Available for collaboration",
     "hero.role":         "Software Analyst\n& Developer",
