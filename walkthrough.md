@@ -55,6 +55,16 @@ Esta fase se enfocó en resolver problemas críticos detectados en auditorías w
     *   **X-XSS-Protection (1; mode=block):** Activa el bloqueo proactivo ante inyecciones de código malicioso XSS.
     *   **Content-Security-Policy (CSP):** Controla estrictamente los dominios desde los cuales el sitio puede cargar scripts, estilos e imágenes.
 
+### 1.7. Favicon Personalizado de Pica (Spade)
+*   **Diseño Exclusivo:** Se diseñó y construyó un favicon en formato SVG (`assets/img/favicon.svg`) utilizando un símbolo de pica (♠) moderno y minimalista.
+*   **Alineación Cromática:** El símbolo está coloreado con un gradiente de alta tecnología que va desde el índigo/púrpura (`#7B61FF`) hasta el verde/turquesa neón (`#00E5C3`), a juego directo con la paleta de colores MD3 del portafolio.
+*   **Adaptabilidad de Interfaz:** Se envolvió el diseño en un marco circular con fondo en degradado oscuro (`#161B26` a `#0B0D12`), lo que garantiza un contraste e identificación impecables tanto en pestañas de navegadores con modo claro como modo oscuro.
+*   **Integración en Código:** Se vincularon las etiquetas en la sección `<head>` de `index.html` para el soporte universal del icono:
+    ```html
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <link rel="shortcut icon" href="assets/img/favicon.svg" />
+    ```
+
 ---
 
 ## 🎨 PARTE 2: Refinamiento de Diseño de Interfaz y Estructura (Sesión Previa)
@@ -91,9 +101,10 @@ Esta fase se centró en mejorar la estética visual en modo claro, estructurar l
 
 | Archivo | Rol en el Proyecto | Estado / Cambios Realizados |
 | :--- | :--- | :--- |
-| [index.html](file:///home/lainramirez18/Portafolio-tecnologico/index.html) | Estructura base de la Single Page Application | Optimizado (reemplazo de base64, meta-tags SEO, Apple Touch Icon, estructura con `about.p4` y certificaciones inline). |
+| [index.html](file:///home/lainramirez18/Portafolio-tecnologico/index.html) | Estructura base de la Single Page Application | Optimizado (reemplazo de base64, meta-tags SEO, Apple Touch Icon, vinculación de favicon de pica, estructura con `about.p4` y certificaciones inline). |
 | [css/style.css](file:///home/lainramirez18/Portafolio-tecnologico/css/style.css) | Estilos generales y animaciones de la UI | Optimizado (sombras del modo claro, efecto de scroll en navbar, estilos inline interactivos de LinkedIn). |
 | [js/i18n.js](file:///home/lainramirez18/Portafolio-tecnologico/js/i18n.js) | Motor de traducción multilingüe (ES/EN) | Optimizado (expansión de textos para cumplir densidad de palabras SEO, adición de emojis a badges y sección `about.p4`). |
+| [assets/img/favicon.svg](file:///home/lainramirez18/Portafolio-tecnologico/assets/img/favicon.svg) | Identidad y favicon del sitio | Creado. Icono de pica (♠) moderno con gradiente dinámico MD3. |
 | [sitemap.xml](file:///home/lainramirez18/Portafolio-tecnologico/sitemap.xml) | Mapa de indexación para buscadores | Creado y validado. |
 | [robots.txt](file:///home/lainramirez18/Portafolio-tecnologico/robots.txt) | Directivas de rastreo de rastreadores | Creado y vinculado al sitemap. |
 | [vercel.json](file:///home/lainramirez18/Portafolio-tecnologico/vercel.json) | Configuración del despliegue en Vercel | Cabeceras de seguridad HTTP y CDN completas. |
