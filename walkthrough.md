@@ -56,10 +56,10 @@ Esta fase se enfocó en resolver problemas críticos detectados en auditorías w
     *   **Content-Security-Policy (CSP):** Controla estrictamente los dominios desde los cuales el sitio puede cargar scripts, estilos e imágenes.
 
 ### 1.7. Favicon Personalizado de Pica (Spade)
-*   **Diseño Exclusivo:** Se diseñó y construyó un favicon en formato SVG (`assets/img/favicon.svg`) utilizando un símbolo de pica (♠) moderno y minimalista.
-*   **Alineación Cromática:** El símbolo está coloreado con un gradiente de alta tecnología que va desde el índigo/púrpura (`#7B61FF`) hasta el verde/turquesa neón (`#00E5C3`), a juego directo con la paleta de colores MD3 del portafolio.
-*   **Adaptabilidad de Interfaz:** Se envolvió el diseño en un marco circular con fondo en degradado oscuro (`#161B26` a `#0B0D12`), lo que garantiza un contraste e identificación impecables tanto en pestañas de navegadores con modo claro como modo oscuro.
-*   **Integración en Código:** Se vincularon las etiquetas en la sección `<head>` de `index.html` para el soporte universal del icono:
+*   **Diseño Exclusivo y Reconocible:** Se rediseñó el favicon en formato SVG (`assets/img/favicon.svg`) utilizando la silueta clásica, simétrica y matemáticamente perfecta de la pica (♠) tradicional de la baraja de cartas.
+*   **Alineación Cromática:** El símbolo está coloreado con un gradiente de 3 tonos de alta tecnología que va desde el índigo/púrpura (`#7B61FF`), pasando por el azul eléctrico (`#40A0E0`), hasta el turquesa/verde neón (`#00E5C3`), a juego directo con la paleta de colores MD3 del portafolio.
+*   **Alta Visibilidad en Browser Tabs:** Se aumentó la escala de la pica, se le añadió un filtro de sombra difusa (`feDropShadow`) en el SVG y se ubicó en un contenedor oscuro estilizado (`#1E2433` a `#0A0C10`). Esto garantiza que sea instantáneamente identificable en pestañas extremadamente pequeñas (16x16 / 32x32 píxeles), tanto en temas claros como oscuros del navegador.
+*   **Integración en Código:** Se vincularon las etiquetas en la sección `<head>` de `index.html` para el soporte de iconos de alta resolución:
     ```html
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
     <link rel="shortcut icon" href="assets/img/favicon.svg" />
