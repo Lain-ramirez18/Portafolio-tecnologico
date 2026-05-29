@@ -1,30 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <!-- High-contrast neon gradient matching the MD3 primary/secondary theme -->
-    <linearGradient id="neon-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+    <!-- Vibrant professional linear gradient from purple (#7B61FF) to primary teal (#00E5C3) -->
+    <linearGradient id="spade-grad" x1="0%" y1="100%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#7B61FF" />
-      <stop offset="50%" stop-color="#40A0E0" />
+      <stop offset="60%" stop-color="#3B9CFF" />
       <stop offset="100%" stop-color="#00E5C3" />
     </linearGradient>
-    <!-- Premium dark metallic background for contrast in light/dark tabs -->
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1E2433" />
-      <stop offset="100%" stop-color="#0A0C10" />
-    </linearGradient>
-    <!-- Drop shadow for the spade to pop out -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#00E5C3" flood-opacity="0.25" />
-    </filter>
   </defs>
 
-  <!-- Background container with smooth rounded corners and a sleek border -->
-  <rect x="16" y="16" width="480" height="480" rx="140" fill="url(#bg-grad)" stroke="url(#neon-grad)" stroke-width="18" />
+  <!-- 
+    Senior UI/UX Best Practice for Multi-Theme Favicons:
+    1. Borderless, full-bleed silhouette to maximize visual scale in browser tabs (16x16 / 32x32).
+    2. Dual-pass rendering: A thick, crisp dark silhouette pass underneath, and a vibrant neon gradient pass on top.
+    3. Guarantees 100% legibility on light browser tabs (via the dark outer shell) and dark browser tabs (via the glowing neon core).
+  -->
+  <g>
+    <!-- PASS 1: Outer Dark Shell (Thick backing outline to isolate the shape on any background) -->
+    <!-- Stem/Base Outline -->
+    <path d="M256 345 C256 385 240 470 162 470 C145 470 148 488 172 488 L340 488 C364 488 367 470 350 470 C272 470 256 385 256 345 Z" fill="#0B0D12" />
+    <!-- Spade Body Outline -->
+    <path d="M256 22 C238 22 72 205 72 310 C72 395 138 446 222 446 C232 446 256 440 256 440 C256 440 280 446 290 446 C374 446 440 395 440 310 C440 205 274 22 256 22 Z" fill="#0B0D12" />
+  </g>
 
-  <!-- Classic playing-card spade (Pica) vector path, scaled and centered for maximum visibility -->
-  <g filter="url(#glow)" transform="translate(0, 0)">
-    <!-- Base / Stem -->
-    <path d="M256 350 C256 385 240 455 170 455 C158 455 160 466 175 466 L337 466 C352 466 354 455 342 455 C272 455 256 385 256 350 Z" fill="url(#neon-grad)" />
-    <!-- Spade Main Body -->
-    <path d="M256 46 C242 46 100 216 100 316 C100 390 160 450 236 450 C245 450 256 448 256 448 C256 448 267 450 276 450 C352 450 412 390 412 316 C412 216 270 46 256 46 Z" fill="url(#neon-grad)" />
+  <g>
+    <!-- PASS 2: Vibrant Core (The actual playing card spade shape) -->
+    <!-- Stem/Base -->
+    <path d="M256 360 C256 395 240 460 176 460 C166 460 168 474 181 474 L331 474 C344 474 346 460 336 460 C272 460 256 395 256 360 Z" fill="url(#spade-grad)" />
+    <!-- Spade Body -->
+    <path d="M256 38 C241 38 88 214 88 310 C88 384 146 430 220 430 C229 430 256 424 256 424 C256 424 283 430 292 430 C366 430 424 384 424 310 C424 214 271 38 256 38 Z" fill="url(#spade-grad)" />
   </g>
 </svg>

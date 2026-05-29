@@ -56,10 +56,12 @@ Esta fase se enfocó en resolver problemas críticos detectados en auditorías w
     *   **Content-Security-Policy (CSP):** Controla estrictamente los dominios desde los cuales el sitio puede cargar scripts, estilos e imágenes.
 
 ### 1.7. Favicon Personalizado de Pica (Spade)
-*   **Diseño Exclusivo y Reconocible:** Se rediseñó el favicon en formato SVG (`assets/img/favicon.svg`) utilizando la silueta clásica, simétrica y matemáticamente perfecta de la pica (♠) tradicional de la baraja de cartas.
-*   **Alineación Cromática:** El símbolo está coloreado con un gradiente de 3 tonos de alta tecnología que va desde el índigo/púrpura (`#7B61FF`), pasando por el azul eléctrico (`#40A0E0`), hasta el turquesa/verde neón (`#00E5C3`), a juego directo con la paleta de colores MD3 del portafolio.
-*   **Alta Visibilidad en Browser Tabs:** Se aumentó la escala de la pica, se le añadió un filtro de sombra difusa (`feDropShadow`) en el SVG y se ubicó en un contenedor oscuro estilizado (`#1E2433` a `#0A0C10`). Esto garantiza que sea instantáneamente identificable en pestañas extremadamente pequeñas (16x16 / 32x32 píxeles), tanto en temas claros como oscuros del navegador.
-*   **Integración en Código:** Se vincularon las etiquetas en la sección `<head>` de `index.html` para el soporte de iconos de alta resolución:
+*   **Diseño Senior de Máxima Identificación:** Se implementó una solución de diseño avanzada basada en la técnica **Full-Bleed Borderless Silhouette** para favicons en formato SVG (`assets/img/favicon.svg`), representando de forma inconfundible la silueta clásica de la pica (♠).
+*   **Técnica de Renderizado Dual-Pass (Doble Capa):**
+    *   **Capa Base (Outer Shell):** Una silueta exterior más gruesa en tono oscuro sólido (`#0B0D12`) que actúa como un contorno de alto contraste.
+    *   **Capa Núcleo (Vibrant Core):** La silueta interna con el gradiente de tres paradas neón del portafolio (púrpura `#7B61FF` -> azul `#3B9CFF` -> turquesa `#00E5C3`).
+*   **Optimización de Contraste y Adaptabilidad Universal:** La remoción de contenedores artificiales o bordes decorativos maximiza la escala real de la pica en resoluciones de navegador de 16x16 y 32x32 píxeles. El contorno oscuro garantiza que el icono resalte con absoluta claridad tanto en pestañas de tema claro como oscuro, siendo recordado e identificado de forma instantánea.
+*   **Integración en Código:** Se vincularon las etiquetas correspondientes en la sección `<head>` de `index.html`:
     ```html
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
     <link rel="shortcut icon" href="assets/img/favicon.svg" />
