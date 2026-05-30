@@ -1,32 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <!-- Vibrant professional linear gradient from purple (#7B61FF) to primary teal (#00E5C3) -->
-    <linearGradient id="spade-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#7B61FF" />
-      <stop offset="60%" stop-color="#3B9CFF" />
-      <stop offset="100%" stop-color="#00E5C3" />
-    </linearGradient>
-  </defs>
-
-  <!-- 
-    Senior UI/UX Best Practice for Multi-Theme Favicons:
-    1. Borderless, full-bleed silhouette to maximize visual scale in browser tabs (16x16 / 32x32).
-    2. Dual-pass rendering: A thick, crisp dark silhouette pass underneath, and a vibrant neon gradient pass on top.
-    3. Guarantees 100% legibility on light browser tabs (via the dark outer shell) and dark browser tabs (via the glowing neon core).
-  -->
+  <!-- Solid, uniform pure black background -->
+  <rect width="512" height="512" fill="#000000" />
+  
   <g>
-    <!-- PASS 1: Outer Dark Shell (Thick backing outline to isolate the shape on any background) -->
-    <!-- Stem/Base Outline -->
-    <path d="M256 345 C256 385 240 470 162 470 C145 470 148 488 172 488 L340 488 C364 488 367 470 350 470 C272 470 256 385 256 345 Z" fill="#0B0D12" />
-    <!-- Spade Body Outline -->
-    <path d="M256 22 C238 22 72 205 72 310 C72 395 138 446 222 446 C232 446 256 440 256 440 C256 440 280 446 290 446 C374 446 440 395 440 310 C440 205 274 22 256 22 Z" fill="#0B0D12" />
+    <!-- Connecting Digital Lines (Perfectly aligned to pixel grid for 32x32 rendering) -->
+    <line x1="128" y1="128" x2="384" y2="128" stroke="#00E5FF" stroke-width="32" stroke-linecap="round" />
+    <line x1="128" y1="384" x2="384" y2="384" stroke="#00E5FF" stroke-width="32" stroke-linecap="round" />
+    <line x1="128" y1="128" x2="384" y2="384" stroke="#00E5FF" stroke-width="32" stroke-linecap="round" />
+    <line x1="128" y1="384" x2="384" y2="128" stroke="#00E5FF" stroke-width="32" stroke-linecap="round" />
   </g>
-
+  
   <g>
-    <!-- PASS 2: Vibrant Core (The actual playing card spade shape) -->
-    <!-- Stem/Base -->
-    <path d="M256 360 C256 395 240 460 176 460 C166 460 168 474 181 474 L331 474 C344 474 346 460 336 460 C272 460 256 395 256 360 Z" fill="url(#spade-grad)" />
-    <!-- Spade Body -->
-    <path d="M256 38 C241 38 88 214 88 310 C88 384 146 430 220 430 C229 430 256 424 256 424 C256 424 283 430 292 430 C366 430 424 384 424 310 C424 214 271 38 256 38 Z" fill="url(#spade-grad)" />
+    <!-- Interconnected Nodes (Cyan rings with pure black center masks) -->
+    <circle cx="128" cy="128" r="32" fill="#000000" stroke="#00E5FF" stroke-width="32" />
+    <circle cx="384" cy="128" r="32" fill="#000000" stroke="#00E5FF" stroke-width="32" />
+    <circle cx="128" cy="384" r="32" fill="#000000" stroke="#00E5FF" stroke-width="32" />
+    <circle cx="384" cy="384" r="32" fill="#000000" stroke="#00E5FF" stroke-width="32" />
   </g>
 </svg>

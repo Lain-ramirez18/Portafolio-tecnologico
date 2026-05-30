@@ -14,10 +14,10 @@ En esta sesión nos enfocamos en que tu página cargue instantáneamente, sea se
 *   **Qué hicimos:** Quitamos ese bloque de texto y lo reemplazamos por una referencia a tu imagen real optimizada (`profile.png`).
 *   **Por qué ayuda:** Es como quitarle una mochila de 50 kg a un corredor. Tu página ahora carga **un 73% más rápido**, lo que mejora drásticamente la experiencia de quien la visita desde su celular.
 
-### ♠️ 2. Tu sello de identidad: El Favicon de la Pica (♠)
-*   **Qué pasaba:** No tenías un icono personalizado en la pestaña del navegador, o el diseño previo no se distinguía bien en tamaños pequeños.
-*   **Qué hicimos:** Creamos un icono de la pica de cartas (♠) vectorial, usando los colores neón (púrpura, azul y turquesa) de tu portafolio, y le añadimos una **silueta oscura por debajo**.
-*   **Por qué ayuda:** Al tener esa silueta oscura de fondo, la pica se ve **súper nítida y reconocible** tanto si el navegador de tu visitante está en modo oscuro (pestañas negras) como en modo claro (pestañas blancas). ¡Se acordarán de tu marca al instante!
+### 🧠 2. Tu sello de identidad: El Favicon de Red Neuronal Minimalista
+*   **Qué pasaba:** El icono anterior no representaba adecuadamente tu enfoque en inteligencia artificial y automatización de agentes.
+*   **Qué hicimos:** Rediseñamos el favicon creando un icono de red neuronal minimalista y tecnológico en formato vectorial SVG y PNG. El diseño presenta 4 nodos pequeños interconectados por líneas digitales limpias en color cian brillante sobre un fondo negro puro sólido.
+*   **Por qué ayuda:** Representa perfectamente el flujo y automatización de agentes de IA. Gracias a su geometría ultra-simple de alto contraste y su alineación matemática con la cuadrícula de píxeles, se ve espectacularmente nítido en el formato estándar de 32x32 píxeles de cualquier pestaña del navegador.
 
 ### 🔍 3. SEO: "Mapa" para Google y más contenido
 *   **Qué pasaba:** La descripción de tu web era muy larga y tenías pocas palabras en total (menos de 500), lo que a Google no le gusta para posicionarte.

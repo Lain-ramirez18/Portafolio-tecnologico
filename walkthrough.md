@@ -55,15 +55,17 @@ Esta fase se enfocó en resolver problemas críticos detectados en auditorías w
     *   **X-XSS-Protection (1; mode=block):** Activa el bloqueo proactivo ante inyecciones de código malicioso XSS.
     *   **Content-Security-Policy (CSP):** Controla estrictamente los dominios desde los cuales el sitio puede cargar scripts, estilos e imágenes.
 
-### 1.7. Favicon Personalizado de Pica (Spade)
-*   **Diseño Senior de Máxima Identificación:** Se implementó una solución de diseño avanzada basada en la técnica **Full-Bleed Borderless Silhouette** para favicons en formato SVG (`assets/img/favicon.svg`), representando de forma inconfundible la silueta clásica de la pica (♠).
-*   **Técnica de Renderizado Dual-Pass (Doble Capa):**
-    *   **Capa Base (Outer Shell):** Una silueta exterior más gruesa en tono oscuro sólido (`#0B0D12`) que actúa como un contorno de alto contraste.
-    *   **Capa Núcleo (Vibrant Core):** La silueta interna con el gradiente de tres paradas neón del portafolio (púrpura `#7B61FF` -> azul `#3B9CFF` -> turquesa `#00E5C3`).
-*   **Optimización de Contraste y Adaptabilidad Universal:** La remoción de contenedores artificiales o bordes decorativos maximiza la escala real de la pica en resoluciones de navegador de 16x16 y 32x32 píxeles. El contorno oscuro garantiza que el icono resalte con absoluta claridad tanto en pestañas de tema claro como oscuro, siendo recordado e identificado de forma instantánea.
-*   **Integración en Código:** Se vincularon las etiquetas correspondientes en la sección `<head>` de `index.html`:
+### 1.7. Favicon Personalizado de Red Neuronal Minimalista (AI Agents Flow)
+*   **Diseño Senior de Máxima Identificación:** Se implementó un diseño de identidad premium que simboliza flujos de agentes de IA y automatización digital, estructurado matemáticamente mediante 4 nodos y líneas interconectadas en una geometría de reloj de arena/red neuronal ultra-limpia.
+*   **Renderizado de Máximo Contraste:** 
+    *   **Base Uniforme:** Un fondo negro puro (`#000000`) de alto impacto.
+    *   **Elementos Digitales:** Nodos circulares en forma de anillos y líneas interconectadas en cian eléctrico vibrante (`#00E5FF`), perfectamente fusionadas.
+*   **Optimización para Pantallas de Baja Resolución (32x32):** El SVG se ha programado de manera que los centros, radios y grosores de trazo coincidan exactamente con múltiplos enteros de la cuadrícula de píxeles a resolución 32x32. Esto elimina la distorsión del suavizado (anti-aliasing) y garantiza bordes limpios y una nitidez asombrosa en las pestañas del navegador.
+*   **Integración en Código:** Se vincularon las etiquetas en la sección `<head>` de `index.html` y el `manifest.json`:
     ```html
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png" />
     <link rel="shortcut icon" href="assets/img/favicon.svg" />
     ```
 
@@ -106,7 +108,7 @@ Esta fase se centró en mejorar la estética visual en modo claro, estructurar l
 | [index.html](file:///home/lainramirez18/Portafolio-tecnologico/index.html) | Estructura base de la Single Page Application | Optimizado (reemplazo de base64, meta-tags SEO, Apple Touch Icon, vinculación de favicon de pica, estructura con `about.p4` y certificaciones inline). |
 | [css/style.css](file:///home/lainramirez18/Portafolio-tecnologico/css/style.css) | Estilos generales y animaciones de la UI | Optimizado (sombras del modo claro, efecto de scroll en navbar, estilos inline interactivos de LinkedIn). |
 | [js/i18n.js](file:///home/lainramirez18/Portafolio-tecnologico/js/i18n.js) | Motor de traducción multilingüe (ES/EN) | Optimizado (expansión de textos para cumplir densidad de palabras SEO, adición de emojis a badges y sección `about.p4`). |
-| [assets/img/favicon.svg](file:///home/lainramirez18/Portafolio-tecnologico/assets/img/favicon.svg) | Identidad y favicon del sitio | Creado. Icono de pica (♠) moderno con gradiente dinámico MD3. |
+| [assets/img/favicon.svg](file:///home/lainramirez18/Portafolio-tecnologico/assets/img/favicon.svg) | Identidad y favicon del sitio | Rediseñado. Icono de red neuronal y agentes de IA en cian y fondo negro de máxima nitidez. |
 | [sitemap.xml](file:///home/lainramirez18/Portafolio-tecnologico/sitemap.xml) | Mapa de indexación para buscadores | Creado y validado. |
 | [robots.txt](file:///home/lainramirez18/Portafolio-tecnologico/robots.txt) | Directivas de rastreo de rastreadores | Creado y vinculado al sitemap. |
 | [vercel.json](file:///home/lainramirez18/Portafolio-tecnologico/vercel.json) | Configuración del despliegue en Vercel | Cabeceras de seguridad HTTP y CDN completas. |
