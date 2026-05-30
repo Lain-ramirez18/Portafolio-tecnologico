@@ -1,22 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="geometricPrecision">
-  <!-- Material Design Surface (White for maximum tab visibility) -->
-  <rect width="512" height="512" rx="128" fill="#FFFFFF" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Perfect Dark Surface -->
+  <rect width="512" height="512" rx="128" fill="#0B0D12" />
   
-  <!-- Aesthetic Spacing: Brackets moved to outer edges for a more "open" design -->
-  <!-- Deep Blue [#001855] provides a professional, stable structure -->
-  <path d="M90 110h-35v292h35v-50h-15V160h15v-50z" fill="#001855" />
-  <path d="M422 110h35v292h-35v-50h15V160h-15v-50z" fill="#001855" />
+  <!-- Brackets [ ] in Project Teal (#00E5C3) - Mathematically aligned -->
+  <path d="M110 100h-40v312h40v-55h-15V155h15v-55z" fill="#00E5C3" />
+  <path d="M402 100h40v312h-40v-55h15V155h-15v-55z" fill="#00E5C3" />
   
-  <!-- Balanced Monogram: Using the page's dark color [#0B0D12] for perfect contrast -->
-  <text x="256" y="260" 
+  <!-- LR Monogram in Authentic Times New Roman Bold -->
+  <!-- Centered with precision using SVG text alignment properties -->
+  <text x="256" y="262" 
         font-family="'Times New Roman', Times, serif" 
-        font-size="210" 
-        font-weight="900" 
-        fill="#0B0D12" 
+        font-size="200" 
+        font-weight="bold" 
+        fill="#E8EAF2" 
         text-anchor="middle" 
         dominant-baseline="central">LR</text>
-  
-  <!-- Brand Integration: A subtle Material-style accent in Project Teal [#00E5C3] -->
-  <!-- This ties the favicon directly to the main site color palette -->
-  <rect x="216" y="370" width="80" height="10" rx="5" fill="#00E5C3" />
 </svg>
