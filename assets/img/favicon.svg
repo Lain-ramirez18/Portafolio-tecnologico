@@ -1,13 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Dark background -->
-  <rect width="512" height="512" rx="128" fill="#0B0D12" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="geometricPrecision">
+  <!-- Material Design Surface (White for maximum tab visibility) -->
+  <rect width="512" height="512" rx="128" fill="#FFFFFF" />
   
-  <!-- Left Brace { - Enhanced definition -->
-  <path d="M100 120c-25 0-35 15-35 35v75c0 20-10 26-25 26 15 0 25 6 25 26v75c0 20 10 35 35 35h15v-30h-5c-15 0-20-10-20-20v-75c0-15 10-21 25-21-15 0-25-6-25-21v-75c0-10 5-20 20-20h5v-30z" fill="#00E5C3" stroke="#00E5C3" stroke-width="1" />
+  <!-- Aesthetic Spacing: Brackets moved to outer edges for a more "open" design -->
+  <!-- Deep Blue [#001855] provides a professional, stable structure -->
+  <path d="M90 110h-35v292h35v-50h-15V160h15v-50z" fill="#001855" />
+  <path d="M422 110h35v292h-35v-50h15V160h-15v-50z" fill="#001855" />
   
-  <!-- Right Brace } - Enhanced definition -->
-  <path d="M412 120c25 0 35 15 35 35v75c0 20 10 26 25 26-15 0-25 6-25 26v75c0 20-10 35-35 35h-15v-30h5c15 0 20-10 20-20v-75c0-15-10-21-25-21 15 0 25-6 25-21v-75c0-10-5-20-20-20h-5v-30z" fill="#00E5C3" stroke="#00E5C3" stroke-width="1" />
+  <!-- Balanced Monogram: Using the page's dark color [#0B0D12] for perfect contrast -->
+  <text x="256" y="260" 
+        font-family="'Times New Roman', Times, serif" 
+        font-size="210" 
+        font-weight="900" 
+        fill="#0B0D12" 
+        text-anchor="middle" 
+        dominant-baseline="central">LR</text>
   
-  <!-- LR Text in Times New Roman Bold - Adding subtle stroke to avoid blurriness at small scales -->
-  <text x="256" y="265" font-family="'Times New Roman', Times, serif" font-size="180" font-weight="bold" fill="#E8EAF2" stroke="#E8EAF2" stroke-width="2" text-anchor="middle" dominant-baseline="central">LR</text>
+  <!-- Brand Integration: A subtle Material-style accent in Project Teal [#00E5C3] -->
+  <!-- This ties the favicon directly to the main site color palette -->
+  <rect x="216" y="370" width="80" height="10" rx="5" fill="#00E5C3" />
 </svg>
