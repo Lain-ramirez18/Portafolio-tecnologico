@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
   <!-- Dark background -->
   <rect width="512" height="512" rx="128" fill="#0B0D12" />
   
-  <!-- Left Brace { -->
-  <path d="M100 120c-25 0-35 15-35 35v75c0 20-10 26-25 26 15 0 25 6 25 26v75c0 20 10 35 35 35h15v-30h-5c-15 0-20-10-20-20v-75c0-15 10-21 25-21-15 0-25-6-25-21v-75c0-10 5-20 20-20h5v-30z" fill="#00E5C3" />
+  <!-- Left Brace { - Enhanced definition -->
+  <path d="M100 120c-25 0-35 15-35 35v75c0 20-10 26-25 26 15 0 25 6 25 26v75c0 20 10 35 35 35h15v-30h-5c-15 0-20-10-20-20v-75c0-15 10-21 25-21-15 0-25-6-25-21v-75c0-10 5-20 20-20h5v-30z" fill="#00E5C3" stroke="#00E5C3" stroke-width="1" />
   
-  <!-- Right Brace } -->
-  <path d="M412 120c25 0 35 15 35 35v75c0 20 10 26 25 26-15 0-25 6-25 26v75c0 20-10 35-35 35h-15v-30h5c15 0 20-10 20-20v-75c0-15-10-21-25-21 15 0 25-6 25-21v-75c0-10-5-20-20-20h-5v-30z" fill="#00E5C3" />
+  <!-- Right Brace } - Enhanced definition -->
+  <path d="M412 120c25 0 35 15 35 35v75c0 20 10 26 25 26-15 0-25 6-25 26v75c0 20-10 35-35 35h-15v-30h5c15 0 20-10 20-20v-75c0-15-10-21-25-21 15 0 25-6 25-21v-75c0-10-5-20-20-20h-5v-30z" fill="#00E5C3" stroke="#00E5C3" stroke-width="1" />
   
-  <!-- LR Text in Times New Roman - Geometrically centered -->
-  <text x="256" y="265" font-family="'Times New Roman', Times, serif" font-size="180" font-weight="bold" fill="#E8EAF2" text-anchor="middle" dominant-baseline="central">LR</text>
+  <!-- LR Text in Times New Roman Bold - Adding subtle stroke to avoid blurriness at small scales -->
+  <text x="256" y="265" font-family="'Times New Roman', Times, serif" font-size="180" font-weight="bold" fill="#E8EAF2" stroke="#E8EAF2" stroke-width="2" text-anchor="middle" dominant-baseline="central">LR</text>
 </svg>
