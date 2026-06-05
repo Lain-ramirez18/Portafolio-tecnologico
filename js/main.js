@@ -8,6 +8,15 @@
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
+/* ══ Throttle utility — performance: limita llamadas en scroll ══ */
+function throttle(fn, wait = 16) {
+  let last = 0;
+  return function(...args) {
+    const now = Date.now();
+    if (now - last >= wait) { last = now; fn.apply(this, args); }
+  };
+}
+
 /* ══════════════ 1. THEME (Nielsen #1: Visibility) ══════════════ */
 const ThemeManager = (() => {
   const KEY = 'lain-theme-v2';
@@ -78,12 +87,12 @@ const ScrollProgress = (() => {
   return {
     init() {
       if (!bar) return;
-      window.addEventListener('scroll', () => {
+      window.addEventListener('scroll', throttle(() => {
         const max = document.body.scrollHeight - window.innerHeight;
         const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
         bar.style.width = `${pct}%`;
         bar.setAttribute('aria-valuenow', Math.round(pct));
-      }, { passive: true });
+      }, 32), { passive: true });
     }
   };
 })();
@@ -111,6 +120,8 @@ const NavManager = (() => {
     highlight();
   }
 
+  const onScrollThrottled = throttle(onScroll, 50);
+
   function closeMenu() {
     navLinks?.classList.remove('open');
     hamburger?.classList.remove('open');
@@ -119,7 +130,7 @@ const NavManager = (() => {
 
   return {
     init() {
-      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('scroll', onScrollThrottled, { passive: true });
       onScroll();
 
       /* Desktop-only: hamburger hidden on mobile (bottom bar handles nav) */
@@ -151,7 +162,7 @@ const BottomBar = (() => {
     init() {
       if (!items.length) return;
 
-      window.addEventListener('scroll', () => {
+      window.addEventListener('scroll', throttle(() => {
         let current = 'hero';
         sections.forEach(s => {
           if (window.scrollY >= s.offsetTop - 140) current = s.id;
@@ -159,7 +170,7 @@ const BottomBar = (() => {
         items.forEach(item => {
           item.classList.toggle('active', item.getAttribute('href') === `#${current}`);
         });
-      }, { passive: true });
+      }, 50), { passive: true });
     }
   };
 })();
@@ -169,11 +180,19 @@ const RevealManager = (() => {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        obs.unobserve(e.target);
+        /* Use scheduler if available (Chrome 115+) for non-urgent reveals */
+        const reveal = () => {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        };
+        if ('scheduler' in window && 'postTask' in window.scheduler) {
+          window.scheduler.postTask(reveal, { priority: 'background' });
+        } else {
+          reveal();
+        }
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
   return {
     init() { $$('.reveal').forEach(el => obs.observe(el)); }
@@ -404,6 +423,27 @@ function setYear() {
           link.href = href;
           document.head.appendChild(link);
         });
+    }, { timeout: 3000 });
+  }
+})();
+
+/* ══════════════ SERVICE WORKER — PWA & Offline Cache ══════════════ */
+(function registerSW() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .then(reg => {
+          /* Background sync of new SW version */
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            newSW?.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                console.info('[SW] Nueva versión disponible. Recarga para actualizar.');
+              }
+            });
+          });
+        })
+        .catch(() => { /* SW no crítico — falla silenciosamente */ });
     });
   }
 })();

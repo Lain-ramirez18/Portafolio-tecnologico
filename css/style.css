@@ -135,6 +135,10 @@ html {
   scroll-padding-top: var(--nav-height);
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  /* Mejora de rendering en sistemas con display de alta densidad */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -158,6 +162,46 @@ img, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
 button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+/* ──────────── PERFORMANCE: content-visibility ──────────── */
+/* Secciones debajo del fold se renderizan solo cuando entran al viewport */
+/* Mejora LCP y TTI significativamente */
+@supports (content-visibility: auto) {
+  .about.section,
+  .skills.section,
+  .projects.section,
+  .contact.section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
+}
+
+/* Hint al compositor para capas que se animarán */
+.hero-orb,
+.float-chip,
+.cursor,
+.cursor-follower,
+.profile-card {
+  will-change: transform;
+}
+
+/* Reducir motion para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-orb,
+  .float-chip,
+  .cursor,
+  .cursor-follower {
+    will-change: auto;
+  }
+}
 
 /* Focus — Nielsen #1: Visibility of system status */
 :focus-visible {
