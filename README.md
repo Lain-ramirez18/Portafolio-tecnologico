@@ -25,4 +25,4 @@ Un portafolio moderno, responsivo y de alto impacto, diseñado con un enfoque en
 Puedes ver el portafolio en vivo aquí: [lainramirez.vercel.app](https://lainramirez.vercel.app/)
 
 ---
-Diseñado y construido por [Lain Sthid Ramirez Rueda](https://github.com/Lain-ramirez18).
+Diseñado y desarrollado por [Lain Sthid Ramirez Rueda](https://github.com/Lain-ramirez18).
