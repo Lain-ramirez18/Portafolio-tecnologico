@@ -18,6 +18,7 @@ graph TD
     Root --> CSS
     Root --> JS
     
+    Root --> GEMINI["GEMINI.md (AI Context & Workflow)"]
     Root --> IndexHTML["index.html (Core DOM structure)"]
     Root --> ManifestJSON["manifest.json (PWA definitions)"]
     Root --> VercelJSON["vercel.json (Server/CDN headers)"]

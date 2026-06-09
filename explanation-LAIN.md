@@ -25,6 +25,7 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 
 | Archivo | ¿Qué es en palabras sencillas? | ¿Para qué sirve y qué hace? |
 | :--- | :--- | :--- |
+| **`GEMINI.md`** | Instrucciones para la IA (Memoria). | Contiene las reglas y flujos de trabajo que yo (la IA) debo seguir, como actualizar estos documentos cada vez que cambiemos algo. |
 | **`index.html`** | El esqueleto de tu casa. | Contiene la estructura básica de la página: los textos, las secciones (Sobre mí, Habilidades, Proyectos, Contacto) y los enlaces. |
 | **`sw.js`** | El Service Worker (asistente offline). | Guarda una copia de tu página en el celular/computadora del visitante. Esto hace que tu web cargue **instantáneamente** en su segunda visita e incluso funcione sin internet. |
 | **`manifest.json`** | La ficha técnica de tu App. | Le dice a los celulares Android/iOS que tu web se puede **"Instalar"** como una aplicación móvil, creando un icono de acceso directo en su pantalla. |
