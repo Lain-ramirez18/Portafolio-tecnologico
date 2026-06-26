@@ -468,6 +468,65 @@ function setYear() {
   }
 })();
 
+/* ══════════════ 16. CV MODAL & TOAST ══════════════ */
+const CVDialog = (() => {
+  const btn = $('#btn-download-cv');
+  const dialog = $('#cv-dialog');
+  const closeBtn = $('#cv-dialog-close');
+  const toastContainer = $('#toast-container');
+  const langBtns = $$('.cv-lang-btn');
+
+  function showToast() {
+    const isEs = document.documentElement.lang === 'es';
+    const msg = isEs ? '¡CV descargado exitosamente!' : 'CV downloaded successfully!';
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
+    toastContainer.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.add('hiding');
+      toast.addEventListener('animationend', () => toast.remove());
+    }, 3000);
+  }
+
+  return {
+    init() {
+      if (!btn || !dialog) return;
+      
+      btn.addEventListener('click', () => {
+        dialog.showModal();
+        btn.setAttribute('aria-expanded', 'true');
+      });
+      
+      closeBtn.addEventListener('click', () => {
+        dialog.close();
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      
+      dialog.addEventListener('click', (e) => {
+        const dialogDimensions = dialog.getBoundingClientRect();
+        if (
+          e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right ||
+          e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom
+        ) {
+          dialog.close();
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      langBtns.forEach(b => {
+        b.addEventListener('click', () => {
+          dialog.close();
+          btn.setAttribute('aria-expanded', 'false');
+          showToast();
+        });
+      });
+    }
+  };
+})();
+
 /* ══════════════ BOOT ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   ThemeManager.init();
@@ -483,6 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ProjectGlow.init();
   SmoothScroll.init();
   BackToTop.init();
+  CVDialog.init();
   initA11y();
   setYear();
 

@@ -24,6 +24,8 @@ const translations = {
 
     "aria.lang_toggle":  "Cambiar idioma",
     "aria.theme_toggle": "Alternar modo oscuro/claro",
+    "cv.dialog_title":   "Elige el idioma del CV",
+    "cv.close_dialog":   "Cerrar modal",
 
     "about.label":      "Sobre mí",
     "about.title":      "Diseñador de\nexperiencias digitales.",
@@ -114,6 +116,8 @@ const translations = {
 
     "aria.lang_toggle":  "Change language",
     "aria.theme_toggle": "Toggle dark/light mode",
+    "cv.dialog_title":   "Choose CV language",
+    "cv.close_dialog":   "Close modal",
 
     "about.label":      "About Me",
     "about.title":      "Architect of\ndigital experiences.",
