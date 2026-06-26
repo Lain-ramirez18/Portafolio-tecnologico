@@ -35,7 +35,7 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 | **`sitemap.xml`** | El mapa de carreteras para Google. | Un listado con la dirección exacta de tu web para que Google la encuentre, rastree e indexe más rápidamente. |
 | **`.gitignore`** | El filtro de subida. | Le dice a Git qué archivos privados o temporales **no debe subir** a tu repositorio público de GitHub. |
 | **`README.md`** | Tu carta de presentación en GitHub. | Es el texto descriptivo que la gente ve cuando entra a tu perfil de GitHub. Explica de qué se trata este repositorio. |
-| **`Diplomado Fundamentos de Full Stack.pdf`** | Tu certificado de diplomado. | Tu archivo físico de diplomado guardado de forma segura en el repositorio. |
+| **`assets/docs/Diplomado...pdf`** | Tu certificado de diplomado. | Tu archivo físico de diplomado guardado de forma segura en la carpeta de documentos. |
 
 ---
 
@@ -44,6 +44,8 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 1.  **Velocidad de Carga:** Al no usar frameworks pesados (como React o Angular) y optimizar el peso de tus imágenes (quitando textos gigantes en base64 de tu HTML), tu página pesa poquísimo y carga en menos de un segundo.
 2.  **Seguridad Extrema:** Gracias a `vercel.json`, tu página tiene activadas cabeceras de seguridad que impiden que otros sitios web metan tu página dentro de un marco falso para engañar usuarios (Clickjacking) y restringe la ejecución de código no autorizado (CSP).
 3.  **Accesibilidad Universal:** Incluye un botón invisible llamado *"Saltar al contenido"* que solo aparece si navegas con la tecla `Tab`. Esto ayuda a que personas que no pueden usar el mouse naveguen por tu web fácilmente.
+4.  **CSS Limpio y sin duplicados:** Se eliminó código CSS muerto e innecesario: selectores que ya no existen en el HTML (`.chip-react`, `.chip-node`), propiedades que no aplican a elementos normales (`font-display`), y reglas duplicadas (`content-visibility`, `will-change`, `prefers-reduced-motion`) que ya estaban definidas en una sección anterior del archivo. Esto mantiene el archivo ligero y fácil de mantener.
+5.  **SEO y Usabilidad:** Se agregó un botón para descargar tu CV directamente. Además, los textos ocultos para lectores de pantalla (`aria-labels`) y los metadatos de Google cambian de idioma dinámicamente cuando presionas el botón "EN/ES", algo que el 90% de los sitios web olvida hacer.
 
 ---
 

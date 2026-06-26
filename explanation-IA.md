@@ -49,17 +49,27 @@ $$W_{HTML\_opt} = W_{HTML} - |I_{b64}| = 36\text{ KB}$$
 This satisfies the performance budget constraint $W_{HTML} \le 64\text{ KB}$, ensuring a rapid Time to Interactive (TTI).
 
 ### 2.2. CSS Rendering Optimization
-To prevent main-thread layout bottleneck during page rendering, sections off-screen are optimized using the CSS containment property:
+To prevent main-thread layout bottleneck during page rendering, sections off-screen are optimized using the CSS containment property, guarded by `@supports` for progressive enhancement (single canonical declaration at lines 169-177):
 
 ```css
-.about, .skills, .projects, .contact {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 600px;
+@supports (content-visibility: auto) {
+  .about, .skills, .projects, .contact {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
+  }
 }
 ```
 This forces the browser to bypass layout calculations and painting of these containers until they approach the viewport margin, reducing initial paint time $T_{paint}$ by:
 
 $$\Delta T_{paint} \propto \sum_{i \in \text{Offscreen}} \text{Layout Complexity}(i)$$
+
+### 2.3. Dead Code & Duplication Cleanup
+A cleanup pass removed ~20 lines of dead or duplicate CSS:
+- **Dead `font-display` property**: `font-display` is a `@font-face` descriptor; applying it to `.hero-title`, `.section-title`, `.project-title` had zero effect. The `?display=swap` parameter in the Google Fonts URL handles this.
+- **Dead selectors `.chip-react`, `.chip-node`**: No matching HTML elements exist in the DOM.
+- **Duplicate `content-visibility`**: Was declared twice; consolidated into the `@supports` guard above.
+- **Duplicate `will-change: transform`**: Was declared twice for `.profile-card`, `.float-chip`, `.hero-orb`; consolidated into section 2 (lines 180-186).
+- **Duplicate `prefers-reduced-motion`**: Was declared twice; consolidated into the comprehensive rule at lines 189-204.
 
 ---
 
@@ -88,6 +98,12 @@ All HTTP headers are configured edge-side via `vercel.json` to defend against ke
 $$\text{FrameAncestors} = \emptyset \implies \text{X-Frame-Options: DENY}$$
 Additionally, a frame-breaking fallback script is executed in `main.js`:
 $$\text{if } (\text{window.top} \neq \text{window.self}) \implies \text{window.top.location} \leftarrow \text{window.self.location}$$
+
+### 4.1.5. SEO, Accessibility & Caching Enhancements (Phase 1 Update)
+*   **Dynamic Localization**: The `i18n.js` module dynamically mutates `document.title` and `<meta name="description">` to match the active language state (`lang`).
+*   **ARIA attributes**: Toggle buttons translate their `aria-label` via a custom `data-i18n-aria` attribute hook to ensure screen readers announce the correct language context.
+*   **Hreflang Tags**: Alternate language URLs explicitly mapped in `<head>` for indexing bots.
+*   **Cache Busting**: `/sw.js` cache versioned as `v2` for busting stale immutable assets.
 
 ### 4.2. Content Security Policy (CSP) Directives
 The CSP is specified to restrict execution scopes, preventing Cross-Site Scripting (XSS):

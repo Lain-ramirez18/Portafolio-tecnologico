@@ -1407,8 +1407,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .hero-visual { display: flex; justify-content: center; order: -1; }
   .profile-card { width: 270px; }
   .chip-python { right: -42px; }
-  .chip-react  { right: -42px; }
-  .chip-node   { left: -44px; }
   .about-grid { grid-template-columns: 1fr; }
   .about-aside { display: grid; grid-template-columns: repeat(2, 1fr); }
   .projects-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1449,11 +1447,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .soft-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ──────────── 18. REDUCED MOTION ──────────── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .hero-bg-grid, .orb-1, .orb-2, .orb-3, .profile-card, .float-chip { animation: none !important; }
-}
+/* Reduced motion rules consolidated in section 2 (lines 189-204) */
 
 /* ──────────── 19. POLISH — Tags, typography overflow, skill bars ──────────── */
 
@@ -1672,11 +1666,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   color: var(--clr-tertiary);
 }
 
-/* ── Performance: defer paint of off-screen sections ── */
-.about, .skills, .projects, .contact {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 600px;
-}
+
 
 /* ── Security: prevent text selection on decorative elements ── */
 .hero-bg-grid,
@@ -1688,19 +1678,9 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   -webkit-user-select: none;
 }
 
-/* ── Performance: promote animated elements to own layer ── */
-.profile-card,
-.float-chip,
-.hero-orb {
-  will-change: transform;
-}
 
-/* ── Prevent layout shift on font load (FOUT) ── */
-.hero-title,
-.section-title,
-.project-title {
-  font-display: swap;
-}
+
+/* font-display: swap is set in the Google Fonts URL parameter (?display=swap) */
 
 /* ── Accessibility: Skip to Main Content Link ── */
 .skip-link {

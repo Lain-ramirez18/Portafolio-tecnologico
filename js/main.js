@@ -260,6 +260,12 @@ const CustomCursor = (() => {
       });
 
       loop();
+
+      // Pause cursor animation when tab is hidden to save resources
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { cancelAnimationFrame(rafId); }
+        else { loop(); }
+      });
     },
     destroy() { cancelAnimationFrame(rafId); }
   };
@@ -353,9 +359,9 @@ const BackToTop = (() => {
   return {
     init() {
       if (!btn) return;
-      window.addEventListener('scroll', () => {
+      window.addEventListener('scroll', throttle(() => {
         btn.classList.toggle('visible', window.scrollY > 400);
-      }, { passive: true });
+      }, 100), { passive: true });
       btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
   };
@@ -383,6 +389,20 @@ function initA11y() {
   live.className = 'sr-only';
   live.id = 'live-region';
   document.body.appendChild(live);
+
+  // Populate live region when navigating between sections
+  $$('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href');
+      const target = $(href);
+      if (target) {
+        const title = target.querySelector('.section-title, .hero-title');
+        if (title) {
+          live.textContent = title.textContent;
+        }
+      }
+    });
+  });
 }
 
 /* ══════════════ 15. FOOTER YEAR ══════════════ */

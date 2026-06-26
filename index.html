@@ -16,7 +16,10 @@
   <meta name="author" content="Lain Sthid Ramirez Rueda" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <link rel="canonical" href="https://lainramirez.vercel.app/" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon.svg" />
+  <link rel="alternate" hreflang="es" href="https://lainramirez.vercel.app/" />
+  <link rel="alternate" hreflang="en" href="https://lainramirez.vercel.app/" />
+  <link rel="alternate" hreflang="x-default" href="https://lainramirez.vercel.app/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon.png" />
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png" />
@@ -120,10 +123,10 @@
       </ul>
 
       <div class="nav-controls">
-        <button class="lang-toggle" id="lang-toggle" aria-label="Cambiar idioma">
+        <button class="lang-toggle" id="lang-toggle" aria-label="Cambiar idioma" data-i18n-aria="aria.lang_toggle">
           <span id="lang-label">EN</span>
         </button>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar modo oscuro/claro">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar modo oscuro/claro" data-i18n-aria="aria.theme_toggle">
           <i class="fa-solid fa-sun" aria-hidden="true" id="theme-icon-inner"></i>
         </button>
         <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
@@ -166,9 +169,13 @@
             <a href="#contact" class="btn btn-ghost">
               <span data-i18n="hero.cta_secondary">Conectemos</span>
             </a>
+            <a href="assets/docs/CV_Lain_Ramirez.pdf" download class="btn btn-ghost">
+              <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+              <span data-i18n="hero.download_cv">Descargar CV</span>
+            </a>
           </div>
 
-          <div class="hero-socials" aria-label="Redes sociales">
+          <div class="hero-socials" role="group" aria-label="Redes sociales">
             <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Perfil de GitHub">
               <i class="fa-brands fa-github" aria-hidden="true"></i><span>GitHub</span>
             </a>
@@ -251,7 +258,7 @@
             <p class="about-desc" data-i18n="about.p4">
               Además de mis habilidades técnicas, valoro profundamente la colaboración interdisciplinaria y la comunicación efectiva con equipos de trabajo. Mi experiencia en elicitación de requisitos me ha enseñado la importancia de escuchar activamente las necesidades del cliente y traducirlas en especificaciones técnicas claras y ejecutables.
             </p>
-            <div class="about-tags" aria-label="Etiquetas clave">
+            <div class="about-tags" role="group" aria-label="Etiquetas clave">
               <span class="tag" data-i18n="about.tag1">Arquitecto Digital</span>
               <span class="tag" data-i18n="about.tag2">AI Specialist</span>
               <span class="tag" data-i18n="about.tag3" style="white-space:nowrap">En proceso · Full-Stack</span>

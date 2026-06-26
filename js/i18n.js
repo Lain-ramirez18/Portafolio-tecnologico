@@ -20,6 +20,10 @@ const translations = {
     "hero.stat_projects":"Proyectos",
     "hero.stat_ai":      "Powered",
     "hero.scroll":       "desliza",
+    "hero.download_cv":  "Descargar CV",
+
+    "aria.lang_toggle":  "Cambiar idioma",
+    "aria.theme_toggle": "Alternar modo oscuro/claro",
 
     "about.label":      "Sobre mí",
     "about.title":      "Diseñador de\nexperiencias digitales.",
@@ -106,6 +110,10 @@ const translations = {
     "hero.stat_projects":"Projects",
     "hero.stat_ai":      "Powered",
     "hero.scroll":       "scroll",
+    "hero.download_cv":  "Download CV",
+
+    "aria.lang_toggle":  "Change language",
+    "aria.theme_toggle": "Toggle dark/light mode",
 
     "about.label":      "About Me",
     "about.title":      "Architect of\ndigital experiences.",
@@ -115,7 +123,7 @@ const translations = {
     "about.p4":         "Beyond my technical skills, I deeply value interdisciplinary collaboration and effective communication with teams. My experience in requirements elicitation has taught me the importance of actively listening to client needs and translating them into clear, actionable technical specifications.",
     "about.tag1":       "Digital Architect",
     "about.tag2":       "AI Specialist",
-    "about.tag3":       "En proceso · Full-Stack",
+    "about.tag3":       "In Progress · Full-Stack",
     "about.tag4":       "UI/UX Design",
     "about.tag5":       "Open Source",
     "about.edu_title":  "Education",
@@ -191,7 +199,29 @@ function applyTranslations(lang) {
     }
   });
 
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const key = el.getAttribute('data-i18n-aria');
+    const value = dict[key];
+    if (value) el.setAttribute('aria-label', value);
+  });
+
+  // Update HTML lang and data-lang attributes
   document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('data-lang', lang);
+
+  // Update document title for SEO
+  document.title = lang === 'es'
+    ? 'Lain Sthid Ramirez Rueda | Analista y Desarrollador de Software'
+    : 'Lain Sthid Ramirez Rueda | Software Analyst & Developer';
+
+  // Update meta description
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute('content', lang === 'es'
+      ? 'Lain Sthid Ramirez Rueda — Analista y Desarrollador de Software. Especialista en IA, Python, UI/UX y elicitación de requisitos. Disponible para proyectos.'
+      : 'Lain Sthid Ramirez Rueda — Software Analyst & Developer. Specialist in AI, Python, UI/UX and requirements elicitation. Available for projects.');
+  }
+
   const label = document.getElementById('lang-label');
   if (label) label.textContent = lang === 'es' ? 'EN' : 'ES';
 }
