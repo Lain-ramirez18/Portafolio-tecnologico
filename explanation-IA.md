@@ -149,3 +149,9 @@ stateDiagram-v2
 
 - **HTML (Network-First):** Guarantees indexers and users always receive the newest DOM state if connected, falling back to cached cache on network disconnect.
 - **Assets (Cache-First + Background Update):** Serves CSS/JS instantly from cache, updating in the background to ensure next-visit consistency.
+
+## Phase 2 Implementation Notes
+- **Premium OG Image (`assets/img/og-image.jpg`)**: Replaced `profile.png` with a dedicated 1376x768 Open Graph image. Meta tags `og:image` and `twitter:image` updated.
+- **CV Download Modal**: Implemented an HTML `<dialog>` accessible modal for dual-language CV downloads. Controlled via `main.js` `CVDialog` IIFE, styled with glassmorphism in `style.css`.
+- **Dynamic Translation Expansion**: Added `cv.dialog_title` and `cv.close_dialog` to `i18n.js`.
+- **Service Worker Burst**: Incremented `CACHE_NAME` to `lsrr-portfolio-v3` to enforce cache bust for the new OG image and modal assets.
