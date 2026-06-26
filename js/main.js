@@ -518,9 +518,11 @@ const CVDialog = (() => {
       
       langBtns.forEach(b => {
         b.addEventListener('click', () => {
-          dialog.close();
-          btn.setAttribute('aria-expanded', 'false');
-          showToast();
+          setTimeout(() => {
+            dialog.close();
+            btn.setAttribute('aria-expanded', 'false');
+            showToast();
+          }, 150);
         });
       });
     }

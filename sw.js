@@ -5,8 +5,8 @@
                Network-First para HTML (siempre fresco)
 ================================================================ */
 
-const CACHE_NAME    = 'lsrr-portfolio-v3';
-const ASSETS_CACHE  = 'lsrr-assets-v3';
+const CACHE_NAME    = 'lsrr-portfolio-v4';
+const ASSETS_CACHE  = 'lsrr-assets-v4';
 
 /* Recursos críticos que se cachean en la instalación */
 const PRECACHE_URLS = [
