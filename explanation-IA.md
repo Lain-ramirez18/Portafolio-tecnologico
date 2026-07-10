@@ -157,3 +157,8 @@ stateDiagram-v2
 - **Service Worker Burst**: Incremented `CACHE_NAME` to `lsrr-portfolio-v3` to enforce cache bust for the new OG image and modal assets.
 - **Serverless Contact Form**: Refactored `.contact-grid` to include an accessible, fully functional `form` integrated with Formspree (or equivalent serverless POST endpoint). Implemented asynchronous interception in `ContactForm.init()` within `main.js` to provide loading states and `showToast` feedback without page reloads.
 - **Tablet Responsive Logic**: Adjusted CSS `@media (max-width: 1024px)` to activate the `.bottom-bar` navigation and hide `.nav-links`. This resolves previous Hamburger UI redundancy and provides a flawless app-like Dock experience on iPad/Tablet screens.
+- **Build Architecture & High Security Obfuscation**: Transitioned from a pure static repository to a build-step repository using Node.js (`npm`).
+  - **Source Code**: Readable, well-documented source files now reside in `src/js/` and `src/css/`.
+  - **Build Process**: `build.js` executes `javascript-obfuscator` and `clean-css-cli`.
+  - **Obfuscation**: JS is compiled with strict protections: `controlFlowFlattening`, `stringArrayEncoding (rc4)`, `deadCodeInjection`, and `debugProtection` (crashes DevTools when attackers try to inspect the logic).
+  - **Deployment**: Vercel automatically runs `npm run build` targeting `package.json` before serving the root directory, ensuring that `js/` and `css/` are always overwritten with highly secure, unreadable payloads on the live site while preserving `src/` for the developer.
