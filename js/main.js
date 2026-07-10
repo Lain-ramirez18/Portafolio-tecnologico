@@ -468,28 +468,34 @@ function setYear() {
   }
 })();
 
-/* ══════════════ 16. CV MODAL & TOAST ══════════════ */
+/* ══════════════ 16. TOAST MANAGER ══════════════ */
+const ToastManager = (() => {
+  let container;
+  return {
+    init: () => {
+      container = $('#toast-container');
+    },
+    show: (msg) => {
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.add('hiding');
+        toast.addEventListener('animationend', () => toast.remove());
+      }, 3000);
+    }
+  };
+})();
+
+/* ══════════════ 17. CV MODAL ══════════════ */
 const CVDialog = (() => {
   const btn = $('#btn-download-cv');
   const dialog = $('#cv-dialog');
   const closeBtn = $('#cv-dialog-close');
-  const toastContainer = $('#toast-container');
   const langBtns = $$('.cv-lang-btn');
-
-  function showToast() {
-    const isEs = document.documentElement.lang === 'es';
-    const msg = isEs ? '¡CV descargado exitosamente!' : 'CV downloaded successfully!';
-    
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
-    toastContainer.appendChild(toast);
-    
-    setTimeout(() => {
-      toast.classList.add('hiding');
-      toast.addEventListener('animationend', () => toast.remove());
-    }, 3000);
-  }
 
   return {
     init() {
@@ -521,7 +527,8 @@ const CVDialog = (() => {
           setTimeout(() => {
             dialog.close();
             btn.setAttribute('aria-expanded', 'false');
-            showToast();
+            const isEs = document.documentElement.lang === 'es';
+            ToastManager.show(isEs ? '¡CV descargado exitosamente!' : 'CV downloaded successfully!');
           }, 150);
         });
       });
@@ -529,19 +536,21 @@ const CVDialog = (() => {
   };
 })();
 
-/* ══════════════ 17. CONTACT FORM ══════════════ */
+/* ══════════════ 18. CONTACT FORM ══════════════ */
 const ContactForm = (() => {
   return {
     init: () => {
       const form = $('#contact-form');
       if (!form) return;
 
+      const btnWhatsApp = $('#btn-whatsapp');
+      
+      // Enviar a FormSubmit.co
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = form.querySelector('.form-submit-btn');
         const originalText = btn.innerHTML;
         
-        // UI Feedback
         btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
         btn.style.pointerEvents = 'none';
 
@@ -554,18 +563,29 @@ const ContactForm = (() => {
           });
           
           if (response.ok) {
-            showToast("¡Mensaje enviado correctamente! 🚀");
+            ToastManager.show("¡Mensaje enviado por Email! 🚀");
             form.reset();
           } else {
-            showToast("Ocurrió un error. Escríbeme por WhatsApp.");
+            ToastManager.show("Error de servicio. Intenta el botón de WhatsApp.");
           }
         } catch (error) {
-          showToast("Error de conexión. Intenta nuevamente.");
+          ToastManager.show("Error de red. Intenta el botón de WhatsApp.");
         } finally {
           btn.innerHTML = originalText;
           btn.style.pointerEvents = 'auto';
         }
       });
+
+      // Enviar por WhatsApp
+      if (btnWhatsApp) {
+        btnWhatsApp.addEventListener('click', () => {
+          const name = $('#name').value.trim() || 'Un visitante';
+          const msg = $('#message').value.trim() || 'Quiero contactarme contigo.';
+          const waUrl = `https://wa.me/573209735859?text=Hola Lain, soy ${encodeURIComponent(name)}. ${encodeURIComponent(msg)}`;
+          window.open(waUrl, '_blank');
+          ToastManager.show("¡Redirigiendo a WhatsApp! 📱");
+        });
+      }
     }
   };
 })();
@@ -585,6 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ProjectGlow.init();
   SmoothScroll.init();
   BackToTop.init();
+  ToastManager.init();
   CVDialog.init();
   ContactForm.init();
   initA11y();
