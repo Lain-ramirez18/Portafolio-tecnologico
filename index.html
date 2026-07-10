@@ -604,59 +604,89 @@
             </div>
           </div>
 
+          <!-- ── FORMULARIO PREMIUM ── -->
           <div class="contact-form-container reveal reveal-delay">
 
-            <!-- Barra de estado (éxito/error) -->
-            <div id="form-status" class="form-status" role="status" aria-live="polite" hidden></div>
+            <div class="cf-header">
+              <span class="cf-badge">
+                <i class="fa-solid fa-bolt" aria-hidden="true"></i> Respuesta en menos de 24h
+              </span>
+            </div>
 
-            <form id="contact-form" class="contact-form" novalidate>
-              <!-- Campos ocultos para FormSubmit.co -->
+            <form id="contact-form" class="contact-form" novalidate autocomplete="off">
+              <!-- Anti-spam honeypot (invisible al usuario) -->
+              <input type="text" name="_honey" style="display:none" tabindex="-1" aria-hidden="true">
               <input type="hidden" name="_captcha" value="false">
               <input type="hidden" name="_template" value="table">
-              <input type="hidden" name="_subject" value="🚀 Nuevo contacto desde tu Portafolio Web">
+              <input type="hidden" name="_subject" value="Nuevo mensaje desde portafolio - Lain Ramirez">
 
-              <div class="form-group">
-                <label for="cf-name" class="form-label">
+              <!-- Nombre -->
+              <div class="cf-group" id="grp-name">
+                <label for="cf-name" class="cf-label">
                   <i class="fa-solid fa-user" aria-hidden="true"></i>
-                  Nombre
+                  Nombre completo
                 </label>
-                <input type="text" id="cf-name" name="name"
-                       placeholder="¿Cómo te llamas?"
-                       required aria-required="true"
-                       autocomplete="name" class="form-input" />
+                <div class="cf-input-wrap">
+                  <input type="text" id="cf-name" name="name"
+                         class="cf-input"
+                         placeholder="¿Cómo te llamas?"
+                         required aria-required="true"
+                         autocomplete="name"
+                         minlength="2" maxlength="80" />
+                  <span class="cf-check" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></span>
+                </div>
+                <span class="cf-error" role="alert" id="err-name"></span>
               </div>
 
-              <div class="form-group">
-                <label for="cf-email" class="form-label">
+              <!-- Email -->
+              <div class="cf-group" id="grp-email">
+                <label for="cf-email" class="cf-label">
                   <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                  Email
+                  Correo electrónico
+                  <span class="cf-hint">para responderte</span>
                 </label>
-                <input type="email" id="cf-email" name="email"
-                       placeholder="tu@correo.com"
-                       required aria-required="true"
-                       autocomplete="email" class="form-input" />
+                <div class="cf-input-wrap">
+                  <input type="email" id="cf-email" name="email"
+                         class="cf-input"
+                         placeholder="tu@correo.com"
+                         required aria-required="true"
+                         autocomplete="email" />
+                  <span class="cf-check" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></span>
+                </div>
+                <span class="cf-error" role="alert" id="err-email"></span>
               </div>
 
-              <div class="form-group">
-                <label for="cf-message" class="form-label">
+              <!-- Mensaje -->
+              <div class="cf-group" id="grp-msg">
+                <label for="cf-message" class="cf-label">
                   <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
                   Mensaje
                 </label>
-                <textarea id="cf-message" name="message" rows="4"
-                          placeholder="¿En qué puedo ayudarte? Cuéntame tu proyecto..."
-                          required aria-required="true"
-                          class="form-input form-textarea"></textarea>
+                <div class="cf-input-wrap">
+                  <textarea id="cf-message" name="message"
+                            class="cf-input cf-textarea"
+                            placeholder="Cuéntame sobre tu proyecto, idea u oportunidad..."
+                            required aria-required="true"
+                            rows="4"
+                            minlength="15" maxlength="800"
+                            aria-describedby="msg-counter"></textarea>
+                </div>
+                <div class="cf-meta-row">
+                  <span class="cf-error" role="alert" id="err-msg"></span>
+                  <span class="cf-counter" id="msg-counter" aria-live="polite">0 / 800</span>
+                </div>
               </div>
 
-              <!-- Doble canal de contacto -->
-              <div class="form-actions">
-                <button type="button" id="btn-whatsapp-form" class="btn btn-wa">
+              <!-- Botones duales -->
+              <div class="cf-actions">
+                <button type="button" id="btn-wa" class="cf-btn cf-btn--wa">
                   <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
                   <span>WhatsApp</span>
                 </button>
-                <button type="submit" id="btn-email-submit" class="btn btn-primary form-submit-btn">
-                  <span>Enviar Email</span>
+                <button type="submit" id="btn-email" class="cf-btn cf-btn--primary">
+                  <span class="cf-btn-text">Enviar Email</span>
                   <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                  <span class="cf-spinner" aria-hidden="true" hidden><i class="fa-solid fa-circle-notch fa-spin"></i></span>
                 </button>
               </div>
             </form>
@@ -667,7 +697,25 @@
 
   </main>
 
+  <!-- ══ MODAL DE ÉXITO ══ -->
+  <dialog id="success-modal" class="success-modal" aria-labelledby="smodal-title" aria-modal="true">
+    <div class="smodal-content">
+      <div class="smodal-icon" aria-hidden="true">
+        <svg viewBox="0 0 52 52" class="smodal-svg">
+          <circle class="sck-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path   class="sck-check"  fill="none" d="M14 27l7 7 17-17"/>
+        </svg>
+      </div>
+      <h3 id="smodal-title" class="smodal-title">¡Mensaje enviado!</h3>
+      <p  class="smodal-desc">Gracias por escribirme. Te responderé a tu correo en menos de 24 horas.</p>
+      <button class="cf-btn cf-btn--primary" id="smodal-close" autofocus>
+        Perfecto, gracias
+      </button>
+    </div>
+  </dialog>
+
   <!-- ══ FOOTER ══ -->
+
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-inner">
