@@ -1,0 +1,28 @@
+# robots.txt — lainramirez.vercel.app
+# Última actualización: 2026-06-05
+
+User-agent: *
+Allow: /
+Disallow: /assets/img/photo_b64.txt
+
+# Principales buscadores
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Crawl-delay para bots menos conocidos
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+Sitemap: https://lainramirez.vercel.app/sitemap.xml

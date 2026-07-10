@@ -2,16 +2,73 @@ const fs = require('fs');
 const path = require('path');
 const JavaScriptObfuscator = require('javascript-obfuscator');
 const CleanCSS = require('clean-css');
+const { minify: minifyHtml } = require('html-minifier-terser');
 
 // Configuración de rutas
 const SRC_DIR = path.join(__dirname, 'src');
-const DIST_DIR = __dirname; // La raíz del proyecto
+const DIST_DIR = path.join(__dirname, 'public'); // Vercel espera la carpeta public por defecto
 
-// Crear carpetas de destino si no existen (ya deberían existir pero por si acaso)
+// Crear carpetas de destino
+if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR);
 if (!fs.existsSync(path.join(DIST_DIR, 'js'))) fs.mkdirSync(path.join(DIST_DIR, 'js'));
 if (!fs.existsSync(path.join(DIST_DIR, 'css'))) fs.mkdirSync(path.join(DIST_DIR, 'css'));
 
-// 1. Ofuscar JavaScript
+// Función auxiliar para copiar carpetas recursivamente
+function copyFolderSync(from, to) {
+    if (!fs.existsSync(to)) fs.mkdirSync(to);
+    fs.readdirSync(from).forEach(element => {
+        if (fs.lstatSync(path.join(from, element)).isFile()) {
+            fs.copyFileSync(path.join(from, element), path.join(to, element));
+        } else {
+            copyFolderSync(path.join(from, element), path.join(to, element));
+        }
+    });
+}
+
+// 0. Copiar assets estáticos
+console.log("[BUILD] Copiando assets estáticos a public/...");
+const staticFiles = ['manifest.json', 'sw.js', 'robots.txt', 'sitemap.xml'];
+staticFiles.forEach(f => {
+    if (fs.existsSync(path.join(__dirname, f))) {
+        fs.copyFileSync(path.join(__dirname, f), path.join(DIST_DIR, f));
+    }
+});
+if (fs.existsSync(path.join(__dirname, 'assets'))) {
+    copyFolderSync(path.join(__dirname, 'assets'), path.join(DIST_DIR, 'assets'));
+}
+
+// 1. Minificar HTML
+async function processHTML() {
+    // Si no está en src, asume que sigue en la raíz
+    const srcHtmlPath = fs.existsSync(path.join(SRC_DIR, 'index.html')) 
+                        ? path.join(SRC_DIR, 'index.html') 
+                        : path.join(__dirname, 'index.html');
+                        
+    const distHtmlPath = path.join(DIST_DIR, 'index.html');
+    
+    if (fs.existsSync(srcHtmlPath)) {
+        const htmlCode = fs.readFileSync(srcHtmlPath, 'utf8');
+        console.log(`[HTML] Minifying index.html...`);
+        const result = await minifyHtml(htmlCode, {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            useShortDoctype: true,
+            minifyCSS: true,
+            minifyJS: true,
+            removeAttributeQuotes: true,
+            collapseInlineTagWhitespace: true,
+            sortAttributes: true,
+            sortClassName: true
+        });
+        fs.writeFileSync(distHtmlPath, result);
+        console.log(`[HTML] Saved minified index.html to public/`);
+    }
+}
+
+// 2. Ofuscar JavaScript
 const jsFiles = ['i18n.js', 'main.js'];
 const obfuscatorOptions = {
     compact: true,
@@ -19,9 +76,9 @@ const obfuscatorOptions = {
     controlFlowFlatteningThreshold: 0.75,
     deadCodeInjection: true,
     deadCodeInjectionThreshold: 0.4,
-    debugProtection: true, // Evita que usen DevTools facilmente
+    debugProtection: true,
     debugProtectionInterval: 2000,
-    disableConsoleOutput: true, // Bloquea los console.log
+    disableConsoleOutput: true,
     identifierNamesGenerator: 'hexadecimal',
     log: false,
     numbersToExpressions: true,
@@ -54,11 +111,11 @@ jsFiles.forEach(file => {
         console.log(`[JS] Obfuscating ${file}...`);
         const obfuscationResult = JavaScriptObfuscator.obfuscate(code, obfuscatorOptions);
         fs.writeFileSync(distPath, obfuscationResult.getObfuscatedCode());
-        console.log(`[JS] Saved obfuscated ${file}`);
+        console.log(`[JS] Saved obfuscated ${file} to public/`);
     }
 });
 
-// 2. Minificar CSS
+// 3. Minificar CSS
 const cssFiles = ['style.css'];
 cssFiles.forEach(file => {
     const srcPath = path.join(SRC_DIR, 'css', file);
@@ -69,8 +126,13 @@ cssFiles.forEach(file => {
         console.log(`[CSS] Minifying ${file}...`);
         const output = new CleanCSS({ level: 2 }).minify(cssCode);
         fs.writeFileSync(distPath, output.styles);
-        console.log(`[CSS] Saved minified ${file}`);
+        console.log(`[CSS] Saved minified ${file} to public/`);
     }
 });
 
-console.log("¡Build de Seguridad y Minificación Completado!");
+// Run HTML minifier
+processHTML().then(() => {
+    console.log("¡Build de Seguridad y Minificación Completado Exitosamente en public/!");
+}).catch(err => {
+    console.error("Error en build:", err);
+});

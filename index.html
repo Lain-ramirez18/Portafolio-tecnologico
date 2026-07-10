@@ -605,29 +605,57 @@
           </div>
 
           <div class="contact-form-container reveal reveal-delay">
-            <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/lainramirez18@gmail.com" method="POST">
-              <!-- Evitar Captcha molesto de FormSubmit -->
+
+            <!-- Barra de estado (éxito/error) -->
+            <div id="form-status" class="form-status" role="status" aria-live="polite" hidden></div>
+
+            <form id="contact-form" class="contact-form" novalidate>
+              <!-- Campos ocultos para FormSubmit.co -->
               <input type="hidden" name="_captcha" value="false">
               <input type="hidden" name="_template" value="table">
-              <input type="hidden" name="_subject" value="Nuevo contacto de Portafolio: Lain Ramirez">
+              <input type="hidden" name="_subject" value="🚀 Nuevo contacto desde tu Portafolio Web">
+
               <div class="form-group">
-                <label for="name" class="sr-only" data-i18n="contact.form_name">Tu Nombre</label>
-                <input type="text" id="name" name="name" placeholder="Tu Nombre" required aria-required="true" autocomplete="name" />
+                <label for="cf-name" class="form-label">
+                  <i class="fa-solid fa-user" aria-hidden="true"></i>
+                  Nombre
+                </label>
+                <input type="text" id="cf-name" name="name"
+                       placeholder="¿Cómo te llamas?"
+                       required aria-required="true"
+                       autocomplete="name" class="form-input" />
               </div>
+
               <div class="form-group">
-                <label for="email" class="sr-only" data-i18n="contact.form_email">Tu Email</label>
-                <input type="email" id="email" name="email" placeholder="tu@email.com" required aria-required="true" autocomplete="email" />
+                <label for="cf-email" class="form-label">
+                  <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                  Email
+                </label>
+                <input type="email" id="cf-email" name="email"
+                       placeholder="tu@correo.com"
+                       required aria-required="true"
+                       autocomplete="email" class="form-input" />
               </div>
+
               <div class="form-group">
-                <label for="message" class="sr-only" data-i18n="contact.form_msg">Mensaje</label>
-                <textarea id="message" name="message" rows="4" placeholder="¿En qué puedo ayudarte?" required aria-required="true"></textarea>
+                <label for="cf-message" class="form-label">
+                  <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
+                  Mensaje
+                </label>
+                <textarea id="cf-message" name="message" rows="4"
+                          placeholder="¿En qué puedo ayudarte? Cuéntame tu proyecto..."
+                          required aria-required="true"
+                          class="form-input form-textarea"></textarea>
               </div>
-              <div class="form-actions" style="display: flex; gap: 1rem; margin-top: 0.5rem;">
-                <button type="button" id="btn-whatsapp" class="btn btn-ghost" style="flex: 1; justify-content: center; color: #25D366; border-color: #25D366;">
-                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span>WhatsApp</span>
+
+              <!-- Doble canal de contacto -->
+              <div class="form-actions">
+                <button type="button" id="btn-whatsapp-form" class="btn btn-wa">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                  <span>WhatsApp</span>
                 </button>
-                <button type="submit" class="btn btn-primary form-submit-btn" style="flex: 1; justify-content: center; padding: 1rem;">
-                  <span data-i18n="contact.form_send">Enviar Correo</span>
+                <button type="submit" id="btn-email-submit" class="btn btn-primary form-submit-btn">
+                  <span>Enviar Email</span>
                   <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                 </button>
               </div>

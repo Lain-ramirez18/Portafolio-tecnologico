@@ -537,53 +537,118 @@ const CVDialog = (() => {
 })();
 
 /* ══════════════ 18. CONTACT FORM ══════════════ */
+// Este módulo maneja el formulario de contacto dual:
+//   - Botón "Enviar Email" → Envía a FormSubmit.co → llega a tu Gmail
+//   - Botón "WhatsApp"     → Abre WhatsApp con el mensaje prellenado
 const ContactForm = (() => {
+
+  // URL de FormSubmit con tu correo real. 
+  // Nota: la primera vez debes activarlo haciendo clic en el correo de verificación que te mandan.
+  const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/lainramirez18@gmail.com';
+
+  // Tu número de WhatsApp en formato internacional (sin + ni espacios)
+  const WA_NUMBER = '573209735859';
+
+  // Muestra el banner de estado dentro del formulario (no el Toast global)
+  function setStatus(type, message) {
+    const statusEl = $('#form-status');
+    if (!statusEl) return;
+    statusEl.className = `form-status form-status--${type}`;
+    statusEl.innerHTML = message;
+    statusEl.hidden = false;
+    // Auto-ocultar después de 6 segundos
+    setTimeout(() => { statusEl.hidden = true; }, 6000);
+  }
+
+  // Valida el formulario manualmente para poder dar feedback preciso
+  function validateForm(form) {
+    const name = form.querySelector('#cf-name');
+    const email = form.querySelector('#cf-email');
+    const message = form.querySelector('#cf-message');
+
+    if (!name.value.trim()) {
+      name.focus();
+      setStatus('error', '<i class="fa-solid fa-circle-exclamation"></i> Por favor ingresa tu nombre.');
+      return false;
+    }
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.focus();
+      setStatus('error', '<i class="fa-solid fa-circle-exclamation"></i> Ingresa un correo electrónico válido.');
+      return false;
+    }
+    if (!message.value.trim() || message.value.trim().length < 10) {
+      message.focus();
+      setStatus('error', '<i class="fa-solid fa-circle-exclamation"></i> Escribe un mensaje de al menos 10 caracteres.');
+      return false;
+    }
+    return true;
+  }
+
   return {
     init: () => {
       const form = $('#contact-form');
       if (!form) return;
 
-      const btnWhatsApp = $('#btn-whatsapp');
-      
-      // Enviar a FormSubmit.co
+      const btnWa = $('#btn-whatsapp-form');
+      const btnSubmit = $('#btn-email-submit');
+
+      // ── Enviar por EMAIL ──────────────────────────────────────────
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = form.querySelector('.form-submit-btn');
-        const originalText = btn.innerHTML;
-        
-        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
-        btn.style.pointerEvents = 'none';
+        if (!validateForm(form)) return;
+
+        const originalHtml = btnSubmit.innerHTML;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...';
+        btnSubmit.disabled = true;
 
         try {
           const formData = new FormData(form);
-          const response = await fetch(form.action, {
+          const response = await fetch(FORMSUBMIT_URL, {
             method: 'POST',
             body: formData,
             headers: { 'Accept': 'application/json' }
           });
-          
+
           if (response.ok) {
-            ToastManager.show("¡Mensaje enviado por Email! 🚀");
+            // ¡ÉXITO! Mostrar mensaje de confirmación claro
+            setStatus('success',
+              '<i class="fa-solid fa-circle-check"></i> <strong>¡Mensaje enviado!</strong> Te responderé pronto a tu correo.'
+            );
+            ToastManager.show('¡Email enviado exitosamente! 📧');
             form.reset();
           } else {
-            ToastManager.show("Error de servicio. Intenta el botón de WhatsApp.");
+            // El servidor respondió con error (por ejemplo, correo no activado aún)
+            const data = await response.json().catch(() => ({}));
+            const hint = data?.message?.includes('not activated')
+              ? 'Activa el formulario desde el correo de FormSubmit que llegó a tu Gmail.'
+              : 'Intenta de nuevo o usa el botón de WhatsApp.';
+            setStatus('error', `<i class="fa-solid fa-circle-exclamation"></i> Error al enviar. ${hint}`);
           }
-        } catch (error) {
-          ToastManager.show("Error de red. Intenta el botón de WhatsApp.");
+        } catch (err) {
+          // Error de red
+          setStatus('error',
+            '<i class="fa-solid fa-wifi"></i> Sin conexión. Prueba el botón de WhatsApp.'
+          );
         } finally {
-          btn.innerHTML = originalText;
-          btn.style.pointerEvents = 'auto';
+          btnSubmit.innerHTML = originalHtml;
+          btnSubmit.disabled = false;
         }
       });
 
-      // Enviar por WhatsApp
-      if (btnWhatsApp) {
-        btnWhatsApp.addEventListener('click', () => {
-          const name = $('#name').value.trim() || 'Un visitante';
-          const msg = $('#message').value.trim() || 'Quiero contactarme contigo.';
-          const waUrl = `https://wa.me/573209735859?text=Hola Lain, soy ${encodeURIComponent(name)}. ${encodeURIComponent(msg)}`;
-          window.open(waUrl, '_blank');
-          ToastManager.show("¡Redirigiendo a WhatsApp! 📱");
+      // ── Enviar por WHATSAPP ───────────────────────────────────────
+      // Toma los datos del formulario y pre-llena el mensaje en WhatsApp
+      if (btnWa) {
+        btnWa.addEventListener('click', () => {
+          const name    = ($('#cf-name')?.value.trim())    || 'Un visitante';
+          const email   = ($('#cf-email')?.value.trim())   || '';
+          const message = ($('#cf-message')?.value.trim()) || 'Quiero contactarme contigo.';
+
+          // Construye el mensaje personalizado
+          const text = `Hola Lain 👋, soy *${name}*${email ? ` (${email})` : ''}.\n\n${message}`;
+          const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+
+          window.open(waUrl, '_blank', 'noopener,noreferrer');
+          ToastManager.show('¡Abriendo WhatsApp! 📱');
         });
       }
     }

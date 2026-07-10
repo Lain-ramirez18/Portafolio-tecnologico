@@ -1298,8 +1298,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 .contact-desc { color: var(--clr-on-surface-med); line-height: 1.82; margin-bottom: var(--space-xl); font-size: 1rem; }
 
-.contact-cta { font-size: 1rem; padding: 0.9rem 2.2rem; display: none; } /* Ocultar el viejo CTA si es necesario, o eliminar la regla si lo borramos de HTML */
-
+/* ── Formulario Premium ── */
 .contact-form-container {
   background: var(--clr-surface-2);
   padding: var(--space-xl);
@@ -1311,53 +1310,122 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 1.25rem;
 }
 
-.form-group input,
-.form-group textarea {
+/* Label visible con icono */
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--clr-on-surface-med);
+  margin-bottom: 0.4rem;
+}
+
+.form-label i { color: var(--clr-primary); font-size: 0.9rem; }
+
+/* Inputs y textarea */
+.form-input {
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: 0.85rem 1.1rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--clr-border);
+  border: 1.5px solid var(--clr-border);
   background: var(--clr-surface-1);
   color: var(--clr-on-surface);
   font-family: var(--font-sans);
   font-size: 0.95rem;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast), background var(--dur-fast);
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: var(--clr-on-surface-low);
-}
+.form-input::placeholder { color: var(--clr-on-surface-low); }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.form-input:focus {
   outline: none;
   border-color: var(--clr-primary);
+  background: var(--clr-surface);
   box-shadow: 0 0 0 3px var(--clr-primary-glow);
 }
 
-.form-group textarea {
+.form-textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 110px;
 }
 
+/* Banner de estado (éxito / error) visible dentro del form */
+.form-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeInDown 0.3s var(--ease-out);
+}
+
+.form-status--success {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #22c55e;
+}
+
+.form-status--error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fila de acciones dual */
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.form-actions .btn { flex: 1; justify-content: center; gap: 0.5rem; }
+
+/* Botón WhatsApp verde */
+.btn-wa {
+  background: transparent;
+  border: 1.5px solid #25D366;
+  color: #25D366;
+  font-weight: 600;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
+}
+
+.btn-wa:hover {
+  background: #25D366;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-wa i { font-size: 1.15rem; }
+
+/* Botón submit */
 .form-submit-btn {
-  width: 100%;
   justify-content: center;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  font-size: 1rem;
-}
-.clc-arrow {
-  color: var(--clr-on-surface-low);
-  font-size: 0.82rem;
-  transition: transform var(--dur-fast), color var(--dur-fast);
+  padding: 0.85rem 1.25rem;
+  font-size: 0.95rem;
 }
 
-.contact-link-card:hover .clc-arrow { transform: translateX(5px); color: var(--clr-primary); }
+@media (max-width: 480px) {
+  .form-actions { flex-direction: column; }
+}
+
 
 /* ──────────── 14. FOOTER ──────────── */
 .footer {

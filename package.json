@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Lain-ramirez18/Portafolio-tecnologico#readme",
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
+    "html-minifier-terser": "^7.2.0",
     "javascript-obfuscator": "^5.4.6"
   }
 }
