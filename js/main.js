@@ -529,6 +529,47 @@ const CVDialog = (() => {
   };
 })();
 
+/* ══════════════ 17. CONTACT FORM ══════════════ */
+const ContactForm = (() => {
+  return {
+    init: () => {
+      const form = $('#contact-form');
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('.form-submit-btn');
+        const originalText = btn.innerHTML;
+        
+        // UI Feedback
+        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
+        btn.style.pointerEvents = 'none';
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          
+          if (response.ok) {
+            showToast("¡Mensaje enviado correctamente! 🚀");
+            form.reset();
+          } else {
+            showToast("Ocurrió un error. Escríbeme por WhatsApp.");
+          }
+        } catch (error) {
+          showToast("Error de conexión. Intenta nuevamente.");
+        } finally {
+          btn.innerHTML = originalText;
+          btn.style.pointerEvents = 'auto';
+        }
+      });
+    }
+  };
+})();
+
 /* ══════════════ BOOT ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   ThemeManager.init();
@@ -545,6 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
   SmoothScroll.init();
   BackToTop.init();
   CVDialog.init();
+  ContactForm.init();
   initA11y();
   setYear();
 

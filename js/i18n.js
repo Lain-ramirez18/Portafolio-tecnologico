@@ -86,6 +86,10 @@ const translations = {
     "contact.wa_sub":  "Mensaje directo",
     "contact.li_sub":  "Red profesional",
     "contact.gh_sub":  "Ver mi código",
+    "contact.form_name": "Tu Nombre",
+    "contact.form_email": "Tu Email",
+    "contact.form_msg": "Mensaje",
+    "contact.form_send": "Enviar Mensaje",
 
     "footer.built":    "Diseñado y construido por",
 
@@ -178,6 +182,10 @@ const translations = {
     "contact.wa_sub":  "Direct message",
     "contact.li_sub":  "Professional network",
     "contact.gh_sub":  "See my code",
+    "contact.form_name": "Your Name",
+    "contact.form_email": "Your Email",
+    "contact.form_msg": "Message",
+    "contact.form_send": "Send Message",
 
     "footer.built":    "Designed & built by",
 

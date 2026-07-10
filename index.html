@@ -587,48 +587,42 @@
             <p class="contact-desc" data-i18n="contact.desc">
               ¿Buscas un desarrollador integral comprometido con la calidad y la innovación constante? Ya sea que tengas un proyecto, una oportunidad o simplemente quieras conectar — mi línea siempre está abierta.
             </p>
-            <a href="https://wa.me/573209735859?text=Hola%20Lain,%20buen%20día" target="_blank" rel="noopener noreferrer" class="btn btn-primary contact-cta" aria-label="Contactar a Lain Sthid Ramirez Rueda por WhatsApp">
-              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-              <span data-i18n="contact.cta">Contáctame ahora</span>
-            </a>
+            
+            <div class="hero-socials" style="margin-top: 2rem;" role="group" aria-label="Redes sociales de contacto">
+              <a href="https://wa.me/573209735859?text=Hola%20Lain,%20buen%20día" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span>
+              </a>
+              <a href="mailto:lainramirez18@gmail.com" class="social-chip" aria-label="Email">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i><span>Email</span>
+              </a>
+              <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="GitHub">
+                <i class="fa-brands fa-github" aria-hidden="true"></i><span>GitHub</span>
+              </a>
+            </div>
           </div>
 
-          <div class="contact-links reveal reveal-delay">
-            <a href="https://wa.me/573209735859?text=Hola%20Lain,%20buen%20día" target="_blank" rel="noopener noreferrer" class="contact-link-card" aria-label="Chatear por WhatsApp">
-              <div class="clc-icon clc-wa"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
-              <div class="clc-info">
-                <span class="clc-title">WhatsApp</span>
-                <span class="clc-sub" data-i18n="contact.wa_sub">Mensaje directo</span>
+          <div class="contact-form-container reveal reveal-delay">
+            <form id="contact-form" class="contact-form" action="https://formspree.io/f/REEMPLAZA_CON_TU_ID" method="POST">
+              <div class="form-group">
+                <label for="name" class="sr-only" data-i18n="contact.form_name">Tu Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Tu Nombre" required aria-required="true" autocomplete="name" />
               </div>
-              <i class="fa-solid fa-arrow-right clc-arrow" aria-hidden="true"></i>
-            </a>
-
-            <a href="mailto:lainramirez18@gmail.com" class="contact-link-card" aria-label="Enviar email">
-              <div class="clc-icon clc-mail"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
-              <div class="clc-info">
-                <span class="clc-title">Email</span>
-                <span class="clc-sub">lainramirez18@gmail.com</span>
+              <div class="form-group">
+                <label for="email" class="sr-only" data-i18n="contact.form_email">Tu Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" required aria-required="true" autocomplete="email" />
               </div>
-              <i class="fa-solid fa-arrow-right clc-arrow" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="contact-link-card" aria-label="Conectar en LinkedIn">
-              <div class="clc-icon clc-li"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></div>
-              <div class="clc-info">
-                <span class="clc-title">LinkedIn</span>
-                <span class="clc-sub" data-i18n="contact.li_sub">Red profesional</span>
+              <div class="form-group">
+                <label for="message" class="sr-only" data-i18n="contact.form_msg">Mensaje</label>
+                <textarea id="message" name="message" rows="4" placeholder="¿En qué puedo ayudarte?" required aria-required="true"></textarea>
               </div>
-              <i class="fa-solid fa-arrow-right clc-arrow" aria-hidden="true"></i>
-            </a>
-
-            <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="contact-link-card" aria-label="Ver perfil de GitHub">
-              <div class="clc-icon clc-gh"><i class="fa-brands fa-github" aria-hidden="true"></i></div>
-              <div class="clc-info">
-                <span class="clc-title">GitHub</span>
-                <span class="clc-sub" data-i18n="contact.gh_sub">Ver mi código</span>
-              </div>
-              <i class="fa-solid fa-arrow-right clc-arrow" aria-hidden="true"></i>
-            </a>
+              <button type="submit" class="btn btn-primary form-submit-btn">
+                <span data-i18n="contact.form_send">Enviar Mensaje</span>
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </form>
           </div>
         </div>
       </div>
