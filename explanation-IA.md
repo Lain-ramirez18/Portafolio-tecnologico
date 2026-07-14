@@ -155,7 +155,8 @@ stateDiagram-v2
 - **CV Download Modal**: Implemented an HTML `<dialog>` accessible modal for dual-language CV downloads. Controlled via `main.js` `CVDialog` IIFE, styled with glassmorphism in `style.css`.
 - **Dynamic Translation Expansion**: Added `cv.dialog_title` and `cv.close_dialog` to `i18n.js`.
 - **Service Worker Burst**: Incremented `CACHE_NAME` to `lsrr-portfolio-v3` to enforce cache bust for the new OG image and modal assets.
-- **Form Component Removal & Terminal Mockup Integration**: Removed the HTML contact form and success modal from `index.html` to improve aesthetic minimalism per user request. The `main.js` initialization for `#contact-form` safely ignores the absence of the DOM node due to a null check, avoiding script errors. To fill the negative space dynamically and boost UX, a Python interactive terminal CSS mockup was appended to `src/css/style.css` and injected into the `.contact-grid`.
+- **Form Component Removal & 3D Orbit AI Graph**: Removed the HTML contact form and success modal from `index.html` to improve aesthetic minimalism per user request. To dynamically fill the negative space, a 3D orbit AI graph animation was injected into the `.contact-grid`.
+- **WCAG AAA Contrast Compliance**: Validated and updated CSS root variables for both light and dark mode text colors (`--clr-on-surface-med` and `--clr-on-surface-low`) to ensure they strictly satisfy WCAG AAA contrast ratio requirements (≥ 7:1) across all backgrounds.
 - **Tablet Responsive Logic**: Adjusted CSS `@media (max-width: 1024px)` to activate the `.bottom-bar` navigation and hide `.nav-links`. This resolves previous Hamburger UI redundancy and provides a flawless app-like Dock experience on iPad/Tablet screens.
 - **Build Architecture & High Security Obfuscation**: Transitioned from a pure static repository to a build-step repository using Node.js (`npm`).
   - **Source Code**: Readable, well-documented source files now reside in `src/js/` and `src/css/`.

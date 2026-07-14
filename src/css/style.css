@@ -19,8 +19,8 @@
   --clr-surface-3:      #1D2336;
   --clr-surface-4:      #232A42;
   --clr-on-surface:     #E8EAF2;
-  --clr-on-surface-med: #9BA3BC;
-  --clr-on-surface-low: #444C6A;
+  --clr-on-surface-med: #B4BCD0;
+  --clr-on-surface-low: #858CA5;
   --clr-border:         rgba(255,255,255,0.06);
   --clr-border-hover:   rgba(0,229,195,0.28);
   --clr-outline:        rgba(255,255,255,0.1);
@@ -88,7 +88,7 @@
   /* Text — WCAG AA guaranteed */
   --clr-on-surface:     #080A14;        /* near-black, not grey */
   --clr-on-surface-med: #1E2340;        /* dark navy — readable */
-  --clr-on-surface-low: #4A5170;        /* medium — still passes AA on light bg */
+  --clr-on-surface-low: #3D435C;        /* medium — still passes AAA on light bg */
   /* Borders */
   --clr-border:         rgba(0,0,0,0.09);
   --clr-border-hover:   rgba(0,107,97,0.35);
@@ -1843,137 +1843,89 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   100% { opacity: 0; transform: translateY(20px); }
 }
 
-/* ── PYTHON TERMINAL MOCKUP ── */
-.terminal-container {
-  background: var(--bg-surface, #1e1e1e);
-  border: 1px solid var(--border-color, #333);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  font-family: 'Fira Code', 'Courier New', Courier, monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
+/* ── 3D ORBIT AI GRAPH MOCKUP ── */
+.orbit-container {
+  position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
-}
-
-.terminal-header {
-  background: var(--bg-alt, #2d2d2d);
-  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border-color, #333);
+  justify-content: center;
+  perspective: 1000px;
 }
 
-.terminal-buttons {
-  display: flex;
-  gap: 8px;
-  margin-right: 15px;
-}
-
-.t-btn {
-  width: 12px;
-  height: 12px;
+.orbit-center {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
   border-radius: 50%;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-primary);
+  z-index: 10;
+  position: absolute;
 }
 
-.t-btn.close { background: #ff5f56; }
-.t-btn.minimize { background: #ffbd2e; }
-.t-btn.maximize { background: #27c93f; }
-
-.terminal-title {
-  color: var(--text-muted, #888);
-  font-size: 0.8rem;
-  font-weight: 500;
-  flex-grow: 1;
-  text-align: center;
-  margin-right: 50px;
-}
-
-.terminal-body {
-  padding: 1.5rem;
-  color: var(--text-main, #eee);
-  background: rgba(10, 10, 15, 0.8);
-  min-height: 220px;
-}
-
-.t-line {
-  margin-bottom: 0.5rem;
-  opacity: 0;
-  animation: fadeInLine 0.1s forwards;
-}
-
-.t-prompt {
-  color: var(--clr-primary, #00d2ff);
+.orbit-logo {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-surface-1);
   font-weight: bold;
-  margin-right: 8px;
+  letter-spacing: 2px;
 }
 
-.t-command {
-  color: #a6e22e;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: bottom;
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed var(--clr-border-hover);
+  transform-style: preserve-3d;
+  animation: spin linear infinite;
 }
 
-.t-output {
-  color: var(--text-muted, #888);
-  display: block;
-  margin-bottom: 0.5rem;
+.orbit-1 { width: 180px; height: 180px; animation-duration: 15s; }
+.orbit-2 { width: 280px; height: 280px; animation-duration: 25s; animation-direction: reverse; }
+.orbit-3 { width: 380px; height: 380px; animation-duration: 35s; }
+
+.orbit-node {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-card, var(--clr-surface-2));
+  border: 1px solid var(--clr-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--clr-primary);
+  box-shadow: var(--shadow-sm);
+  /* Reverse counter-spin to keep icons upright */
+  animation: counter-spin linear infinite;
 }
 
-.t-output.string {
-  color: #e6db74;
+.orbit-1 .orbit-node { animation-duration: 15s; }
+.orbit-2 .orbit-node { animation-duration: 25s; animation-direction: reverse; }
+.orbit-3 .orbit-node { animation-duration: 35s; }
+
+/* Positioning Nodes on circles using translate */
+.n-1 { top: -20px; left: calc(50% - 20px); }
+.n-2 { bottom: -20px; left: calc(50% - 20px); }
+
+.n-3 { top: calc(50% - 20px); left: -20px; }
+.n-4 { top: calc(15% - 20px); right: 0; }
+.n-5 { bottom: calc(15% - 20px); right: 0; }
+
+.n-6 { top: -20px; left: calc(50% - 20px); }
+.n-7 { bottom: calc(20% - 20px); left: -5px; }
+.n-8 { bottom: calc(20% - 20px); right: -5px; }
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
 }
 
-.t-output.info {
-  color: #66d9ef;
-}
-
-.t-output.highlight {
-  color: #fd971f;
-}
-
-.t-cursor {
-  display: inline-block;
-  width: 8px;
-  height: 15px;
-  background-color: var(--text-main, #eee);
-  animation: blink 1s step-end infinite;
-  vertical-align: middle;
-  margin-left: 4px;
-}
-
-/* Typing animations */
-.type-1 { width: 0; animation: typing 1s steps(11, end) forwards; }
-.type-2 { width: 0; animation: typing 1.5s steps(19, end) forwards; }
-.type-3 { width: 0; animation: typing 2s steps(31, end) forwards; }
-
-/* Delays */
-.t-line.delay-1 { animation-delay: 1.5s; }
-.t-line.delay-1 .type-2 { animation-delay: 1.5s; }
-
-.t-line.delay-2 { animation-delay: 3.2s; }
-
-.t-line.delay-3 { animation-delay: 4.0s; }
-.t-line.delay-3 .type-3 { animation-delay: 4.0s; }
-
-.t-line.delay-4 { animation-delay: 6.2s; }
-.t-line.delay-5 { animation-delay: 7.0s; }
-
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes fadeInLine {
-  to { opacity: 1; }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+@keyframes counter-spin {
+  100% { transform: rotate(-360deg); }
 }
