@@ -155,7 +155,7 @@ stateDiagram-v2
 - **CV Download Modal**: Implemented an HTML `<dialog>` accessible modal for dual-language CV downloads. Controlled via `main.js` `CVDialog` IIFE, styled with glassmorphism in `style.css`.
 - **Dynamic Translation Expansion**: Added `cv.dialog_title` and `cv.close_dialog` to `i18n.js`.
 - **Service Worker Burst**: Incremented `CACHE_NAME` to `lsrr-portfolio-v3` to enforce cache bust for the new OG image and modal assets.
-- **Serverless Contact Form**: Refactored `.contact-grid` to include an accessible, fully functional `form` integrated with Formspree (or equivalent serverless POST endpoint). Implemented asynchronous interception in `ContactForm.init()` within `main.js` to provide loading states and `showToast` feedback without page reloads.
+- **Form Component Removal**: Removed the HTML contact form and success modal from `index.html` to improve aesthetic minimalism per user request. The `main.js` initialization for `#contact-form` safely ignores the absence of the DOM node due to a null check, avoiding script errors.
 - **Tablet Responsive Logic**: Adjusted CSS `@media (max-width: 1024px)` to activate the `.bottom-bar` navigation and hide `.nav-links`. This resolves previous Hamburger UI redundancy and provides a flawless app-like Dock experience on iPad/Tablet screens.
 - **Build Architecture & High Security Obfuscation**: Transitioned from a pure static repository to a build-step repository using Node.js (`npm`).
   - **Source Code**: Readable, well-documented source files now reside in `src/js/` and `src/css/`.
