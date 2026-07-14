@@ -1843,3 +1843,137 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   100% { opacity: 0; transform: translateY(20px); }
 }
 
+/* ── PYTHON TERMINAL MOCKUP ── */
+.terminal-container {
+  background: var(--bg-surface, #1e1e1e);
+  border: 1px solid var(--border-color, #333);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.terminal-header {
+  background: var(--bg-alt, #2d2d2d);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color, #333);
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+  margin-right: 15px;
+}
+
+.t-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.t-btn.close { background: #ff5f56; }
+.t-btn.minimize { background: #ffbd2e; }
+.t-btn.maximize { background: #27c93f; }
+
+.terminal-title {
+  color: var(--text-muted, #888);
+  font-size: 0.8rem;
+  font-weight: 500;
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 50px;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  color: var(--text-main, #eee);
+  background: rgba(10, 10, 15, 0.8);
+  min-height: 220px;
+}
+
+.t-line {
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeInLine 0.1s forwards;
+}
+
+.t-prompt {
+  color: var(--clr-primary, #00d2ff);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.t-command {
+  color: #a6e22e;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.t-output {
+  color: var(--text-muted, #888);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.t-output.string {
+  color: #e6db74;
+}
+
+.t-output.info {
+  color: #66d9ef;
+}
+
+.t-output.highlight {
+  color: #fd971f;
+}
+
+.t-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: var(--text-main, #eee);
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+/* Typing animations */
+.type-1 { width: 0; animation: typing 1s steps(11, end) forwards; }
+.type-2 { width: 0; animation: typing 1.5s steps(19, end) forwards; }
+.type-3 { width: 0; animation: typing 2s steps(31, end) forwards; }
+
+/* Delays */
+.t-line.delay-1 { animation-delay: 1.5s; }
+.t-line.delay-1 .type-2 { animation-delay: 1.5s; }
+
+.t-line.delay-2 { animation-delay: 3.2s; }
+
+.t-line.delay-3 { animation-delay: 4.0s; }
+.t-line.delay-3 .type-3 { animation-delay: 4.0s; }
+
+.t-line.delay-4 { animation-delay: 6.2s; }
+.t-line.delay-5 { animation-delay: 7.0s; }
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes fadeInLine {
+  to { opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
