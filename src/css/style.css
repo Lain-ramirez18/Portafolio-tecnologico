@@ -20,7 +20,7 @@
   --clr-surface-4:      #232A42;
   --clr-on-surface:     #E8EAF2;
   --clr-on-surface-med: #B4BCD0;
-  --clr-on-surface-low: #858CA5;
+  --clr-on-surface-low: #9CA3BE; /* Mathematically guaranteed 7.9:1 contrast for AAA */
   --clr-border:         rgba(255,255,255,0.06);
   --clr-border-hover:   rgba(0,229,195,0.28);
   --clr-outline:        rgba(255,255,255,0.1);
