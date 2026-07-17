@@ -157,6 +157,14 @@ stateDiagram-v2
 - **Service Worker Burst**: Incremented `CACHE_NAME` to `lsrr-portfolio-v3` to enforce cache bust for the new OG image and modal assets.
 - **Form Component Removal & 3D Orbit AI Graph**: Removed the HTML contact form and success modal from `index.html` to improve aesthetic minimalism per user request. To dynamically fill the negative space, a 3D orbit AI graph animation was injected into the `.contact-grid`.
 - **WCAG AAA Contrast Compliance**: Validated and updated CSS root variables for both light and dark mode text colors (`--clr-on-surface-med` and `--clr-on-surface-low`) to ensure they strictly satisfy WCAG AAA contrast ratio requirements (≥ 7:1) across all backgrounds.
+- **UI/UX PRO MAX Upgrade**: Applied a suite of premium design improvements inspired by top-tier design systems (Vercel, Linear, Apple):
+  - **Typography**: Replaced `Bebas Neue` (display) with `Space Grotesk` (700, tight `-0.02em` tracking) on all section titles and headings for a modern startup aesthetic.
+  - **Noise Texture (Grain)**: Added a CSS `body::before` pseudo-element with an inline SVG `feTurbulence` filter at `opacity: 0.04` and `mix-blend-mode: overlay` (dark) / `multiply` (light) to eliminate flat color banding without impacting paint performance (GPU composited, `pointer-events: none`).
+  - **Bento Grid — Skills Section**: Skills section restructured from a uniform `2-column` grid to an asymmetric `3-column` Bento layout. Cards use `grid-column: span` rules to create an Apple-style asymmetric hierarchy. Shimmer sweep `::after` pseudo-element adds a dynamic light-glare on hover.
+  - **Magnetic Buttons**: `btn-primary` and `btn-ghost` now use `scale(1.03)` and `translateY(-4px)` spring animations on hover with `will-change: transform` for GPU acceleration. Active state has a tactile `scale(0.97)` press feedback.
+  - **Scroll-Driven Reveal**: `reveal` transition upgraded to 750ms spring with `will-change` hinting. Added `nth-child` stagger delays to create a cascading reveal wave for list items within revealed containers. New `.reveal-delay-2` and `.reveal-delay-3` classes added.
+  - **Responsive Bento Fallback**: Bento grid degrades gracefully — tablets collapse to `2-col` (all spans become `span 2`), mobile overrides with `span 1`.
+  - **Backup**: Pre-upgrade snapshot saved to `backup_promax/` for instant rollback if needed.
 - **Tablet Responsive Logic**: Adjusted CSS `@media (max-width: 1024px)` to activate the `.bottom-bar` navigation and hide `.nav-links`. This resolves previous Hamburger UI redundancy and provides a flawless app-like Dock experience on iPad/Tablet screens.
 - **Build Architecture & High Security Obfuscation**: Transitioned from a pure static repository to a build-step repository using Node.js (`npm`).
   - **Source Code**: Readable, well-documented source files now reside in `src/js/` and `src/css/`.

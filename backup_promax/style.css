@@ -26,7 +26,7 @@
   --clr-outline:        rgba(255,255,255,0.1);
 
   /* Typography */
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Bebas Neue', sans-serif;
   --font-mono:    'Space Mono', monospace;
   --font-body:    'DM Sans', sans-serif;
 
@@ -152,18 +152,6 @@ body {
   /* Bottom bar padding on mobile */
   padding-bottom: 0;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-}
-[data-theme="light"] body::before { opacity: 0.02; mix-blend-mode: multiply; }
 
 @media (max-width: 768px) {
   body { padding-bottom: var(--bottom-height); }
@@ -319,9 +307,8 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em; /* PRO MAX: tight tracking for modern display font */
-  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
   color: var(--clr-on-surface);
   margin-bottom: var(--space-2xl);
 }
@@ -362,14 +349,9 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   background: var(--clr-primary);
   color: var(--clr-surface);
   box-shadow: var(--shadow-primary);
-  will-change: transform, box-shadow;
 }
 
-.btn-primary:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 20px 56px var(--clr-primary-glow);
-}
-.btn-primary:active { transform: scale(0.97) !important; }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 48px var(--clr-primary-glow); }
 
 [data-theme="light"] .btn-primary { color: #fff; }
 
@@ -378,15 +360,9 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   color: var(--clr-on-surface);
   border: 1px solid var(--clr-outline);
   backdrop-filter: var(--blur-glass);
-  will-change: transform, background;
 }
 
-.btn-ghost:hover { 
-  background: var(--clr-surface-3); 
-  transform: translateY(-4px) scale(1.02); 
-  border-color: var(--clr-border-hover);
-  box-shadow: var(--shadow-md);
-}
+.btn-ghost:hover { background: var(--clr-surface-3); transform: translateY(-3px); }
 .btn-sm { padding: 0.5rem 1.1rem; font-size: 0.82rem; min-height: 40px; }
 
 /* ──────────── 7. NAVBAR ──────────── */
@@ -1077,50 +1053,17 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 /* ──────────── 11. SKILLS ──────────── */
 .skills { background: var(--clr-surface); }
 
-/* PRO MAX Bento Grid */
-.skills-grid { 
-  display: grid; 
-  grid-template-columns: repeat(3, 1fr); 
-  grid-template-rows: auto auto;
-  gap: var(--space-xl); 
-  margin-bottom: var(--space-2xl); 
-}
-
-.skill-category:nth-child(1) { grid-column: span 2; }
-.skill-category:nth-child(2) { grid-column: span 1; }
-.skill-category:nth-child(3) { grid-column: span 3; }
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); margin-bottom: var(--space-2xl); }
 
 .skill-category {
-  position: relative;
   background: var(--clr-surface-2);
-  backdrop-filter: var(--blur-glass);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  overflow: hidden;
-  transition: transform var(--dur-slow) var(--ease-spring), box-shadow var(--dur-slow) ease, border-color var(--dur-base);
+  transition: border-color var(--dur-base), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base);
 }
 
-.skill-category::after {
-  content: "";
-  position: absolute;
-  top: 0; left: -100%;
-  width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-  transform: skewX(-20deg);
-  transition: left 0.7s ease;
-  pointer-events: none;
-}
-[data-theme="light"] .skill-category::after {
-  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.02), transparent);
-}
-
-.skill-category:hover { 
-  border-color: var(--clr-primary-glow); 
-  transform: translateY(-6px) scale(1.01); 
-  box-shadow: var(--shadow-primary); 
-}
-.skill-category:hover::after { left: 150%; }
+.skill-category:hover { border-color: var(--clr-border-hover); transform: translateY(-4px); box-shadow: var(--shadow-sm); }
 
 .skill-cat-title {
   font-family: var(--font-mono);
@@ -1528,29 +1471,15 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 @keyframes fadeInUp   { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeInRight{ from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
 @keyframes fadeIn     { from{opacity:0} to{opacity:1} }
-@keyframes scaleIn    { from{opacity:0;transform:scale(0.92) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
 
-/* PRO MAX — Scroll Reveal with staggered spring */
 .reveal {
   opacity: 0;
-  transform: translateY(36px);
-  transition:
-    opacity   0.75s var(--ease-out),
-    transform 0.75s var(--ease-out);
-  will-change: opacity, transform;
+  transform: translateY(32px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
 
 .reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* Stagger children inside a visible reveal container */
-.reveal.visible > *:nth-child(1) { transition-delay: 0.05s; }
-.reveal.visible > *:nth-child(2) { transition-delay: 0.12s; }
-.reveal.visible > *:nth-child(3) { transition-delay: 0.20s; }
-.reveal.visible > *:nth-child(4) { transition-delay: 0.28s; }
-
-.reveal-delay { transition-delay: 0.18s; }
-.reveal-delay-2 { transition-delay: 0.32s; }
-.reveal-delay-3 { transition-delay: 0.48s; }
+.reveal-delay { transition-delay: 0.15s; }
 
 /* ──────────── 17. RESPONSIVE ──────────── */
 @media (max-width: 1024px) {
@@ -1565,12 +1494,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .contact-grid { grid-template-columns: 1fr; gap: var(--space-2xl); }
   .soft-grid { grid-template-columns: repeat(3, 1fr); }
 
-  /* Bento → 2 cols on tablet */
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .skill-category:nth-child(1) { grid-column: span 2; }
-  .skill-category:nth-child(2) { grid-column: span 2; }
-  .skill-category:nth-child(3) { grid-column: span 2; }
-
   /* Navigation for Tablet & Mobile: Use Bottom Bar */
   .bottom-bar { display: flex; align-items: center; justify-content: space-around; }
   .hamburger  { display: none !important; }
@@ -1582,7 +1505,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
   /* Layout modifications for Mobile */
   .skills-grid   { grid-template-columns: 1fr; }
-  .skill-category:nth-child(n) { grid-column: span 1; } /* override bento spans */
   .projects-grid { grid-template-columns: 1fr; }
   .about-aside   { grid-template-columns: 1fr; }
   .soft-grid     { grid-template-columns: repeat(2, 1fr); }
