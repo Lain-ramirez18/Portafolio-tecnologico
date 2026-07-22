@@ -13,10 +13,12 @@ graph TD
     Assets["assets/ (Static assets)"]
     CSS["css/ (Styling sheets)"]
     JS["js/ (Execution scripts)"]
+    Docs["docs/ (Documentation)"]
     
     Root --> Assets
     Root --> CSS
     Root --> JS
+    Root --> Docs
     
     Root --> GEMINI["GEMINI.md (AI Context & Workflow)"]
     Root --> IndexHTML["index.html (Core DOM structure)"]
@@ -31,6 +33,8 @@ graph TD
     CSS --> StyleCSS["style.css (Custom design tokens)"]
     JS --> MainJS["main.js (Dynamic logic module)"]
     JS --> I18nJS["i18n.js (Localization maps)"]
+    Docs --> ExpIA["explanation-IA.md"]
+    Docs --> ExpLain["explanation-LAIN.md"]
 ```
 
 ---
@@ -151,20 +155,7 @@ stateDiagram-v2
 - **Media Assets (Images, Fonts) -> Cache-First + Background Update:** Serves large binary files instantly from cache, updating in the background to ensure next-visit consistency.
 - **Auto-Update Mechanism:** When a new `sw.js` is detected and installed, it immediately calls `skipWaiting()`. `main.js` listens for the `controllerchange` event and triggers a seamless `window.location.reload()`, ensuring the user is immediately transitioned to the new version without manual intervention.
 
-## Phase 2 Implementation Notes
-- **Premium OG Image (`assets/img/og-image.jpg`)**: Replaced `profile.png` with a dedicated 1376x768 Open Graph image. Meta tags `og:image` and `twitter:image` updated.
-- **CV Download Modal**: Implemented an HTML `<dialog>` accessible modal for dual-language CV downloads. Controlled via `main.js` `CVDialog` IIFE, styled with glassmorphism in `style.css`.
-- **Dynamic Translation Expansion**: Added `cv.dialog_title` and `cv.close_dialog` to `i18n.js`.
-- **Service Worker Burst**: Incremented `CACHE_NAME` to `lsrr-portfolio-v3` to enforce cache bust for the new OG image and modal assets.
-- **Form Component Removal & 3D Orbit AI Graph**: Removed the HTML contact form and success modal from `index.html` to improve aesthetic minimalism per user request. To dynamically fill the negative space, a 3D orbit AI graph animation was injected into the `.contact-grid`.
-- **WCAG AAA Contrast Compliance**: Validated and updated CSS root variables for both light and dark mode text colors (`--clr-on-surface-med` and `--clr-on-surface-low`) to ensure they strictly satisfy WCAG AAA contrast ratio requirements (≥ 7:1) across all backgrounds.
-- **UI/UX PRO MAX Upgrade**: Applied a suite of premium design improvements inspired by top-tier design systems (Vercel, Linear, Apple):
-  - **Typography**: Replaced `Bebas Neue` (display) with `Space Grotesk` (700, tight `-0.02em` tracking) on all section titles and headings for a modern startup aesthetic.
-  - **Noise Texture (Grain)**: Added a CSS `body::before` pseudo-element with an inline SVG `feTurbulence` filter at `opacity: 0.04` and `mix-blend-mode: overlay` (dark) / `multiply` (light) to eliminate flat color banding without impacting paint performance (GPU composited, `pointer-events: none`).
-  - **Bento Grid — Skills Section**: Skills section restructured from a uniform `2-column` grid to an asymmetric `3-column` Bento layout. Cards use `grid-column: span` rules to create an Apple-style asymmetric hierarchy. Shimmer sweep `::after` pseudo-element adds a dynamic light-glare on hover.
-  - **Magnetic Buttons**: `btn-primary` and `btn-ghost` now use `scale(1.03)` and `translateY(-4px)` spring animations on hover with `will-change: transform` for GPU acceleration. Active state has a tactile `scale(0.97)` press feedback.
-  - **Scroll-Driven Reveal**: `reveal` transition upgraded to 750ms spring with `will-change` hinting. Added `nth-child` stagger delays to create a cascading reveal wave for list items within revealed containers. New `.reveal-delay-2` and `.reveal-delay-3` classes added.
-  - **Responsive Bento Fallback**: Bento grid degrades gracefully — tablets collapse to `2-col` (all spans become `span 2`), mobile overrides with `span 1`.
+- **Custom Image Branding (Phase 5 Update)**: Replaced text-based logos (`[LSRR]` and `LR`) with a custom `image.png` file provided by the user. The image was duplicated to serve as both `logo.png` (navbar and 3D orbit core) and `favicon.png`. References to `.svg` favicons were removed from `index.html`. `sw.js` cache was bumped to `v6` to trigger immediate update via the auto-reload mechanism.
   - **Backup**: Pre-upgrade snapshot saved to `backup_promax/` for instant rollback if needed.
 - **Tablet Responsive Logic**: Adjusted CSS `@media (max-width: 1024px)` to activate the `.bottom-bar` navigation and hide `.nav-links`. This resolves previous Hamburger UI redundancy and provides a flawless app-like Dock experience on iPad/Tablet screens.
 - **Build Architecture & High Security Obfuscation**: Transitioned from a pure static repository to a build-step repository using Node.js (`npm`).

@@ -5,11 +5,12 @@
 
 ### Documentation Updates
 - **Mandatory Update:** Every time a change is made to the codebase (structure, logic, or assets), you MUST update the following files:
-    - `explanation-IA.md`: Formal, mathematical, and logical explanation for AI agents.
-    - `explanation-LAIN.md`: Human-readable, easy-to-understand explanation for the user.
+    - `docs/explanation-IA.md`: Formal, mathematical, and logical explanation for AI agents.
+    - `docs/explanation-LAIN.md`: Human-readable, easy-to-understand explanation for the user.
 
 ## Conventions
 - **Structure:** Keep the repository organized with clear separations:
+    - `/docs/`: Project documentation and explanations.
     - `/assets/img/`: Images and icons.
     - `/assets/docs/`: Documents and PDFs.
     - `/css/`: Stylesheets.

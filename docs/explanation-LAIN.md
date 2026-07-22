@@ -9,6 +9,7 @@ He creado este documento en español, claro y sencillo, para que entiendas perfe
 Tu portafolio está estructurado de manera muy limpia y profesional. Aquí tienes la lista de carpetas y archivos principales y su función explicada de forma fácil:
 
 ### 📁 Carpetas Principales
+*   **`docs/`**: Contiene la documentación del proyecto (las explicaciones técnicas y para el usuario, como este mismo archivo).
 *   **`css/`**: Contiene la "pintura y decoración" de tu web.
     *   `style.css`: Aquí están definidos los colores (modo claro y oscuro), las fuentes, el tamaño de los textos y las animaciones de tu sitio.
 *   **`js/`**: Contiene el "cerebro y la lógica" de tu web.
@@ -25,7 +26,7 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 
 | Archivo | ¿Qué es en palabras sencillas? | ¿Para qué sirve y qué hace? |
 | :--- | :--- | :--- |
-| **`GEMINI.md`** | Instrucciones para la IA (Memoria). | Contiene las reglas y flujos de trabajo que yo (la IA) debo seguir, como actualizar estos documentos cada vez que cambiemos algo. |
+| **`GEMINI.md`** | Instrucciones para la IA (Memoria). | Contiene las reglas y flujos de trabajo que yo (la IA) debo seguir. |
 | **`index.html`** | El esqueleto de tu casa. | Contiene la estructura básica de la página: los textos, las secciones (Sobre mí, Habilidades, Proyectos, Contacto) y los enlaces. |
 | **`sw.js`** | El Service Worker (asistente offline). | Guarda una copia de tu página en el celular/computadora del visitante. Esto hace que tu web cargue **instantáneamente** en su segunda visita e incluso funcione sin internet. |
 | **`manifest.json`** | La ficha técnica de tu App. | Le dice a los celulares Android/iOS que tu web se puede **"Instalar"** como una aplicación móvil, creando un icono de acceso directo en su pantalla. |
@@ -59,10 +60,12 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 10. **Seguridad y Ofuscación Militar (Fase 3):** Transformamos la arquitectura de tu portafolio. Ahora tienes una carpeta secreta llamada `src/` donde tu código fuente (`main.js`, `style.css`) está hermosamente estructurado, legible y comentado para que lo entiendas a la perfección. Pero gracias a un nuevo script automático (`build.js`), cada vez que despliegas tu página, todo ese código se destruye intencionalmente en las carpetas públicas (`js/` y `css/`), comprimiéndose y "ofuscándose" con protección extrema (encriptación de textos, bloqueo de depurador, aplanamiento de flujo). Si algún programador o hacker presiona "Inspeccionar" e intenta robar tu código, se encontrará con un laberinto ilegible e incomprensible de letras hexadecimales, ¡e incluso se le bloqueará la consola si intenta usar el Debugger!
 11. **Auto-Actualización Inteligente de Caché (Fase 4):** Se resolvió un problema donde a veces te quedabas atascado viendo una versión antigua de tu diseño (archivos "fantasma" en caché). Ahora, la estrategia se cambió a *Network-First* para tus archivos HTML, CSS y JS, lo que significa que siempre buscará la versión más nueva de internet. Y lo mejor de todo: si detecta que hay una nueva versión del Service Worker, la página **se actualizará sola automáticamente** sin que tú tengas que recargar manualmente, dándote siempre lo más reciente sin complicaciones.
 
+12. **Identidad de Marca Personalizada (Fase 5):** Se reemplazaron los logos de texto simples (como el `[LSRR]` del menú superior y el `LR` al final de la página) por el diseño de logo gráfico en imagen que proporcionaste con fondo oscuro. Este logo ahora funciona como la pieza central de tu menú de navegación, como el núcleo de tu animación 3D de órbita y como el ícono oficial (favicon) que aparece en la pestaña del navegador.
+
 ---
 
 > [!IMPORTANT]
 > **Regla de Oro del Repositorio:**
-> Siempre que realicemos una mejora, un cambio de diseño o agreguemos una nueva sección al portafolio, **debemos actualizar dos archivos**:
-> 1. `explanation-LAIN.md`: Para actualizar esta guía de forma sencilla y humana.
-> 2. `explanation-IA.md`: Para actualizar la documentación técnica y matemática para que la IA entienda el estado actual de tu código.
+> Siempre que realicemos una mejora, un cambio de diseño o agreguemos una nueva sección al portafolio, **debemos actualizar dos archivos en la carpeta docs/**:
+> 1. `docs/explanation-LAIN.md`: Para actualizar esta guía de forma sencilla y humana.
+> 2. `docs/explanation-IA.md`: Para actualizar la documentación técnica y matemática para que la IA entienda el estado actual de tu código.

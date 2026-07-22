@@ -421,16 +421,20 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 
 .nav-logo {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--clr-on-surface);
-  transition: color var(--dur-fast);
+  display: flex;
+  align-items: center;
+  transition: opacity var(--dur-fast);
   flex-shrink: 0;
 }
 
-.logo-bracket { color: var(--clr-primary); }
-.nav-logo:hover { color: var(--clr-primary); }
+.brand-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  border-radius: var(--radius-xs);
+}
+
+.nav-logo:hover { opacity: 0.8; }
 
 .nav-links {
   display: flex;
