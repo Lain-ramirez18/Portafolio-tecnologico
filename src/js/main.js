@@ -458,12 +458,24 @@ function setYear() {
             const newSW = reg.installing;
             newSW?.addEventListener('statechange', () => {
               if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                console.info('[SW] Nueva versión disponible. Recarga para actualizar.');
+                console.info('[SW] Nueva versión disponible. Recargando automáticamente...');
+                if (window.ToastManager) {
+                  window.ToastManager.show('Actualizando la aplicación...', 3000);
+                }
               }
             });
           });
         })
         .catch(() => { /* SW no crítico — falla silenciosamente */ });
+
+      /* Auto-refresh cuando el nuevo SW toma el control (skipWaiting disparado en sw.js) */
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
     });
   }
 })();

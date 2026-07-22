@@ -1,12 +1,12 @@
 /* ================================================================
-   sw.js — Service Worker v1.0
+   sw.js — Service Worker v2.0
    Lain Sthid Ramirez Rueda Portfolio
-   Estrategia: Cache-First para assets estáticos,
-               Network-First para HTML (siempre fresco)
+   Estrategia: Network-First para HTML, CSS y JS (siempre fresco)
+               Cache-First para assets (imágenes, fuentes)
 ================================================================ */
 
-const CACHE_NAME    = 'lsrr-portfolio-v4';
-const ASSETS_CACHE  = 'lsrr-assets-v4';
+const CACHE_NAME    = 'lsrr-portfolio-v5';
+const ASSETS_CACHE  = 'lsrr-assets-v5';
 
 /* Recursos críticos que se cachean en la instalación */
 const PRECACHE_URLS = [
@@ -44,7 +44,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-/* ── FETCH: estrategia híbrida ── */
+/* ── FETCH: estrategia Network-First para código, Cache-First para media ── */
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
@@ -52,8 +52,12 @@ self.addEventListener('fetch', event => {
   /* Solo interceptar mismo origen */
   if (url.origin !== location.origin) return;
 
-  /* HTML → Network-First (siempre fresco para SEO) */
-  if (request.headers.get('accept')?.includes('text/html')) {
+  /* HTML, CSS, JS → Network-First (siempre fresco) */
+  if (
+    request.headers.get('accept')?.includes('text/html') ||
+    request.url.match(/\.(css|js)$/) ||
+    request.url.endsWith('manifest.json')
+  ) {
     event.respondWith(
       fetch(request)
         .then(response => {
@@ -61,14 +65,14 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
           return response;
         })
-        .catch(() => caches.match('/index.html'))
+        .catch(() => caches.match(request).then(res => res || caches.match('/index.html')))
     );
     return;
   }
 
-  /* Assets (CSS, JS, imágenes) → Cache-First + actualización en background */
+  /* Assets (imágenes, fuentes) → Cache-First + actualización en background */
   if (
-    request.url.match(/\.(css|js|png|svg|webp|woff2?|ttf)$/)
+    request.url.match(/\.(png|svg|webp|woff2?|ttf|jpg|jpeg|gif)$/)
   ) {
     event.respondWith(
       caches.match(request).then(cached => {

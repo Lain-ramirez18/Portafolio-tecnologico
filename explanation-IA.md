@@ -114,28 +114,28 @@ Where:
 
 ---
 
-## ⚙️ 5. Offline Caching State Machine (Service Worker Lifecycle)
+## ⚙️ 5. Offline Caching State Machine & Auto-Update Mechanism
 
-The Service Worker defined in `sw.js` controls resource interception using a dual caching strategy:
+The Service Worker defined in `sw.js` controls resource interception using a strict dual caching strategy designed to eliminate stale asset retention:
 
 ```mermaid
 stateDiagram-v2
     [*] --> InstallState : SW Registered
-    InstallState --> PrecacheCritical : Cache CACHE_NAME ('lsrr-portfolio-v1')
-    PrecacheCritical --> ActivateState
+    InstallState --> PrecacheCritical : Cache CACHE_NAME ('lsrr-portfolio-v5')
+    PrecacheCritical --> ActivateState : skipWaiting()
     ActivateState --> ClearOldCaches : Delete caches != [CACHE_NAME, ASSETS_CACHE]
     ClearOldCaches --> FetchInterceptor
     
     state FetchInterceptor {
         [*] --> InterceptRequest
-        InterceptRequest --> IsHTML : Match Accept HTML?
-        IsHTML --> NetworkFirst : Yes
-        IsHTML --> IsAsset : No
-        IsAsset --> CacheFirst : Yes (CSS, JS, Images)
+        InterceptRequest --> IsCode : Match Accept HTML OR .css/.js OR manifest?
+        IsCode --> NetworkFirst : Yes (Code & Structure)
+        IsCode --> IsAsset : No
+        IsAsset --> CacheFirst : Yes (Images, Fonts)
         
         state NetworkFirst {
             [*] --> QueryNetwork
-            QueryNetwork --> UpdateCache : Success
+            QueryNetwork --> UpdateCache : Success (Always Fresh)
             QueryNetwork --> OfflineFallback : Failure (Fetch from local cache)
         }
         
@@ -147,8 +147,9 @@ stateDiagram-v2
     }
 ```
 
-- **HTML (Network-First):** Guarantees indexers and users always receive the newest DOM state if connected, falling back to cached cache on network disconnect.
-- **Assets (Cache-First + Background Update):** Serves CSS/JS instantly from cache, updating in the background to ensure next-visit consistency.
+- **Code & Structure (HTML, CSS, JS, Manifest) -> Network-First:** Guarantees indexers and users always receive the newest DOM state and styling if connected, falling back to cached versions only on network disconnect. This resolves stale "ghost" caches.
+- **Media Assets (Images, Fonts) -> Cache-First + Background Update:** Serves large binary files instantly from cache, updating in the background to ensure next-visit consistency.
+- **Auto-Update Mechanism:** When a new `sw.js` is detected and installed, it immediately calls `skipWaiting()`. `main.js` listens for the `controllerchange` event and triggers a seamless `window.location.reload()`, ensuring the user is immediately transitioned to the new version without manual intervention.
 
 ## Phase 2 Implementation Notes
 - **Premium OG Image (`assets/img/og-image.jpg`)**: Replaced `profile.png` with a dedicated 1376x768 Open Graph image. Meta tags `og:image` and `twitter:image` updated.
