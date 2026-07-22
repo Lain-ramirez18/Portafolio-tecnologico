@@ -421,20 +421,16 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 
 .nav-logo {
-  display: flex;
-  align-items: center;
-  transition: opacity var(--dur-fast);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-on-surface);
+  transition: color var(--dur-fast);
   flex-shrink: 0;
 }
 
-.brand-logo-img {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  border-radius: var(--radius-xs);
-}
-
-.nav-logo:hover { opacity: 0.8; }
+.logo-bracket { color: var(--clr-primary); }
+.nav-logo:hover { color: var(--clr-primary); }
 
 .nav-links {
   display: flex;
@@ -1973,7 +1969,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .orbit-center {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+  background: #000000;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1984,11 +1980,11 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 
 .orbit-logo {
-  font-family: var(--font-display);
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 2rem;
-  color: var(--clr-surface-1);
+  color: #FFFFFF;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .orbit {

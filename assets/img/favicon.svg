@@ -1,21 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" shape-rendering="geometricPrecision">
-  <!-- Perfect Dark Surface - Unchanged -->
-  <rect width="512" height="512" rx="128" fill="#0B0D12" />
-  
-  <!-- Brackets [ ] - Moved further apart for more "air" and aesthetic balance -->
-  <!-- Left Bracket moved to x=85 -->
-  <path d="M85 80h-50v352h50v-65h-20V145h20V80z" fill="#00E5C3" />
-  <!-- Right Bracket moved to x=427 -->
-  <path d="M427 80h50v352h-50v-65h20V145h-20V80z" fill="#00E5C3" />
-  
-  <!-- LR Monogram - Perfectly centered with Times New Roman Bold -->
-  <text x="256" y="260" 
-        font-family="'Times New Roman', Times, serif" 
-        font-size="240" 
-        font-weight="bold" 
-        fill="#E8EAF2" 
-        stroke="#E8EAF2" 
-        stroke-width="2"
-        text-anchor="middle" 
-        dominant-baseline="central">LR</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#000000" rx="100" />
+  <text x="50%" y="54%" font-family="'Space Grotesk', sans-serif" font-weight="bold" font-size="280" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">LR</text>
 </svg>

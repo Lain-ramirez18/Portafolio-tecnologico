@@ -5,8 +5,8 @@
                Cache-First para assets (imágenes, fuentes)
 ================================================================ */
 
-const CACHE_NAME    = 'lsrr-portfolio-v6';
-const ASSETS_CACHE  = 'lsrr-assets-v6';
+const CACHE_NAME    = 'lsrr-portfolio-v7';
+const ASSETS_CACHE  = 'lsrr-assets-v7';
 
 /* Recursos críticos que se cachean en la instalación */
 const PRECACHE_URLS = [
