@@ -213,6 +213,12 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .cursor-follower {
     will-change: auto;
   }
+  /* Pill animations: ensure pills are visible when motion is reduced */
+  .skill-tag-pill {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
 
 /* Focus — Nielsen #1: Visibility of system status */
@@ -1217,25 +1223,30 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   color: var(--clr-on-surface-med);
   transition: color var(--dur-fast), border-color var(--dur-fast), transform 200ms var(--ease-spring), background var(--dur-fast), box-shadow var(--dur-fast);
   cursor: default;
-  /* Stagger entrance animation */
-  opacity: 0;
-  transform: translateY(8px) scale(0.96);
-  animation: pill-enter 0.4s var(--ease-spring) forwards;
+  /* Pills are VISIBLE by default — animation only triggers inside .visible cards */
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger entrance: only animate pills when the PARENT card has been revealed */
+.skill-category.visible .skill-tag-pill {
+  animation: pill-enter 0.4s var(--ease-spring) both;
 }
 
 @keyframes pill-enter {
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Stagger delays for pills inside IA card */
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(1) { animation-delay: 0.05s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(2) { animation-delay: 0.10s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(3) { animation-delay: 0.15s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(4) { animation-delay: 0.20s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(5) { animation-delay: 0.25s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(6) { animation-delay: 0.30s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(7) { animation-delay: 0.35s; }
-.skill-category:nth-child(3) .skill-tag-pill:nth-child(8) { animation-delay: 0.40s; }
+/* Stagger delays for pills inside IA card — only after reveal */
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(1) { animation-delay: 0.05s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(2) { animation-delay: 0.10s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(3) { animation-delay: 0.15s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(4) { animation-delay: 0.20s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(5) { animation-delay: 0.25s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(6) { animation-delay: 0.30s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(7) { animation-delay: 0.35s; }
+.skill-category:nth-child(3).visible .skill-tag-pill:nth-child(8) { animation-delay: 0.40s; }
 
 .skill-tag-pill:hover { 
   color: var(--clr-primary); 

@@ -16,9 +16,10 @@
   <meta name="author" content="Lain Sthid Ramirez Rueda" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <link rel="canonical" href="https://lainramirez.vercel.app/" />
-  <link rel="alternate" hreflang="es" href="https://lainramirez.vercel.app/" />
-  <link rel="alternate" hreflang="en" href="https://lainramirez.vercel.app/" />
+  <!-- hreflang: single-URL SPA with client-side i18n — only x-default is correct per Google guidelines -->
   <link rel="alternate" hreflang="x-default" href="https://lainramirez.vercel.app/" />
+  <!-- color-scheme: tells browser to style scrollbars, form controls and system UI accordingly -->
+  <meta name="color-scheme" content="dark light" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon.png" />
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon.png" />
@@ -638,21 +639,7 @@
 
 
 
-  <!-- ══ FOOTER ══ -->
-
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="footer-copy">
-          <span data-i18n="footer.built">Diseñado y construido por</span>
-          <span class="footer-name">Lain Sthid Ramirez Rueda</span>
-        </p>
-        <p class="footer-year">© <span id="footer-year"></span></p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ══ BOTTOM BAR (mobile) ══ -->
+  <!-- ══ BOTTOM BAR (mobile/tablet) — before footer for correct DOM order ══ -->
   <nav class="bottom-bar" id="bottom-bar" aria-label="Navegación rápida">
     <a href="#hero"     class="bb-item active" aria-label="Inicio">
       <i class="fa-solid fa-house"  aria-hidden="true"></i>
@@ -676,6 +663,20 @@
     </a>
   </nav>
 
+  <!-- ══ FOOTER ══ -->
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-copy">
+          <span data-i18n="footer.built">Diseñado y construido por</span>
+          <span class="footer-name">Lain Sthid Ramirez Rueda</span>
+        </p>
+        <p class="footer-year">© <span id="footer-year"></span></p>
+      </div>
+    </div>
+  </footer>
+
   <!-- ══ BACK TO TOP ══ -->
   <button class="back-to-top" id="back-to-top" aria-label="Volver al inicio">
     <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
@@ -685,7 +686,7 @@
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 
   <!-- CV Download Dialog -->
-  <dialog id="cv-dialog" class="cv-dialog" aria-labelledby="cv-dialog-title">
+  <dialog id="cv-dialog" class="cv-dialog" aria-labelledby="cv-dialog-title" aria-modal="true">
     <div class="cv-dialog-content">
       <div class="cv-dialog-header">
         <h3 id="cv-dialog-title" data-i18n="cv.dialog_title">Elige el idioma del CV</h3>

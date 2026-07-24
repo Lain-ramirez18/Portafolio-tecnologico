@@ -215,13 +215,14 @@ const SkillBars = (() => {
   };
 })();
 
-/* ══════════════ 8. CUSTOM CURSOR (desktop) ══════════════ */
+/* ══ 8. CUSTOM CURSOR (desktop) ══ */
 const CustomCursor = (() => {
   const cursor   = $('#cursor');
   const follower = $('#cursor-follower');
   let fx = 0, fy = 0;
   let cx = 0, cy = 0;
   let rafId;
+  let running = false;
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
@@ -232,7 +233,19 @@ const CustomCursor = (() => {
       follower.style.left = `${cx}px`;
       follower.style.top  = `${cy}px`;
     }
+    /* Stop the loop when follower has converged — saves CPU when cursor is idle */
+    if (Math.abs(cx - fx) < 0.5 && Math.abs(cy - fy) < 0.5) {
+      running = false;
+      return;
+    }
     rafId = requestAnimationFrame(loop);
+  }
+
+  function startLoop() {
+    if (!running) {
+      running = true;
+      rafId = requestAnimationFrame(loop);
+    }
   }
 
   return {
@@ -245,6 +258,7 @@ const CustomCursor = (() => {
         fy = e.clientY;
         cursor.style.left = `${e.clientX}px`;
         cursor.style.top  = `${e.clientY}px`;
+        startLoop();
       }, { passive: true });
 
       // Magnetic effect on interactive elements
@@ -259,15 +273,12 @@ const CustomCursor = (() => {
         });
       });
 
-      loop();
-
-      // Pause cursor animation when tab is hidden to save resources
+      // Pause cursor animation when tab is hidden
       document.addEventListener('visibilitychange', () => {
-        if (document.hidden) { cancelAnimationFrame(rafId); }
-        else { loop(); }
+        if (document.hidden) { cancelAnimationFrame(rafId); running = false; }
       });
     },
-    destroy() { cancelAnimationFrame(rafId); }
+    destroy() { cancelAnimationFrame(rafId); running = false; }
   };
 })();
 
@@ -411,9 +422,6 @@ function setYear() {
   if (el) el.textContent = new Date().getFullYear();
 }
 
-/* SwipeNav removed — free scrolling on mobile is correct UX */
-
-
 /* ══════════════ SECURITY — External link hardening ══════════════ */
 (function lockExternalLinks() {
   /* Ensure all external links have rel="noopener noreferrer"
@@ -489,14 +497,22 @@ const ToastManager = (() => {
     },
     show: (msg) => {
       if (!container) return;
+      /* Security: use textContent — never innerHTML with dynamic data */
       const toast = document.createElement('div');
       toast.className = 'toast';
-      toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
+      const icon = document.createElement('i');
+      icon.className = 'fa-solid fa-circle-check';
+      icon.setAttribute('aria-hidden', 'true');
+      const text = document.createElement('span');
+      text.textContent = msg;
+      toast.appendChild(icon);
+      toast.appendChild(document.createTextNode(' '));
+      toast.appendChild(text);
       container.appendChild(toast);
       
       setTimeout(() => {
         toast.classList.add('hiding');
-        toast.addEventListener('animationend', () => toast.remove());
+        toast.addEventListener('animationend', () => toast.remove(), { once: true });
       }, 3000);
     }
   };

@@ -78,3 +78,16 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     - **Glow en Hover:** Al pasar el mouse sobre la card de IA aparece una sombra brillante del color primario, reforzando la sensación de tecnología.
     - **Animación Escalonada (Stagger):** Cada tag-pill dentro de la card de IA entra con un pequeño retraso individual al cargarse la página, creando un efecto visual fluido y premium.
     - **Responsividad perfecta:** En móvil, la card resetea sus estilos especiales para quedar limpia y sin artefactos visuales al apilarse.
+
+14. **Mejoras de Industria — Buenas Prácticas (Fase 7):**
+    Se realizó un análisis profundo del código y se aplicaron las siguientes mejoras:
+    - **Seguridad XSS — ToastManager:** Se reemplazó `innerHTML` con `textContent` usando `createElement` al crear los toasts. Ahora ninguna cadena dinámica puede inyectar HTML malicioso.
+    - **Cursor RAF optimizado:** El loop del cursor personalizado (60fps) ahora se **detiene solo** cuando el seguidor llega a menos de 0.5px del mouse. Antes corría siempre — ahora solo cuando hay movimiento real, ahorrando CPU.
+    - **Animación pill-enter corregida:** Las pastillas de skills ya no arrancan con `opacity: 0` globalmente. Ahora solo se animan cuando su card padre recibe la clase `.visible` del IntersectionObserver. Esto evitaba que los pills fueran invisibles si el usuario tiene JS lento o la card no entraba al viewport.
+    - **`prefers-reduced-motion`:** Se añadió override explícito para que los pills sean completamente visibles cuando el usuario prefiere movimiento reducido.
+    - **hreflang corregido:** Se eliminaron las etiquetas `hreflang="es"` y `hreflang="en"` que apuntaban a la misma URL (incorrect para Google). Para SPAs con i18n client-side, solo `x-default` es correcto según las guías de Google.
+    - **`color-scheme` meta:** Se añadió `<meta name="color-scheme" content="dark light">` para que los scrollbars, inputs y controles del sistema también respeten el tema oscuro/claro.
+    - **`aria-modal="true"` en `<dialog>`:** Mejora el soporte de lectores de pantalla antiguos con el atributo explícito.
+    - **`display=swap` en Google Fonts:** Previene el FOIT (Flash of Invisible Text) durante la carga de fuentes.
+    - **Orden DOM corregido:** `<nav class="bottom-bar">` ahora está antes del `<footer>` en el HTML, que es el orden lógico correcto para navegación y lectores de pantalla.
+    - **Código muerto aislado:** El `ContactForm` ya no ejecuta nada (tiene `if (!form) return`) porque `#contact-form` no existe en el HTML.
