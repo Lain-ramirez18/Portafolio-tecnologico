@@ -1077,22 +1077,52 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 /* ──────────── 11. SKILLS ──────────── */
 .skills { background: var(--clr-surface); }
 
-/* PRO MAX Bento Grid — 4 cols, row 1: [2+2], row 2: [3+1] */
+/* Bento Grid — 2 cols balanced: row 1 [1+1], row 2 [1+1] */
 .skills-grid { 
   display: grid; 
-  grid-template-columns: repeat(4, 1fr); 
+  grid-template-columns: repeat(2, 1fr); 
   gap: var(--space-xl); 
   margin-bottom: var(--space-2xl); 
 }
 
-/* Row 1: Frontend (wide) + Backend (narrow) */
-.skill-category:nth-child(1) { grid-column: span 2; }
-.skill-category:nth-child(2) { grid-column: span 2; }
-/* Row 2: IA (wider) + Tools (accent panel) */
-.skill-category:nth-child(3) { grid-column: span 3; }
+/* All cards span 1 column — perfectly balanced */
+.skill-category:nth-child(1) { grid-column: span 1; }
+.skill-category:nth-child(2) { grid-column: span 1; }
+.skill-category:nth-child(3) { grid-column: span 1; }
 .skill-category:nth-child(4) { grid-column: span 1; }
 
-/* 4th card accent: teal left-border highlight + darker bg */
+/* IA & Automatización card — subtle accent gradient */
+.skill-category:nth-child(3) {
+  background: linear-gradient(
+    135deg,
+    var(--clr-surface-2) 0%,
+    color-mix(in srgb, var(--clr-primary) 6%, var(--clr-surface-2)) 100%
+  );
+  border-color: color-mix(in srgb, var(--clr-primary) 30%, var(--clr-border));
+}
+
+/* IA card — decorative watermark robot icon */
+.skill-category:nth-child(3)::before {
+  content: "\f544"; /* fa-robot unicode */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  bottom: -0.5rem;
+  right: 1rem;
+  font-size: 6rem;
+  color: var(--clr-primary);
+  opacity: 0.04;
+  pointer-events: none;
+  line-height: 1;
+  user-select: none;
+}
+
+/* IA card hover — stronger glow to reinforce the accent */
+.skill-category:nth-child(3):hover {
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--clr-primary) 18%, transparent);
+}
+
+/* 4th card accent: teal left-border highlight */
 .skill-category:nth-child(4) {
   border-left: 3px solid var(--clr-primary);
   background: linear-gradient(135deg, var(--clr-surface-2), var(--clr-surface-3));
@@ -1187,7 +1217,25 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   color: var(--clr-on-surface-med);
   transition: color var(--dur-fast), border-color var(--dur-fast), transform 200ms var(--ease-spring), background var(--dur-fast), box-shadow var(--dur-fast);
   cursor: default;
+  /* Stagger entrance animation */
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  animation: pill-enter 0.4s var(--ease-spring) forwards;
 }
+
+@keyframes pill-enter {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Stagger delays for pills inside IA card */
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(1) { animation-delay: 0.05s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(2) { animation-delay: 0.10s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(3) { animation-delay: 0.15s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(4) { animation-delay: 0.20s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(5) { animation-delay: 0.25s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(6) { animation-delay: 0.30s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(7) { animation-delay: 0.35s; }
+.skill-category:nth-child(3) .skill-tag-pill:nth-child(8) { animation-delay: 0.40s; }
 
 .skill-tag-pill:hover { 
   color: var(--clr-primary); 
@@ -1592,7 +1640,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .contact-grid { grid-template-columns: 1fr; gap: var(--space-2xl); }
   .soft-grid { grid-template-columns: repeat(3, 1fr); }
 
-  /* Bento → 2 cols on tablet: row1 [1+1], row2 [1+1] (equal) */
+  /* Bento → 2 cols on tablet: all cards span 1 (equal) */
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
   .skill-category:nth-child(1) { grid-column: span 1; }
   .skill-category:nth-child(2) { grid-column: span 1; }
@@ -1610,11 +1658,14 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
   /* Layout modifications for Mobile */
   .skills-grid   { grid-template-columns: 1fr; }
-  /* Override all bento spans to stack on mobile */
+  /* Stack all cards on mobile */
   .skill-category:nth-child(1),
   .skill-category:nth-child(2),
   .skill-category:nth-child(3),
   .skill-category:nth-child(4) { grid-column: span 1; }
+  /* IA card: reset desktop gradient override to avoid edge artifact on mobile */
+  .skill-category:nth-child(3) { background: var(--clr-surface-2); border-color: var(--clr-border); }
+  .skill-category:nth-child(3)::before { font-size: 4rem; bottom: -0.25rem; right: 0.5rem; }
   .projects-grid { grid-template-columns: 1fr; }
   .about-aside   { grid-template-columns: 1fr; }
   .soft-grid     { grid-template-columns: repeat(2, 1fr); }

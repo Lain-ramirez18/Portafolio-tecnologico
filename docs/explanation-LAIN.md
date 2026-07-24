@@ -69,3 +69,12 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 > Siempre que realicemos una mejora, un cambio de diseño o agreguemos una nueva sección al portafolio, **debemos actualizar dos archivos en la carpeta docs/**:
 > 1. `docs/explanation-LAIN.md`: Para actualizar esta guía de forma sencilla y humana.
 > 2. `docs/explanation-IA.md`: Para actualizar la documentación técnica y matemática para que la IA entienda el estado actual de tu código.
+
+13. **Card IA & Automatización — Corrección de Layout y Mejoras Visuales (Fase 6):**
+    Se detectó que la card de "IA & Automatización" en computadores de escritorio se veía desproporcionadamente ancha porque ocupaba 3 de 4 columnas en una grilla asimétrica (`span 3`), dejando a la card de Herramientas solo 1 columna muy estrecha.
+    - **Fix del Grid:** Se cambió de una grilla de 4 columnas asimétrica (`3+1`) a una grilla de **2 columnas simétricas** (`1+1`), creando un layout equilibrado y elegante en todas las resoluciones.
+    - **Gradiente de Acento:** La card de IA ahora tiene un fondo con gradiente sutil que mezcla el color primario del tema para diferenciarse visualmente sin saturar.
+    - **Ícono Decorativo (Watermark):** Se añadió un ícono de robot gigante en segundo plano (muy transparente) como marca de agua decorativa, dando profundidad y contexto visual.
+    - **Glow en Hover:** Al pasar el mouse sobre la card de IA aparece una sombra brillante del color primario, reforzando la sensación de tecnología.
+    - **Animación Escalonada (Stagger):** Cada tag-pill dentro de la card de IA entra con un pequeño retraso individual al cargarse la página, creando un efecto visual fluido y premium.
+    - **Responsividad perfecta:** En móvil, la card resetea sus estilos especiales para quedar limpia y sin artefactos visuales al apilarse.
