@@ -5,7 +5,7 @@ const CleanCSS = require('clean-css');
 const { minify: minifyHtml } = require('html-minifier-terser');
 
 // Configuración de rutas
-const SRC_DIR = path.join(__dirname, 'src');
+const SRC_DIR = __dirname; // Leemos desde la raíz, tal como la convención del proyecto lo exige
 const DIST_DIR = path.join(__dirname, 'public'); // Vercel espera la carpeta public por defecto
 
 // Crear carpetas de destino

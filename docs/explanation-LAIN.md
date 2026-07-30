@@ -91,3 +91,6 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     - **`display=swap` en Google Fonts:** Previene el FOIT (Flash of Invisible Text) durante la carga de fuentes.
     - **Orden DOM corregido:** `<nav class="bottom-bar">` ahora está antes del `<footer>` en el HTML, que es el orden lógico correcto para navegación y lectores de pantalla.
     - **Código muerto aislado:** El `ContactForm` ya no ejecuta nada (tiene `if (!form) return`) porque `#contact-form` no existe en el HTML.
+    - **Reorganización de Carpetas (Clean Architecture):** Se eliminó la carpeta `/src` que estaba desactualizada, y se ajustó el sistema de construcción (`build.js`) para que procese correctamente los archivos raíz hacia `/public`, manteniendo una arquitectura más limpia de acuerdo con las reglas de GEMINI.md.
+    - **Accesibilidad AAA:** Se ajustaron los contrastes de los botones y los estados de foco de teclado (`:focus-visible`) para que cumplan el estándar de accesibilidad más estricto WCAG AAA, ayudando a la usabilidad universal.
+    - **Tipografía y UX Fluida:** Se integró la función `clamp()` en CSS para lograr que los tamaños de texto crezcan o se encojan de forma fluida dependiendo del tamaño de pantalla (Mobile a Desktop), además de respetar la configuración de reducción de animaciones del usuario.
