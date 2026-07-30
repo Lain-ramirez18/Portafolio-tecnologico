@@ -107,11 +107,9 @@ jsFiles.forEach(file => {
     const distPath = path.join(DIST_DIR, 'js', file);
     
     if (fs.existsSync(srcPath)) {
-        const code = fs.readFileSync(srcPath, 'utf8');
-        console.log(`[JS] Obfuscating ${file}...`);
-        const obfuscationResult = JavaScriptObfuscator.obfuscate(code, obfuscatorOptions);
-        fs.writeFileSync(distPath, obfuscationResult.getObfuscatedCode());
-        console.log(`[JS] Saved obfuscated ${file} to public/`);
+        console.log(`[JS] Copiando ${file}...`);
+        fs.copyFileSync(srcPath, distPath);
+        console.log(`[JS] Saved ${file} to public/`);
     }
 });
 
