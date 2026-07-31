@@ -282,73 +282,167 @@ const CustomCursor = (() => {
   };
 })();
 
-/* ══════════════ 9. CARD TILT — Antigravity ══════════════ */
+/* ══════════════ 9. UNIVERSAL 3D CARD TILT (PRO MAX) ══════════════ */
 const CardTilt = (() => {
-  const card = $('#profile-card');
-  let raf;
-
   return {
     init() {
-      if (!card || !window.matchMedia('(hover: hover)').matches) return;
-
-      card.addEventListener('mousemove', e => {
-        const r  = card.getBoundingClientRect();
-        const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
-        const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `perspective(900px) rotateY(${dx*10}deg) rotateX(${-dy*8}deg) translateY(-16px) scale(1.02)`;
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      
+      const cards = $$('.profile-card, .project-card, .about-card, .cert-item-card');
+      
+      cards.forEach(card => {
+        let raf;
+        card.addEventListener('mousemove', e => {
+          const r  = card.getBoundingClientRect();
+          const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+          const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+          
+          const isProfile = card.classList.contains('profile-card');
+          const maxRotate = isProfile ? 12 : 5;
+          
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            card.style.transition = 'none';
+            card.style.transform = `perspective(1000px) rotateY(${dx * maxRotate}deg) rotateX(${-dy * maxRotate}deg) translateY(-4px) scale(1.02)`;
+            card.style.zIndex = '10';
+            
+            const glow = $('.project-card-glow', card);
+            if (glow) {
+              glow.style.left = `${e.clientX - r.left - 100}px`;
+              glow.style.top  = `${e.clientY - r.top  - 100}px`;
+            }
+          });
         });
-      });
 
-      card.addEventListener('mouseleave', () => {
-        cancelAnimationFrame(raf);
-        card.style.transform = '';
+        card.addEventListener('mouseleave', () => {
+          cancelAnimationFrame(raf);
+          card.style.transition = 'transform 0.6s var(--ease-out)';
+          card.style.transform = '';
+          card.style.zIndex = '';
+        });
       });
     }
   };
 })();
 
-/* ══════════════ 10. HERO PARALLAX ══════════════ */
-const HeroParallax = (() => {
-  const o1 = $('.orb-1');
-  const o2 = $('.orb-2');
-  const o3 = $('.orb-3');
-  let raf;
-
+/* ══════════════ 10. HERO INTERACTIVE 3D CANVAS (PRO MAX) ══════════════ */
+const HeroCanvas = (() => {
   return {
     init() {
-      if (!window.matchMedia('(hover: hover) and (min-width: 768px)').matches) return;
-
-      document.addEventListener('mousemove', e => {
-        const xR = e.clientX / window.innerWidth  - 0.5;
-        const yR = e.clientY / window.innerHeight - 0.5;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          if (o1) o1.style.transform = `translate(${xR * -32}px, ${yR * -22}px)`;
-          if (o2) o2.style.transform = `translate(${xR * 24}px, ${yR * 18}px)`;
-          if (o3) o3.style.transform = `translate(${xR * 14}px, ${yR * -10}px)`;
-        });
-      }, { passive: true });
-    }
-  };
-})();
-
-/* ══════════════ 11. PROJECT CARD MOUSE GLOW ══════════════ */
-const ProjectGlow = (() => ({
-  init() {
-    $$('.project-card:not(.project-card--upcoming)').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const glow = $('.project-card-glow', card);
-        if (glow) {
-          glow.style.left = `${e.clientX - r.left - 100}px`;
-          glow.style.top  = `${e.clientY - r.top  - 100}px`;
+      const hero = $('#hero');
+      if (!hero || window.innerWidth < 768) return; // Only desktop/tablet for performance
+      
+      const canvas = document.createElement('canvas');
+      canvas.className = 'hero-canvas-bg';
+      canvas.style.position = 'absolute';
+      canvas.style.inset = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.zIndex = '0';
+      canvas.style.pointerEvents = 'none';
+      
+      const grid = $('.hero-bg-grid');
+      if (grid) hero.insertBefore(canvas, grid);
+      else hero.appendChild(canvas);
+      
+      const ctx = canvas.getContext('2d', { alpha: false });
+      let w, h, particles = [];
+      const mouse = { x: null, y: null, radius: 150 };
+      
+      const isDark = () => document.documentElement.getAttribute('data-theme') !== 'light';
+      
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = hero.offsetHeight;
+        initParticles();
+      }
+      
+      class Particle {
+        constructor() {
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
+          this.size = Math.random() * 1.5 + 0.5;
+          this.baseX = this.x;
+          this.baseY = this.y;
+          this.density = (Math.random() * 30) + 1;
         }
+        draw() {
+          ctx.fillStyle = isDark() ? 'rgba(0, 229, 195, 0.8)' : 'rgba(0, 107, 97, 0.6)';
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fill();
+        }
+        update() {
+          if (mouse.x != null) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius) {
+              let force = (mouse.radius - distance) / mouse.radius;
+              this.x -= (dx / distance) * force * this.density;
+              this.y -= (dy / distance) * force * this.density;
+            } else {
+              if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 20;
+              if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 20;
+            }
+          } else {
+            if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 20;
+            if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 20;
+          }
+        }
+      }
+      
+      function initParticles() {
+        particles = [];
+        const numParticles = Math.min((w * h) / 12000, 120); 
+        for (let i = 0; i < numParticles; i++) particles.push(new Particle());
+      }
+      
+      function connect() {
+        for (let a = 0; a < particles.length; a++) {
+          for (let b = a; b < particles.length; b++) {
+            let dx = particles[a].x - particles[b].x;
+            let dy = particles[a].y - particles[b].y;
+            let distance = dx * dx + dy * dy;
+            if (distance < 15000) {
+              let opacity = 1 - (distance / 15000);
+              ctx.strokeStyle = isDark() ? `rgba(0, 229, 195, ${opacity * 0.2})` : `rgba(0, 107, 97, ${opacity * 0.15})`;
+              ctx.lineWidth = 0.5;
+              ctx.beginPath();
+              ctx.moveTo(particles[a].x, particles[a].y);
+              ctx.lineTo(particles[b].x, particles[b].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.fillStyle = isDark() ? '#0B0D12' : '#F2F3F8';
+        ctx.fillRect(0, 0, w, h);
+        
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+        }
+        connect();
+      }
+      
+      window.addEventListener('resize', resize);
+      hero.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
       });
-    });
-  }
-}))();
+      hero.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+      
+      resize();
+      animate();
+    }
+  };
+})();
 
 /* ══════════════ 12. SMOOTH SCROLL ══════════════ */
 const SmoothScroll = (() => ({
@@ -461,6 +555,13 @@ function setYear() {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js', { scope: '/' })
         .then(reg => {
+          // PRO MAX: Chequeo automático de actualizaciones al volver a la pestaña
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+              reg.update();
+            }
+          });
+
           /* Background sync of new SW version */
           reg.addEventListener('updatefound', () => {
             const newSW = reg.installing;
@@ -694,8 +795,7 @@ document.addEventListener('DOMContentLoaded', () => {
   SkillBars.init();
   CustomCursor.init();
   CardTilt.init();
-  HeroParallax.init();
-  ProjectGlow.init();
+  HeroCanvas.init();
   SmoothScroll.init();
   BackToTop.init();
   ToastManager.init();

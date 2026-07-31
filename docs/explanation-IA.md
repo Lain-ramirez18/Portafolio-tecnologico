@@ -187,3 +187,9 @@ stateDiagram-v2
   - **Folder Restructuring & Build system**: Removed the obsolete `/src` folder, directing `build.js` to construct `public/` directly from root `css` and `js` source files, complying with the stated structural rule and eliminating duplication.
   - **WCAG AAA Compliance**: Injected `:focus-visible` UI state improvements in `css/style.css` matching WCAG AAA contrast ratio requirements (3px solid cyan outline with offset). Corrected primary buttons contrast for readability (#0B0D12 on cyan).
   - **Fluid Typography (Chrome UX)**: Leveraged CSS `clamp()` capabilities to map `font-size` adaptively to viewport width instead of discrete breakpoints. Integrated `prefers-reduced-motion` override.
+
+### 4.1.6. Pro Max Cache & UI Enhancements (Phase 8 Update)
+*   **Stale-While-Revalidate Caching**: `sw.js` upgraded to `Stale-While-Revalidate` for all requests, ensuring instant load times (cache-first delivery) combined with background network synchronization to update the cache for the next reload. Cache version bumped to `v8`.
+*   **Proactive Auto-Update Sync**: In `main.js`, an event listener for `visibilitychange` triggers `reg.update()` whenever the tab becomes visible, forcing the browser to check for Service Worker byte-level changes and initiating an auto-refresh via the controllerchange listener without user intervention.
+*   **Universal 3D Tilt**: `CardTilt` logic generalized to apply a 3D perspective rotation (`perspective(1000px) rotateY/X`) to `.project-card`, `.about-card`, and `.cert-item-card`, enhancing spatial depth.
+*   **Interactive Neural Canvas**: Added a `HeroCanvas` module that dynamically renders an interactive, physics-based 3D particle network (constellation effect) in the hero section, replacing the static CSS grid for a PRO MAX visual experience.
