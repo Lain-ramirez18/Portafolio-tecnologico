@@ -533,20 +533,71 @@ function setYear() {
   }
 })();
 
-/* ══════════════ PERFORMANCE — Resource hints injected at runtime ══════════════ */
-(function injectPerfHints() {
-  /* Prefetch next likely navigation targets after page is idle */
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      ['https://github.com/Lain-ramirez18', 'https://proassist-r1q6.onrender.com']
-        .forEach(href => {
-          const link = document.createElement('link');
-          link.rel  = 'prefetch';
-          link.href = href;
-          document.head.appendChild(link);
-        });
-    }, { timeout: 3000 });
+/* ══════════════ 19. SMART PREFETCHING (PREDICTIVE CACHE) ══════════════ */
+const SmartPrefetch = (() => {
+  const preconnected = new Set();
+  const prefetched = new Set();
+
+  function preconnect(url) {
+    try {
+      const origin = new URL(url).origin;
+      if (preconnected.has(origin)) return;
+      
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = origin;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+      
+      const dns = document.createElement('link');
+      dns.rel = 'dns-prefetch';
+      dns.href = origin;
+      document.head.appendChild(dns);
+      
+      preconnected.add(origin);
+    } catch (e) {}
   }
+
+  function prefetch(url) {
+    if (prefetched.has(url)) return;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = url;
+    document.head.appendChild(link);
+    prefetched.add(url);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const url = entry.target.href;
+        if (url) preconnect(url);
+        // Desobservamos tras pre-conectar para ahorrar CPU y memoria
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '50px' });
+
+  return {
+    init() {
+      // Evitar prefetch en dispositivos con conexiones lentas o ahorro de datos
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (connection && (connection.saveData || connection.effectiveType?.includes('2g'))) {
+        return;
+      }
+
+      const links = document.querySelectorAll('a[href^="http"]');
+      
+      links.forEach(link => {
+        // 1. Preconnect asíncrono al hacer scroll (cuando el link es visible)
+        observer.observe(link);
+        
+        // 2. Prefetch ultra-rápido al hacer hover (intención clara de clic)
+        link.addEventListener('mouseenter', () => prefetch(link.href), { once: true });
+        link.addEventListener('touchstart', () => prefetch(link.href), { once: true, passive: true });
+      });
+    }
+  };
 })();
 
 /* ══════════════ SERVICE WORKER — PWA & Offline Cache ══════════════ */
@@ -801,6 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ToastManager.init();
   CVDialog.init();
   ContactForm.init();
+  SmartPrefetch.init();
   initA11y();
   setYear();
 
