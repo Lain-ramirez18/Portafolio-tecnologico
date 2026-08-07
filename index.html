@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <!-- Security headers via meta (HTTPS enforced at hosting level) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://cdn.vercel-insights.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://vitals.vercel-insights.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://cdn.vercel-insights.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://vitals.vercel-insights.com https://formsubmit.co;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
@@ -174,6 +174,10 @@
               <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
               <span data-i18n="hero.download_cv">Descargar CV</span>
             </button>
+            <button id="btn-open-terminal" class="btn btn-ghost" aria-haspopup="dialog" aria-expanded="false">
+              <i class="fa-solid fa-terminal" aria-hidden="true"></i>
+              <span data-i18n="hero.open_terminal">Terminal IA</span>
+            </button>
           </div>
 
           <div class="hero-socials" role="group" aria-label="Redes sociales">
@@ -206,17 +210,17 @@
               </div>
               <div class="profile-card-stats">
                 <div class="stat">
-                  <span class="stat-number">2+</span>
+                  <span class="stat-number" data-counter="2">2+</span>
                   <span class="stat-label" data-i18n="hero.stat_projects">Proyectos</span>
                 </div>
                 <div class="stat-divider" aria-hidden="true"></div>
                 <div class="stat">
-                  <span class="stat-number">AI</span>
+                  <span class="stat-number" data-counter="100">AI</span>
                   <span class="stat-label" data-i18n="hero.stat_ai">Powered</span>
                 </div>
                 <div class="stat-divider" aria-hidden="true"></div>
                 <div class="stat">
-                  <span class="stat-number">UX</span>
+                  <span class="stat-number" data-counter="100">UX</span>
                   <span class="stat-label">Focused</span>
                 </div>
               </div>
@@ -359,9 +363,18 @@
         </div>
         <h2 id="skills-title" class="section-title reveal" data-i18n="skills.title">Herramientas &amp; Tecnologías</h2>
 
+        <div class="skills-filter-wrap reveal" role="tablist" aria-label="Filtro de habilidades">
+          <button class="skill-filter-btn active" data-filter="all" data-i18n="skills.filter_all">Todos</button>
+          <button class="skill-filter-btn" data-filter="frontend" data-i18n="skills.filter_frontend">Frontend</button>
+          <button class="skill-filter-btn" data-filter="backend" data-i18n="skills.filter_backend">Backend</button>
+          <button class="skill-filter-btn" data-filter="ai" data-i18n="skills.filter_ai">IA &amp; Automatización</button>
+          <button class="skill-filter-btn" data-filter="tools" data-i18n="skills.filter_tools">Herramientas</button>
+          <button class="skill-filter-btn" data-filter="soft" data-i18n="skills.filter_soft">Soft Skills</button>
+        </div>
+
         <div class="skills-grid">
 
-          <div class="skill-category reveal">
+          <div class="skill-category reveal" data-category="frontend">
             <h3 class="skill-cat-title" data-i18n="skills.cat1">Frontend &amp; UI</h3>
             <div class="skill-list">
               <div class="skill-item">
@@ -395,7 +408,7 @@
             </div>
           </div>
 
-          <div class="skill-category reveal reveal-delay">
+          <div class="skill-category reveal reveal-delay" data-category="backend">
             <h3 class="skill-cat-title" data-i18n="skills.cat2">Backend &amp; Scripting</h3>
             <div class="skill-list">
               <div class="skill-item">
@@ -421,7 +434,7 @@
             </div>
           </div>
 
-          <div class="skill-category reveal">
+          <div class="skill-category reveal" data-category="ai">
             <h3 class="skill-cat-title" data-i18n="skills.cat3">IA &amp; Automatización</h3>
             <div class="skill-tags">
               <span class="skill-tag-pill"><i class="fa-solid fa-robot" aria-hidden="true"></i> Subagentes de IA</span>
@@ -435,7 +448,7 @@
             </div>
           </div>
 
-          <div class="skill-category reveal reveal-delay">
+          <div class="skill-category reveal reveal-delay" data-category="tools">
             <h3 class="skill-cat-title" data-i18n="skills.cat4">Herramientas &amp; Entorno</h3>
             <div class="skill-tags">
               <span class="skill-tag-pill"><i class="fa-solid fa-code" aria-hidden="true"></i> Visual Studio Code</span>
@@ -450,7 +463,7 @@
         </div>
 
         <!-- Soft Skills -->
-        <div class="soft-skills-wrap reveal">
+        <div class="soft-skills-wrap reveal" data-category="soft">
           <h3 class="skill-cat-title" style="margin-bottom:1.25rem" data-i18n="skills.soft_title">Habilidades Blandas</h3>
           <div class="soft-grid">
             <div class="soft-card">
@@ -505,6 +518,10 @@
             <div class="project-card-header">
               <div class="project-number" aria-hidden="true">01</div>
               <div class="project-links">
+                <button class="btn btn-ghost btn-sm btn-project-detail" data-project="appfocus" aria-label="Ver detalles de APPFOCUS">
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                  <span data-i18n="proj.view_details">Ver detalles</span>
+                </button>
                 <a href="https://github.com/Lain-ramirez18/APPFOCUS" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ver APPFOCUS en GitHub">
                   <i class="fa-brands fa-github" aria-hidden="true"></i>
                 </a>
@@ -529,6 +546,10 @@
             <div class="project-card-header">
               <div class="project-number" aria-hidden="true">02</div>
               <div class="project-links">
+                <button class="btn btn-ghost btn-sm btn-project-detail" data-project="proassist" aria-label="Ver detalles de ProAssist">
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                  <span data-i18n="proj.view_details">Ver detalles</span>
+                </button>
                 <a href="https://proassist-r1q6.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ver ProAssist en vivo">
                   <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
                 </a>
@@ -562,10 +583,16 @@
               <p class="project-desc" data-i18n="proj.upcoming.desc">
                 Algo emocionante está en camino. Sígueme en GitHub para estar al día con los últimos builds y experimentos.
               </p>
-              <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
-                <i class="fa-brands fa-github" aria-hidden="true"></i>
-                <span data-i18n="proj.follow_github">Seguir en GitHub</span>
-              </a>
+              <div class="project-cta-group">
+                <button class="btn btn-ghost btn-sm btn-project-detail" data-project="upcoming" aria-label="Ver detalles del próximo proyecto">
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                  <span data-i18n="proj.view_details">Ver detalles</span>
+                </button>
+                <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+                  <i class="fa-brands fa-github" aria-hidden="true"></i>
+                  <span data-i18n="proj.follow_github">Seguir en GitHub</span>
+                </a>
+              </div>
             </div>
           </article>
 
@@ -591,78 +618,78 @@
             
             <div class="contact-links-grid" role="group" aria-label="Canales de contacto">
 
-              <a href="https://wa.me/573209735859?text=Hola%20Lain,%20buen%20día" target="_blank" rel="noopener noreferrer"
-                 class="contact-link-card" id="clc-whatsapp" aria-label="Contactar por WhatsApp">
+              <div class="contact-link-card" id="clc-whatsapp">
                 <div class="clc-icon clc-icon--wa">
                   <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
                 </div>
-                <div class="clc-body">
+                <a href="https://wa.me/573209735859?text=Hola%20Lain,%20buen%20día" target="_blank" rel="noopener noreferrer" class="clc-body" aria-label="Contactar por WhatsApp">
                   <span class="clc-label">WhatsApp</span>
-                  <span class="clc-sub">Respuesta rápida</span>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square clc-arrow" aria-hidden="true"></i>
-              </a>
+                  <span class="clc-sub">Respuesta rápida (+57 3209735859)</span>
+                </a>
+                <button class="clc-copy-btn" data-copy="+573209735859" aria-label="Copiar número de WhatsApp" data-i18n-aria="aria.copy_phone" title="Copiar teléfono">
+                  <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                </button>
+              </div>
 
-              <a href="mailto:lainramirez18@gmail.com"
-                 class="contact-link-card" id="clc-email" aria-label="Enviar email">
+              <div class="contact-link-card" id="clc-email">
                 <div class="clc-icon clc-icon--email">
                   <i class="fa-solid fa-envelope" aria-hidden="true"></i>
                 </div>
-                <div class="clc-body">
+                <a href="mailto:lainramirez18@gmail.com" class="clc-body" aria-label="Enviar email">
                   <span class="clc-label">Email</span>
                   <span class="clc-sub">lainramirez18@gmail.com</span>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square clc-arrow" aria-hidden="true"></i>
-              </a>
+                </a>
+                <button class="clc-copy-btn" data-copy="lainramirez18@gmail.com" aria-label="Copiar correo electrónico" data-i18n-aria="aria.copy_email" title="Copiar correo">
+                  <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                </button>
+              </div>
 
-              <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer"
-                 class="contact-link-card" id="clc-linkedin" aria-label="Ver perfil de LinkedIn">
+              <div class="contact-link-card" id="clc-linkedin">
                 <div class="clc-icon clc-icon--li">
                   <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
                 </div>
-                <div class="clc-body">
+                <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="clc-body" aria-label="Ver perfil de LinkedIn">
                   <span class="clc-label">LinkedIn</span>
                   <span class="clc-sub">lain-sthid-ramirez-rueda</span>
-                </div>
+                </a>
                 <i class="fa-solid fa-arrow-up-right-from-square clc-arrow" aria-hidden="true"></i>
-              </a>
+              </div>
 
-              <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer"
-                 class="contact-link-card" id="clc-github" aria-label="Ver perfil de GitHub">
+              <div class="contact-link-card" id="clc-github">
                 <div class="clc-icon clc-icon--gh">
                   <i class="fa-brands fa-github" aria-hidden="true"></i>
                 </div>
-                <div class="clc-body">
+                <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="clc-body" aria-label="Ver perfil de GitHub">
                   <span class="clc-label">GitHub</span>
                   <span class="clc-sub">Lain-ramirez18</span>
-                </div>
+                </a>
                 <i class="fa-solid fa-arrow-up-right-from-square clc-arrow" aria-hidden="true"></i>
-              </a>
+              </div>
 
             </div>
           </div>
 
           <!-- ── 3D ORBIT AI GRAPH ── -->
-          <div class="orbit-container reveal reveal-delay">
+          <div class="orbit-container reveal reveal-delay" aria-label="Gráfico de tecnologías en órbita 3D">
             <div class="orbit-center">
               <span class="orbit-logo">LR</span>
             </div>
             
             <!-- Orbit 1: Inner (Fast) -->
-            <div class="orbit orbit-1">
+            <div class="orbit orbit-1" aria-hidden="true">
               <div class="orbit-node n-1"><i class="fa-brands fa-js"></i></div>
               <div class="orbit-node n-2"><i class="fa-brands fa-python"></i></div>
             </div>
             
             <!-- Orbit 2: Middle (Medium) -->
-            <div class="orbit orbit-2">
+            <div class="orbit orbit-2" aria-hidden="true">
               <div class="orbit-node n-3"><i class="fa-solid fa-brain"></i></div>
               <div class="orbit-node n-4"><i class="fa-brands fa-react"></i></div>
               <div class="orbit-node n-5"><i class="fa-brands fa-node-js"></i></div>
             </div>
             
             <!-- Orbit 3: Outer (Slow) -->
-            <div class="orbit orbit-3">
+            <div class="orbit orbit-3" aria-hidden="true">
               <div class="orbit-node n-6"><i class="fa-solid fa-database"></i></div>
               <div class="orbit-node n-7"><i class="fa-brands fa-git-alt"></i></div>
               <div class="orbit-node n-8"><i class="fa-brands fa-aws"></i></div>
@@ -721,6 +748,49 @@
 
   <!-- Vercel Web Analytics -->
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+
+  <!-- Interactive AI Terminal Dialog -->
+  <dialog id="terminal-dialog" class="terminal-dialog" aria-labelledby="terminal-dialog-title" aria-modal="true">
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <div class="terminal-controls">
+          <button class="control close-dot" id="terminal-dialog-close" aria-label="Cerrar terminal"></button>
+          <span class="control minimize-dot"></span>
+          <span class="control maximize-dot"></span>
+        </div>
+        <h3 id="terminal-dialog-title" class="terminal-title" data-i18n="terminal.title">LSRR AI Agent CLI v3.0</h3>
+      </div>
+      <div class="terminal-body" id="terminal-body">
+        <div class="terminal-output" id="terminal-output">
+          <div class="terminal-line banner">
+            <span class="prompt-user">system@lsrr-agent</span>:<span class="prompt-path">~</span>$ init --interactive
+          </div>
+          <div class="terminal-line welcome" data-i18n="terminal.welcome">
+            Bienvenido a LSRR Terminal v3.0. Escribe "help" para ver los comandos disponibles.
+          </div>
+        </div>
+        <form id="terminal-form" class="terminal-input-row" autocomplete="off">
+          <span class="prompt-user">visitor@lsrr-agent</span>:<span class="prompt-path">~</span>$&nbsp;
+          <input type="text" id="terminal-input" class="terminal-input" data-i18n-aria="terminal.prompt_label" aria-label="Ingresa un comando o prompt..." placeholder="type help..." />
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Project Detail Dialog -->
+  <dialog id="project-modal" class="project-modal" aria-labelledby="project-modal-title" aria-modal="true">
+    <div class="project-modal-content">
+      <div class="project-modal-header">
+        <h3 id="project-modal-title" class="project-modal-title">Detalles del Proyecto</h3>
+        <button id="project-modal-close" class="cv-dialog-close" aria-label="Cerrar modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="project-modal-body" id="project-modal-body">
+        <!-- Dynamic content injected by JS -->
+      </div>
+    </div>
+  </dialog>
 
   <!-- CV Download Dialog -->
   <dialog id="cv-dialog" class="cv-dialog" aria-labelledby="cv-dialog-title" aria-modal="true">

@@ -282,73 +282,167 @@ const CustomCursor = (() => {
   };
 })();
 
-/* ══════════════ 9. CARD TILT — Antigravity ══════════════ */
+/* ══════════════ 9. UNIVERSAL 3D CARD TILT (PRO MAX) ══════════════ */
 const CardTilt = (() => {
-  const card = $('#profile-card');
-  let raf;
-
   return {
     init() {
-      if (!card || !window.matchMedia('(hover: hover)').matches) return;
-
-      card.addEventListener('mousemove', e => {
-        const r  = card.getBoundingClientRect();
-        const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
-        const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `perspective(900px) rotateY(${dx*10}deg) rotateX(${-dy*8}deg) translateY(-16px) scale(1.02)`;
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      
+      const cards = $$('.profile-card, .project-card, .about-card, .cert-item-card');
+      
+      cards.forEach(card => {
+        let raf;
+        card.addEventListener('mousemove', e => {
+          const r  = card.getBoundingClientRect();
+          const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+          const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+          
+          const isProfile = card.classList.contains('profile-card');
+          const maxRotate = isProfile ? 12 : 5;
+          
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            card.style.transition = 'none';
+            card.style.transform = `perspective(1000px) rotateY(${dx * maxRotate}deg) rotateX(${-dy * maxRotate}deg) translateY(-4px) scale(1.02)`;
+            card.style.zIndex = '10';
+            
+            const glow = $('.project-card-glow', card);
+            if (glow) {
+              glow.style.left = `${e.clientX - r.left - 100}px`;
+              glow.style.top  = `${e.clientY - r.top  - 100}px`;
+            }
+          });
         });
-      });
 
-      card.addEventListener('mouseleave', () => {
-        cancelAnimationFrame(raf);
-        card.style.transform = '';
+        card.addEventListener('mouseleave', () => {
+          cancelAnimationFrame(raf);
+          card.style.transition = 'transform 0.6s var(--ease-out)';
+          card.style.transform = '';
+          card.style.zIndex = '';
+        });
       });
     }
   };
 })();
 
-/* ══════════════ 10. HERO PARALLAX ══════════════ */
-const HeroParallax = (() => {
-  const o1 = $('.orb-1');
-  const o2 = $('.orb-2');
-  const o3 = $('.orb-3');
-  let raf;
-
+/* ══════════════ 10. HERO INTERACTIVE 3D CANVAS (PRO MAX) ══════════════ */
+const HeroCanvas = (() => {
   return {
     init() {
-      if (!window.matchMedia('(hover: hover) and (min-width: 768px)').matches) return;
-
-      document.addEventListener('mousemove', e => {
-        const xR = e.clientX / window.innerWidth  - 0.5;
-        const yR = e.clientY / window.innerHeight - 0.5;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          if (o1) o1.style.transform = `translate(${xR * -32}px, ${yR * -22}px)`;
-          if (o2) o2.style.transform = `translate(${xR * 24}px, ${yR * 18}px)`;
-          if (o3) o3.style.transform = `translate(${xR * 14}px, ${yR * -10}px)`;
-        });
-      }, { passive: true });
-    }
-  };
-})();
-
-/* ══════════════ 11. PROJECT CARD MOUSE GLOW ══════════════ */
-const ProjectGlow = (() => ({
-  init() {
-    $$('.project-card:not(.project-card--upcoming)').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const glow = $('.project-card-glow', card);
-        if (glow) {
-          glow.style.left = `${e.clientX - r.left - 100}px`;
-          glow.style.top  = `${e.clientY - r.top  - 100}px`;
+      const hero = $('#hero');
+      if (!hero || window.innerWidth < 768) return; // Only desktop/tablet for performance
+      
+      const canvas = document.createElement('canvas');
+      canvas.className = 'hero-canvas-bg';
+      canvas.style.position = 'absolute';
+      canvas.style.inset = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.zIndex = '0';
+      canvas.style.pointerEvents = 'none';
+      
+      const grid = $('.hero-bg-grid');
+      if (grid) hero.insertBefore(canvas, grid);
+      else hero.appendChild(canvas);
+      
+      const ctx = canvas.getContext('2d', { alpha: false });
+      let w, h, particles = [];
+      const mouse = { x: null, y: null, radius: 150 };
+      
+      const isDark = () => document.documentElement.getAttribute('data-theme') !== 'light';
+      
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = hero.offsetHeight;
+        initParticles();
+      }
+      
+      class Particle {
+        constructor() {
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
+          this.size = Math.random() * 1.5 + 0.5;
+          this.baseX = this.x;
+          this.baseY = this.y;
+          this.density = (Math.random() * 30) + 1;
         }
+        draw() {
+          ctx.fillStyle = isDark() ? 'rgba(0, 229, 195, 0.8)' : 'rgba(0, 107, 97, 0.6)';
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fill();
+        }
+        update() {
+          if (mouse.x != null) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius) {
+              let force = (mouse.radius - distance) / mouse.radius;
+              this.x -= (dx / distance) * force * this.density;
+              this.y -= (dy / distance) * force * this.density;
+            } else {
+              if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 20;
+              if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 20;
+            }
+          } else {
+            if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 20;
+            if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 20;
+          }
+        }
+      }
+      
+      function initParticles() {
+        particles = [];
+        const numParticles = Math.min((w * h) / 12000, 120); 
+        for (let i = 0; i < numParticles; i++) particles.push(new Particle());
+      }
+      
+      function connect() {
+        for (let a = 0; a < particles.length; a++) {
+          for (let b = a; b < particles.length; b++) {
+            let dx = particles[a].x - particles[b].x;
+            let dy = particles[a].y - particles[b].y;
+            let distance = dx * dx + dy * dy;
+            if (distance < 15000) {
+              let opacity = 1 - (distance / 15000);
+              ctx.strokeStyle = isDark() ? `rgba(0, 229, 195, ${opacity * 0.2})` : `rgba(0, 107, 97, ${opacity * 0.15})`;
+              ctx.lineWidth = 0.5;
+              ctx.beginPath();
+              ctx.moveTo(particles[a].x, particles[a].y);
+              ctx.lineTo(particles[b].x, particles[b].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.fillStyle = isDark() ? '#0B0D12' : '#F2F3F8';
+        ctx.fillRect(0, 0, w, h);
+        
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+        }
+        connect();
+      }
+      
+      window.addEventListener('resize', resize);
+      hero.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
       });
-    });
-  }
-}))();
+      hero.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+      
+      resize();
+      animate();
+    }
+  };
+})();
 
 /* ══════════════ 12. SMOOTH SCROLL ══════════════ */
 const SmoothScroll = (() => ({
@@ -439,20 +533,71 @@ function setYear() {
   }
 })();
 
-/* ══════════════ PERFORMANCE — Resource hints injected at runtime ══════════════ */
-(function injectPerfHints() {
-  /* Prefetch next likely navigation targets after page is idle */
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      ['https://github.com/Lain-ramirez18', 'https://proassist-r1q6.onrender.com']
-        .forEach(href => {
-          const link = document.createElement('link');
-          link.rel  = 'prefetch';
-          link.href = href;
-          document.head.appendChild(link);
-        });
-    }, { timeout: 3000 });
+/* ══════════════ 19. SMART PREFETCHING (PREDICTIVE CACHE) ══════════════ */
+const SmartPrefetch = (() => {
+  const preconnected = new Set();
+  const prefetched = new Set();
+
+  function preconnect(url) {
+    try {
+      const origin = new URL(url).origin;
+      if (preconnected.has(origin)) return;
+      
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = origin;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+      
+      const dns = document.createElement('link');
+      dns.rel = 'dns-prefetch';
+      dns.href = origin;
+      document.head.appendChild(dns);
+      
+      preconnected.add(origin);
+    } catch (e) {}
   }
+
+  function prefetch(url) {
+    if (prefetched.has(url)) return;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = url;
+    document.head.appendChild(link);
+    prefetched.add(url);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const url = entry.target.href;
+        if (url) preconnect(url);
+        // Desobservamos tras pre-conectar para ahorrar CPU y memoria
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '50px' });
+
+  return {
+    init() {
+      // Evitar prefetch en dispositivos con conexiones lentas o ahorro de datos
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (connection && (connection.saveData || connection.effectiveType?.includes('2g'))) {
+        return;
+      }
+
+      const links = document.querySelectorAll('a[href^="http"]');
+      
+      links.forEach(link => {
+        // 1. Preconnect asíncrono al hacer scroll (cuando el link es visible)
+        observer.observe(link);
+        
+        // 2. Prefetch ultra-rápido al hacer hover (intención clara de clic)
+        link.addEventListener('mouseenter', () => prefetch(link.href), { once: true });
+        link.addEventListener('touchstart', () => prefetch(link.href), { once: true, passive: true });
+      });
+    }
+  };
 })();
 
 /* ══════════════ SERVICE WORKER — PWA & Offline Cache ══════════════ */
@@ -461,6 +606,13 @@ function setYear() {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js', { scope: '/' })
         .then(reg => {
+          // PRO MAX: Chequeo automático de actualizaciones al volver a la pestaña
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+              reg.update();
+            }
+          });
+
           /* Background sync of new SW version */
           reg.addEventListener('updatefound', () => {
             const newSW = reg.installing;
@@ -683,6 +835,301 @@ const ContactForm = (() => {
   };
 })();
 
+/* ══════════════ 20. COPY TO CLIPBOARD ══════════════ */
+const CopyManager = (() => {
+  return {
+    init() {
+      $$('.clc-copy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const text = btn.getAttribute('data-copy');
+          if (!text) return;
+
+          navigator.clipboard.writeText(text).then(() => {
+            const isEs = (localStorage.getItem('lain-lang-v2') || 'es') === 'es';
+            const isEmail = text.includes('@');
+            const msg = isEmail
+              ? (isEs ? '¡Correo copiado al portapapeles! 📋' : 'Email copied to clipboard! 📋')
+              : (isEs ? '¡WhatsApp copiado al portapapeles! 📋' : 'WhatsApp copied to clipboard! 📋');
+            ToastManager.show(msg);
+          }).catch(() => {
+            ToastManager.show('Error al copiar al portapapeles');
+          });
+        });
+      });
+    }
+  };
+})();
+
+/* ══════════════ 21. SKILL FILTER MANAGER ══════════════ */
+const SkillsFilterManager = (() => {
+  return {
+    init() {
+      const filterBtns = $$('.skill-filter-btn');
+      const categories = $$('[data-category]');
+
+      if (!filterBtns.length) return;
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+
+          categories.forEach(cat => {
+            const catType = cat.getAttribute('data-category');
+            if (filter === 'all' || filter === catType) {
+              cat.classList.remove('filtered-out');
+            } else {
+              cat.classList.add('filtered-out');
+            }
+          });
+        });
+      });
+    }
+  };
+})();
+
+/* ══════════════ 22. AI TERMINAL CLI ══════════════ */
+const AITerminal = (() => {
+  const dialog = $('#terminal-dialog');
+  const openBtn = $('#btn-open-terminal');
+  const closeBtn = $('#terminal-dialog-close');
+  const form = $('#terminal-form');
+  const input = $('#terminal-input');
+  const output = $('#terminal-output');
+
+  const commands = {
+    help: () => 'Comandos disponibles: bio, stack, projects, contact, ai, clear, date, whoami, exit',
+    bio: () => 'Lain Sthid Ramirez Rueda | Analista & Dev SENA. Especialista en IA, Python, Elicitación de Requisitos y UI/UX.',
+    stack: () => 'Frontend: HTML5, CSS3 (MD3), JS ES6+\nBackend: Python, Git/GitHub, Docker\nIA: Subagentes IA, Claude, Groq/LLaMA, Gemini, Prompt Engineering',
+    projects: () => '1. APPFOCUS CORE v3.0 (Offline Productivity Terminal)\n2. ProAssist (Bilingual LLaMA 3.3-70B + Groq AI Chatbot)\n3. Próximo Proyecto (AI Autonomous Subagents Sandbox)',
+    contact: () => 'WhatsApp: +57 3209735859\nEmail: lainramirez18@gmail.com\nLinkedIn: lain-sthid-ramirez-rueda\nGitHub: Lain-ramirez18',
+    ai: () => '🤖 AI Sub-Agent Status: Online (Groq + LLaMA 3.3-70B API connected). Ready for prompt orchestration.',
+    date: () => `Fecha actual: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+    whoami: () => 'visitor@lsrr-portfolio-guest'
+  };
+
+  function appendLine(userText, cmdText) {
+    const line = document.createElement('div');
+    line.className = 'terminal-line';
+    if (userText) {
+      line.innerHTML = `<span class="prompt-user">visitor@lsrr-agent</span>:<span class="prompt-path">~</span>$&nbsp;<span class="prompt-cmd">${escapeHtml(userText)}</span>`;
+    }
+    output.appendChild(line);
+
+    if (cmdText) {
+      const respLine = document.createElement('div');
+      respLine.className = 'terminal-line response';
+      respLine.style.color = '#7ee787';
+      respLine.innerHTML = escapeHtml(cmdText).replace(/\n/g, '<br/>');
+      output.appendChild(respLine);
+    }
+
+    output.scrollTop = output.scrollHeight;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  return {
+    init() {
+      if (!dialog || !openBtn) return;
+
+      openBtn.addEventListener('click', () => {
+        dialog.showModal();
+        openBtn.setAttribute('aria-expanded', 'true');
+        setTimeout(() => input?.focus(), 100);
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        dialog.close();
+        openBtn.setAttribute('aria-expanded', 'false');
+      });
+
+      dialog.addEventListener('click', (e) => {
+        const r = dialog.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+          dialog.close();
+          openBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const val = input.value.trim().toLowerCase();
+        if (!val) return;
+
+        input.value = '';
+
+        if (val === 'clear') {
+          output.innerHTML = '';
+          return;
+        }
+
+        if (val === 'exit') {
+          dialog.close();
+          openBtn.setAttribute('aria-expanded', 'false');
+          return;
+        }
+
+        const handler = commands[val];
+        if (handler) {
+          appendLine(val, handler());
+        } else {
+          appendLine(val, `Comando no reconocido: "${val}". Escribe "help" para ver la lista de comandos.`);
+        }
+      });
+    }
+  };
+})();
+
+/* ══════════════ 23. PROJECT DETAILS MODAL ══════════════ */
+const ProjectDetailModal = (() => {
+  const dialog = $('#project-modal');
+  const title = $('#project-modal-title');
+  const body = $('#project-modal-body');
+  const closeBtn = $('#project-modal-close');
+
+  const projectData = {
+    appfocus: {
+      title: 'APPFOCUS CORE v3.0 — Deep Work Terminal',
+      content: `
+        <div class="project-modal-section">
+          <span class="project-modal-section-title">Resumen del Proyecto</span>
+          <p>APPFOCUS es una terminal de productividad de alto rendimiento concebida bajo los principios de la metodología Deep Work de Cal Newport. Su propósito es eliminar fricciones cognitivas durante sesiones de trabajo concentrado.</p>
+        </div>
+        <div class="project-modal-section">
+          <span class="project-modal-section-title">Aspectos Técnicos Clave</span>
+          <ul>
+            <li>• <strong>Arquitectura 100% Offline-First:</strong> Sin dependencias de red externas ni rastreadores. Todos los datos permanecen locales.</li>
+            <li>• <strong>Algoritmo de Foco Dinámico:</strong> Ajuste automático de bloques de trabajo e intervalos de descanso según ritmo circadiano.</li>
+            <li>• <strong>Estética Minimalista:</strong> UI construida con Tailwind CSS y Vanilla JavaScript altamente optimizado.</li>
+          </ul>
+        </div>
+        <div class="project-cta-group">
+          <a href="https://github.com/Lain-ramirez18/APPFOCUS" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+            <i class="fa-brands fa-github"></i> Repositorio GitHub
+          </a>
+        </div>
+      `
+    },
+    proassist: {
+      title: 'ProAssist — AI Productivity Chatbot',
+      content: `
+        <div class="project-modal-section">
+          <span class="project-modal-section-title">Resumen del Proyecto</span>
+          <p>ProAssist es un asistente conversacional bilingüe diseñado para responder consultas complejas, automatizar tareas y actuar como un compañero inteligente de desarrollo en tiempo real.</p>
+        </div>
+        <div class="project-modal-section">
+          <span class="project-modal-section-title">Arquitectura Tecnológica</span>
+          <ul>
+            <li>• <strong>Motor de IA:</strong> Impulsado por LLaMA 3.3-70B ejecutado sobre Groq LPU (Language Processing Unit) API, alcanzando velocidades de generación superiores a 300 tokens/segundo.</li>
+            <li>• <strong>Infraestructura:</strong> Aplicación Python contenerizada en un contenedor Docker optimizado y desplegada en Render.</li>
+            <li>• <strong>Soporte Bilingüe:</strong> Detección y respuesta automática en español e inglés sin pérdida de contexto.</li>
+          </ul>
+        </div>
+        <div class="project-cta-group">
+          <a href="https://proassist-r1q6.onrender.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Demo en Vivo (Render)
+          </a>
+          <a href="https://github.com/Lain-ramirez18/proassist" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+            <i class="fa-brands fa-github"></i> Código en GitHub
+          </a>
+        </div>
+      `
+    },
+    upcoming: {
+      title: 'Próximo Proyecto — Sandbox de Subagentes de IA',
+      content: `
+        <div class="project-modal-section">
+          <span class="project-modal-section-title">En Desarrollo</span>
+          <p>Actualmente me encuentro construyendo un ecosistema de subagentes autónomos de IA integrados con canal de orquestación en Python. Este proyecto busca automatizar flujos complejos de elicitar requisitos, análisis de datos y generación de documentación técnica.</p>
+        </div>
+        <div class="project-cta-group">
+          <a href="https://github.com/Lain-ramirez18" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+            <i class="fa-brands fa-github"></i> Perfil de GitHub
+          </a>
+        </div>
+      `
+    }
+  };
+
+  return {
+    init() {
+      if (!dialog) return;
+
+      $$('.btn-project-detail').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.getAttribute('data-project');
+          const data = projectData[key];
+          if (!data) return;
+
+          title.textContent = data.title;
+          body.innerHTML = data.content;
+
+          dialog.showModal();
+        });
+      });
+
+      closeBtn?.addEventListener('click', () => dialog.close());
+
+      dialog.addEventListener('click', (e) => {
+        const r = dialog.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+          dialog.close();
+        }
+      });
+    }
+  };
+})();
+
+/* ══════════════ 24. STAT COUNTER ANIMATION ══════════════ */
+const CounterAnim = (() => {
+  return {
+    init() {
+      const stats = $$('.stat-number[data-counter]');
+      if (!stats.length) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const targetVal = parseInt(el.getAttribute('data-counter'), 10);
+            if (isNaN(targetVal)) return;
+
+            let current = 0;
+            const step = Math.max(1, Math.ceil(targetVal / 25));
+            const timer = setInterval(() => {
+              current += step;
+              if (current >= targetVal) {
+                current = targetVal;
+                clearInterval(timer);
+              }
+              if (el.textContent.includes('+')) {
+                el.textContent = `${current}+`;
+              } else if (el.textContent.includes('AI')) {
+                el.textContent = 'AI';
+              } else if (el.textContent.includes('UX')) {
+                el.textContent = 'UX';
+              } else {
+                el.textContent = current;
+              }
+            }, 40);
+
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      stats.forEach(s => observer.observe(s));
+    }
+  };
+})();
+
 /* ══════════════ BOOT ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   ThemeManager.init();
@@ -694,15 +1141,21 @@ document.addEventListener('DOMContentLoaded', () => {
   SkillBars.init();
   CustomCursor.init();
   CardTilt.init();
-  HeroParallax.init();
-  ProjectGlow.init();
+  HeroCanvas.init();
   SmoothScroll.init();
   BackToTop.init();
   ToastManager.init();
   CVDialog.init();
   ContactForm.init();
+  SmartPrefetch.init();
+  CopyManager.init();
+  SkillsFilterManager.init();
+  AITerminal.init();
+  ProjectDetailModal.init();
+  CounterAnim.init();
   initA11y();
   setYear();
 
   document.body.classList.add('js-loaded');
 });
+

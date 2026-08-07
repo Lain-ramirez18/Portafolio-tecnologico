@@ -1,12 +1,12 @@
 /* ================================================================
-   sw.js — Service Worker v2.0
+   sw.js — Service Worker v3.0 (PRO MAX)
    Lain Sthid Ramirez Rueda Portfolio
-   Estrategia: Network-First para HTML, CSS y JS (siempre fresco)
-               Cache-First para assets (imágenes, fuentes)
+   Estrategia: Stale-While-Revalidate para máxima velocidad (Instant Load)
+               + Background Sync para mantener todo actualizado.
 ================================================================ */
 
-const CACHE_NAME    = 'lsrr-portfolio-v7';
-const ASSETS_CACHE  = 'lsrr-assets-v7';
+const CACHE_NAME    = 'lsrr-portfolio-v8';
+const ASSETS_CACHE  = 'lsrr-assets-v8';
 
 /* Recursos críticos que se cachean en la instalación */
 const PRECACHE_URLS = [
@@ -23,6 +23,7 @@ const PRECACHE_URLS = [
 
 /* ── INSTALL: precachear recursos críticos ── */
 self.addEventListener('install', event => {
+  // skipWaiting garantiza que el nuevo SW se active inmediatamente
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(PRECACHE_URLS))
@@ -30,59 +31,55 @@ self.addEventListener('install', event => {
   );
 });
 
-/* ── ACTIVATE: limpiar caches antiguas ── */
+/* ── ACTIVATE: limpiar caches antiguas y tomar control ── */
 self.addEventListener('activate', event => {
   const validCaches = [CACHE_NAME, ASSETS_CACHE];
   event.waitUntil(
     caches.keys()
       .then(keys => Promise.all(
-        keys
-          .filter(key => !validCaches.includes(key))
-          .map(key => caches.delete(key))
+        keys.filter(key => !validCaches.includes(key)).map(key => caches.delete(key))
       ))
+      // claim() asegura que los clientes actuales sean controlados inmediatamente
       .then(() => self.clients.claim())
   );
 });
 
-/* ── FETCH: estrategia Network-First para código, Cache-First para media ── */
+/* ── FETCH: Stale-While-Revalidate (Carga instantánea + Delta update) ── */
 self.addEventListener('fetch', event => {
   const { request } = event;
+  
+  if (request.method !== 'GET') return;
+  
   const url = new URL(request.url);
-
-  /* Solo interceptar mismo origen */
   if (url.origin !== location.origin) return;
 
-  /* HTML, CSS, JS → Network-First (siempre fresco) */
-  if (
-    request.headers.get('accept')?.includes('text/html') ||
-    request.url.match(/\.(css|js)$/) ||
-    request.url.endsWith('manifest.json')
-  ) {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
-          return response;
-        })
-        .catch(() => caches.match(request).then(res => res || caches.match('/index.html')))
-    );
-    return;
-  }
+  const isAsset = request.url.match(/\.(png|svg|webp|woff2?|ttf|jpg|jpeg|gif)$/);
+  const cacheName = isAsset ? ASSETS_CACHE : CACHE_NAME;
 
-  /* Assets (imágenes, fuentes) → Cache-First + actualización en background */
-  if (
-    request.url.match(/\.(png|svg|webp|woff2?|ttf|jpg|jpeg|gif)$/)
-  ) {
-    event.respondWith(
-      caches.match(request).then(cached => {
-        const networkFetch = fetch(request).then(response => {
-          caches.open(ASSETS_CACHE).then(cache => cache.put(request, response.clone()));
-          return response;
+  event.respondWith(
+    caches.match(request).then(cachedResponse => {
+      // Si hay red, traemos la última versión en segundo plano (Revalidate)
+      const fetchPromise = fetch(request).then(networkResponse => {
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+          return networkResponse;
+        }
+        // Actualizamos la caché con la versión fresca
+        const responseToCache = networkResponse.clone();
+        caches.open(cacheName).then(cache => {
+          cache.put(request, responseToCache);
         });
-        return cached || networkFetch;
-      })
-    );
-    return;
-  }
+        
+        return networkResponse;
+      }).catch(() => {
+        // Fallback offline
+        if (request.headers.get('accept')?.includes('text/html')) {
+          return caches.match('/index.html');
+        }
+      });
+
+      // Retornamos la respuesta en caché INMEDIATAMENTE (Instant Load)
+      // Si no está en caché, esperamos a la red.
+      return cachedResponse || fetchPromise;
+    })
+  );
 });
