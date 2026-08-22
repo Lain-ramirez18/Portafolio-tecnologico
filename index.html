@@ -86,7 +86,7 @@
   <!-- Performance: preload critical resources -->
   <link rel="preload" href="css/style.css" as="style" />
   <link rel="preload" href="js/main.js" as="script" />
-  <link rel="preload" href="assets/img/profile.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="assets/img/profile.webp" as="image" fetchpriority="high" type="image/webp" />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
   <link rel="dns-prefetch" href="https://cdn.vercel-insights.com" />
@@ -198,7 +198,11 @@
             <div class="profile-card-inner">
               <div class="profile-avatar-wrap">
                 <div class="profile-avatar">
-                  <img src="assets/img/profile.png" alt="Foto de perfil de Lain Sthid Ramirez Rueda" class="profile-img" loading="eager" fetchpriority="high" decoding="async" width="400" height="400" />
+                  <picture>
+                    <source srcset="assets/img/profile.avif" type="image/avif" />
+                    <source srcset="assets/img/profile.webp" type="image/webp" />
+                    <img src="assets/img/profile.png" alt="Foto de perfil de Lain Sthid Ramirez Rueda" class="profile-img" loading="eager" fetchpriority="high" decoding="async" width="400" height="400" />
+                  </picture>
                 </div>
                 <div class="avatar-badge" aria-hidden="true">
                   <i class="fa-solid fa-code"></i>
@@ -282,11 +286,11 @@
 
             <div class="about-card cert-section-card">
               <div class="about-card-icon" aria-hidden="true"><i class="fa-solid fa-award"></i></div>
-              <h3 data-i18n="about.cert_title">Certificaciones & Diplomados</h3>
+              <h3 data-i18n="about.cert_title">Certificaciones &amp; Diplomados</h3>
               
               <div class="cert-list-new">
                 <!-- Cert 3: Full Stack Diplomado -->
-                <div class="cert-item-card">
+                <div class="cert-item-card" role="group" aria-label="Diplomado Fundamentos de Full Stack">
                   <div class="cert-item-icon-zone">
                     <div class="cert-icon-bg cert-fullstack">
                       <i class="fa-solid fa-layer-group"></i>
@@ -297,15 +301,14 @@
                     <h4 class="cert-item-title" data-i18n="about.cert3_title">Fundamentos de Full Stack</h4>
                     <p class="cert-item-issuer">
                       <span data-i18n="about.cert3_issuer">Capacítate para el Empleo</span>
-                      <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="cert-inline-link" aria-label="LinkedIn">
-                        <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-                      </a>
                     </p>
                   </div>
+                  <button class="btn-view-cert" data-cert-url="assets/docs/Diplomado Fundamentos de Full Stack.pdf" data-cert-title="Diplomado — Fundamentos de Full Stack" data-cert-issuer="Capacítate para el Empleo" aria-label="Ver certificado de Full Stack">
+                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                  </button>
                 </div>
 
-                <!-- Cert 1: Front-End -->
-                <div class="cert-item-card">
+                <div class="cert-item-card" role="group" aria-label="Certificación Desarrollador Front-End">
                   <div class="cert-item-icon-zone">
                     <div class="cert-icon-bg cert-frontend">
                       <i class="fa-solid fa-code"></i>
@@ -316,15 +319,15 @@
                     <h4 class="cert-item-title" data-i18n="about.cert1_title">Desarrollador Front-End</h4>
                     <p class="cert-item-issuer">
                       <span data-i18n="about.cert1_issuer">Capacítate para el Empleo</span>
-                      <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="cert-inline-link" aria-label="LinkedIn">
-                        <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-                      </a>
                     </p>
                   </div>
+                  <button class="btn-view-cert" data-cert-url="" data-cert-title="Certificación — Desarrollador Front-End" data-cert-issuer="Capacítate para el Empleo" aria-label="Ver certificado de Desarrollador Front-End">
+                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                  </button>
                 </div>
 
                 <!-- Cert 2: Anthropic IA -->
-                <div class="cert-item-card">
+                <div class="cert-item-card" role="group" aria-label="AI Certification de Anthropic">
                   <div class="cert-item-icon-zone">
                     <div class="cert-icon-bg cert-ai">
                       <i class="fa-solid fa-robot"></i>
@@ -335,11 +338,11 @@
                     <h4 class="cert-item-title" data-i18n="about.cert2_title">AI Certification</h4>
                     <p class="cert-item-issuer">
                       <span data-i18n="about.cert2_issuer">Anthropic</span>
-                      <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="cert-inline-link" aria-label="LinkedIn">
-                        <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-                      </a>
                     </p>
                   </div>
+                  <button class="btn-view-cert" data-cert-url="" data-cert-title="AI Certification" data-cert-issuer="Anthropic" aria-label="Ver certificación de IA de Anthropic">
+                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -550,9 +553,10 @@
                   <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
                   <span data-i18n="proj.view_details">Ver detalles</span>
                 </button>
-                <a href="https://proassist-r1q6.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ver ProAssist en vivo">
-                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                </a>
+                <button class="btn btn-ghost btn-sm btn-project-demo" data-demo-url="https://proassist-r1q6.onrender.com" data-demo-title="ProAssist — AI Chatbot" aria-label="Probar demo de ProAssist en vivo">
+                  <i class="fa-solid fa-play" aria-hidden="true"></i>
+                  <span data-i18n="proj.live_demo">Demo</span>
+                </button>
                 <a href="https://github.com/Lain-ramirez18/proassist" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ver ProAssist en GitHub">
                   <i class="fa-brands fa-github" aria-hidden="true"></i>
                 </a>
@@ -737,6 +741,15 @@
           <span class="footer-name">Lain Sthid Ramirez Rueda</span>
         </p>
         <p class="footer-year">© <span id="footer-year"></span></p>
+        <!-- Network / PWA status badge -->
+        <div id="network-status-badge" class="network-badge" role="status" aria-live="polite" aria-label="Estado de conexión">
+          <span class="net-led" aria-hidden="true"></span>
+          <span class="net-text" data-i18n="pwa.online">PWA En Línea</span>
+        </div>
+        <!-- Sound Design toggle -->
+        <button id="sound-toggle" class="sound-toggle" aria-label="Activar o silenciar efectos de sonido" title="Efectos de sonido" aria-pressed="false">
+          <i class="fa-solid fa-volume-xmark" aria-hidden="true" id="sound-icon"></i>
+        </button>
       </div>
     </div>
   </footer>
@@ -788,6 +801,78 @@
       </div>
       <div class="project-modal-body" id="project-modal-body">
         <!-- Dynamic content injected by JS -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Certificate Viewer Dialog -->
+  <dialog id="cert-modal" class="cert-modal" aria-labelledby="cert-modal-title" aria-modal="true">
+    <div class="cert-modal-content">
+      <div class="cert-modal-header">
+        <div class="cert-modal-meta">
+          <span class="cert-modal-issuer" id="cert-modal-issuer">Capacítate para el Empleo</span>
+          <h3 id="cert-modal-title" class="cert-modal-title">Certificado</h3>
+        </div>
+        <div class="cert-modal-actions">
+          <a id="cert-modal-download" href="#" download class="btn btn-primary btn-sm" aria-label="Descargar certificado">
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
+            <span data-i18n="cert.download">Descargar</span>
+          </a>
+          <button id="cert-modal-close" class="cv-dialog-close" aria-label="Cerrar visor de certificado">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="cert-modal-body">
+        <div class="cert-modal-iframe-wrap">
+          <div class="cert-modal-loading" id="cert-modal-loading" aria-label="Cargando certificado">
+            <div class="cert-loader-ring"></div>
+            <span data-i18n="cert.loading">Cargando certificado...</span>
+          </div>
+          <iframe id="cert-modal-iframe" class="cert-modal-iframe" title="Visor de Certificado" loading="lazy" aria-label="Documento de certificado"></iframe>
+          <!-- Fallback for certs without a PDF -->
+          <div class="cert-modal-no-pdf" id="cert-modal-no-pdf" hidden>
+            <i class="fa-solid fa-certificate" aria-hidden="true"></i>
+            <p data-i18n="cert.no_pdf">El certificado se puede ver en LinkedIn</p>
+            <a href="https://www.linkedin.com/in/lain-sthid-ramirez-rueda" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+              <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Live Demo Preview Dialog -->
+  <dialog id="demo-modal" class="demo-modal" aria-labelledby="demo-modal-title" aria-modal="true">
+    <div class="demo-modal-content">
+      <div class="demo-modal-titlebar">
+        <!-- Fake browser chrome -->
+        <div class="demo-browser-controls" aria-hidden="true">
+          <span class="demo-dot demo-dot--red"></span>
+          <span class="demo-dot demo-dot--yellow"></span>
+          <span class="demo-dot demo-dot--green"></span>
+        </div>
+        <div class="demo-url-bar" aria-hidden="true">
+          <i class="fa-solid fa-lock"></i>
+          <span id="demo-url-display">https://proassist-r1q6.onrender.com</span>
+        </div>
+        <div class="demo-controls">
+          <a id="demo-open-external" href="#" target="_blank" rel="noopener noreferrer" class="demo-ctrl-btn" aria-label="Abrir en pestaña nueva">
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
+          <button id="demo-modal-close" class="cv-dialog-close" aria-label="Cerrar visor de demo">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="demo-modal-body">
+        <div class="demo-loading" id="demo-loading">
+          <div class="demo-loader-ring"></div>
+          <p class="demo-loading-text"><span data-i18n="demo.loading">Iniciando contenedor en Render</span><span class="demo-dots-anim">...</span></p>
+          <p class="demo-loading-sub" data-i18n="demo.loading_sub">Esto puede tomar hasta 30 segundos la primera vez</p>
+        </div>
+        <iframe id="demo-iframe" class="demo-iframe" title="Demo en vivo de ProAssist" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
       </div>
     </div>
   </dialog>

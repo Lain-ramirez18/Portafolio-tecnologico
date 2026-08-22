@@ -1130,6 +1130,355 @@ const CounterAnim = (() => {
   };
 })();
 
+/* ══════════════ 25. CERTIFICATE VIEWER MODAL ══════════════ */
+const CertViewer = (() => {
+  const dialog   = $('#cert-modal');
+  const iframeEl = $('#cert-modal-iframe');
+  const loading  = $('#cert-modal-loading');
+  const noPdf    = $('#cert-modal-no-pdf');
+  const titleEl  = $('#cert-modal-title');
+  const issuerEl = $('#cert-modal-issuer');
+  const dlBtn    = $('#cert-modal-download');
+  const closeBtn = $('#cert-modal-close');
+
+  function open(certUrl, certTitle, certIssuer) {
+    if (!dialog) return;
+
+    titleEl.textContent  = certTitle  || 'Certificado';
+    issuerEl.textContent = certIssuer || '';
+
+    // Reset state
+    iframeEl.src = '';
+    iframeEl.style.opacity = '0';
+    loading?.classList.remove('hidden');
+    noPdf?.setAttribute('hidden', '');
+
+    if (certUrl) {
+      dlBtn.href = certUrl;
+      dlBtn.removeAttribute('hidden');
+
+      iframeEl.src = certUrl + '#toolbar=0&view=FitH';
+
+      /* Hide loader on iframe load */
+      const onLoad = () => {
+        loading?.classList.add('hidden');
+        iframeEl.style.opacity = '1';
+        iframeEl.removeEventListener('load', onLoad);
+      };
+      iframeEl.addEventListener('load', onLoad);
+
+      /* Fallback: if iframe doesn't load in 10s (e.g., PDF blocked), show no-pdf */
+      const fallbackTimer = setTimeout(() => {
+        if (!loading?.classList.contains('hidden')) {
+          loading?.classList.add('hidden');
+          iframeEl.style.display = 'none';
+          noPdf?.removeAttribute('hidden');
+        }
+      }, 10000);
+      iframeEl.addEventListener('load', () => clearTimeout(fallbackTimer), { once: true });
+
+    } else {
+      /* No PDF available — show LinkedIn fallback */
+      dlBtn.setAttribute('hidden', '');
+      loading?.classList.add('hidden');
+      noPdf?.removeAttribute('hidden');
+    }
+
+    dialog.showModal();
+  }
+
+  return {
+    init() {
+      if (!dialog) return;
+
+      /* Bind all .btn-view-cert buttons */
+      $$('.btn-view-cert').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const url    = btn.getAttribute('data-cert-url')   || '';
+          const title  = btn.getAttribute('data-cert-title') || 'Certificado';
+          const issuer = btn.getAttribute('data-cert-issuer')|| '';
+          open(url, title, issuer);
+        });
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        dialog.close();
+        /* Stop iframe to free resources */
+        iframeEl.src = '';
+      });
+
+      /* Close on backdrop click */
+      dialog.addEventListener('click', (e) => {
+        const r = dialog.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right ||
+            e.clientY < r.top  || e.clientY > r.bottom) {
+          dialog.close();
+          iframeEl.src = '';
+        }
+      });
+
+      /* Transition iframe opacity */
+      iframeEl.style.transition = 'opacity 0.4s';
+    }
+  };
+})();
+
+/* ══════════════ 26. LIVE DEMO PREVIEW MODAL ══════════════ */
+const LiveDemoModal = (() => {
+  const dialog     = $('#demo-modal');
+  const iframeEl   = $('#demo-iframe');
+  const loading    = $('#demo-loading');
+  const urlDisplay = $('#demo-url-display');
+  const openExt    = $('#demo-open-external');
+  const closeBtn   = $('#demo-modal-close');
+
+  let loadTimeout = null;
+
+  function open(demoUrl, demoTitle) {
+    if (!dialog) return;
+
+    /* On mobile < 520px, open external to avoid bad iframe UX */
+    if (window.innerWidth < 520) {
+      window.open(demoUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    if (urlDisplay) urlDisplay.textContent = demoUrl;
+    if (openExt) openExt.href = demoUrl;
+
+    /* Reset state — inject src ONLY on open (lazy) */
+    iframeEl.src = '';
+    iframeEl.style.opacity = '0';
+    loading?.classList.remove('hidden');
+
+    dialog.showModal();
+
+    /* Small delay before injecting src to let dialog paint first */
+    setTimeout(() => {
+      iframeEl.src = demoUrl;
+    }, 80);
+
+    const onLoad = () => {
+      if (loadTimeout) clearTimeout(loadTimeout);
+      loading?.classList.add('hidden');
+      iframeEl.style.opacity = '1';
+    };
+    iframeEl.addEventListener('load', onLoad, { once: true });
+
+    /* Render containers can take up to 60s to cold-start */
+    loadTimeout = setTimeout(() => {
+      loading?.classList.add('hidden');
+      iframeEl.style.opacity = '1';
+    }, 60000);
+  }
+
+  function close() {
+    if (!dialog) return;
+    if (loadTimeout) clearTimeout(loadTimeout);
+    iframeEl.src = ''; /* free resource */
+    dialog.close();
+  }
+
+  return {
+    init() {
+      if (!dialog) return;
+
+      iframeEl.style.transition = 'opacity 0.5s';
+
+      $$('.btn-project-demo').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const url   = btn.getAttribute('data-demo-url')   || '';
+          const title = btn.getAttribute('data-demo-title') || 'Demo';
+          open(url, title);
+        });
+      });
+
+      closeBtn?.addEventListener('click', close);
+
+      dialog.addEventListener('click', (e) => {
+        const r = dialog.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right ||
+            e.clientY < r.top  || e.clientY > r.bottom) {
+          close();
+        }
+      });
+    }
+  };
+})();
+
+/* ══════════════ 27. NETWORK STATUS BADGE ══════════════ */
+const NetworkStatus = (() => {
+  const badge   = $('#network-status-badge');
+  const led     = badge?.querySelector('.net-led');
+  const text    = badge?.querySelector('.net-text');
+
+  const lang = () => localStorage.getItem('lain-lang-v2') || 'es';
+
+  const LABELS = {
+    online:  { es: 'PWA En Línea',          en: 'PWA Online' },
+    offline: { es: 'Modo Offline (PWA v3)', en: 'Offline Mode (PWA v3)' },
+    restored:{ es: 'Conexión restablecida', en: 'Connection restored' },
+  };
+
+  function update(isOnline) {
+    if (!badge) return;
+    const l = lang();
+    if (isOnline) {
+      badge.classList.remove('offline');
+      badge.classList.add('online');
+      if (text) text.textContent = LABELS.online[l];
+    } else {
+      badge.classList.remove('online');
+      badge.classList.add('offline');
+      if (text) text.textContent = LABELS.offline[l];
+      ToastManager.show(l === 'es'
+        ? '📶 Sin conexión — portafolio PWA activo'
+        : '📶 Offline — PWA portfolio active');
+    }
+  }
+
+  return {
+    init() {
+      if (!badge) return;
+      /* Set initial state immediately */
+      update(navigator.onLine);
+
+      window.addEventListener('online', () => {
+        update(true);
+        const l = lang();
+        ToastManager.show(LABELS.restored[l]);
+      });
+
+      window.addEventListener('offline', () => update(false));
+    }
+  };
+})();
+
+/* ══════════════ 28. SOUND DESIGN (Web Audio API) ══════════════ */
+const SoundDesign = (() => {
+  const KEY   = 'lain-sound-enabled';
+  const btn   = $('#sound-toggle');
+  const icon  = $('#sound-icon');
+
+  let ctx = null;
+  let enabled = false;
+
+  /* Lazy-init AudioContext on first user gesture */
+  function getCtx() {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  /* Generic tone generator: freq Hz, duration ms, type waveform, vol 0-1 */
+  function tone(freq, duration = 80, type = 'sine', vol = 0.08, freqEnd = null) {
+    if (!enabled) return;
+    try {
+      const c = getCtx();
+      const osc  = c.createOscillator();
+      const gain = c.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, c.currentTime);
+      if (freqEnd !== null) {
+        osc.frequency.linearRampToValueAtTime(freqEnd, c.currentTime + duration / 1000);
+      }
+
+      gain.gain.setValueAtTime(vol, c.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + duration / 1000);
+
+      osc.connect(gain);
+      gain.connect(c.destination);
+      osc.start(c.currentTime);
+      osc.stop(c.currentTime + duration / 1000);
+    } catch (_) { /* AudioContext unavailable — silent fail */ }
+  }
+
+  /* Named sound presets */
+  const sounds = {
+    click:      () => tone(400, 50,  'sine',     0.06, 300),
+    modalOpen:  () => tone(300, 120, 'sine',     0.07, 480),
+    modalClose: () => tone(480, 100, 'sine',     0.05, 260),
+    toast:      () => tone(520, 90,  'triangle', 0.05, 600),
+    terminal:   () => tone(550, 30,  'square',   0.04),
+    themeToggle:() => tone(360, 140, 'sine',     0.06, 520),
+    copy:       () => { tone(440, 60, 'sine', 0.05); setTimeout(() => tone(660, 60, 'sine', 0.04), 70); },
+  };
+
+  function setEnabled(val) {
+    enabled = val;
+    localStorage.setItem(KEY, val ? '1' : '0');
+    if (btn) {
+      btn.setAttribute('aria-pressed', val ? 'true' : 'false');
+    }
+    if (icon) {
+      icon.className = val ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+    }
+    if (val) sounds.click();
+  }
+
+  return {
+    sounds,
+    init() {
+      /* Default: off (respect user preference) */
+      const stored = localStorage.getItem(KEY);
+      setEnabled(stored === '1');
+
+      btn?.addEventListener('click', () => {
+        setEnabled(!enabled);
+      });
+
+      /* Hook into existing interactive elements */
+      /* Theme toggle */
+      $('#theme-toggle')?.addEventListener('click', () => sounds.themeToggle());
+
+      /* Modal opens — Terminal */
+      $('#btn-open-terminal')?.addEventListener('click', () => sounds.modalOpen());
+      $('#terminal-dialog-close')?.addEventListener('click', () => sounds.modalClose());
+
+      /* Modal opens — CV */
+      $('#btn-download-cv')?.addEventListener('click', () => sounds.modalOpen());
+      $('#cv-dialog-close')?.addEventListener('click', () => sounds.modalClose());
+
+      /* Cert modal */
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-view-cert')) sounds.modalOpen();
+      });
+
+      /* Demo modal */
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-project-demo')) sounds.modalOpen();
+      });
+
+      /* Copy buttons — after clipboard write */
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.clc-copy-btn')) {
+          setTimeout(() => sounds.copy(), 100);
+        }
+      });
+
+      /* Terminal typing */
+      $('#terminal-input')?.addEventListener('keydown', () => {
+        if (enabled) tone(600, 18, 'square', 0.025);
+      });
+
+      /* Project detail buttons */
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-project-detail')) sounds.modalOpen();
+      });
+
+      /* Toast hook — ToastManager calls ToastManager.show() already; we hook it via a proxy */
+      const origShow = ToastManager.show.bind(ToastManager);
+      ToastManager.show = (msg) => {
+        origShow(msg);
+        sounds.toast();
+      };
+    }
+  };
+})();
+
 /* ══════════════ BOOT ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   ThemeManager.init();
@@ -1153,9 +1502,14 @@ document.addEventListener('DOMContentLoaded', () => {
   AITerminal.init();
   ProjectDetailModal.init();
   CounterAnim.init();
+  CertViewer.init();
+  LiveDemoModal.init();
+  NetworkStatus.init();
+  SoundDesign.init();
   initA11y();
   setYear();
 
   document.body.classList.add('js-loaded');
 });
+
 

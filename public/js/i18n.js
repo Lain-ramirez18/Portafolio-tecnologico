@@ -109,7 +109,19 @@ const translations = {
 
     'terminal.title': 'LSRR AI Agent CLI v3.0',
     'terminal.welcome': 'Bienvenido a LSRR Terminal v3.0. Escribe "help" para ver los comandos disponibles.',
-    'terminal.prompt_label': 'Ingresa un comando o prompt...'
+    'terminal.prompt_label': 'Ingresa un comando o prompt...',
+
+    'proj.live_demo': 'Demo',
+
+    'cert.download': 'Descargar',
+    'cert.loading': 'Cargando certificado...',
+    'cert.no_pdf': 'El certificado se puede ver en LinkedIn',
+
+    'demo.loading': 'Iniciando contenedor en Render',
+    'demo.loading_sub': 'Esto puede tomar hasta 30 segundos la primera vez',
+
+    'pwa.online': 'PWA En Línea',
+    'pwa.offline': 'Modo Offline (PWA v3)'
   },
   en: {
     'nav.about': 'About',
@@ -214,7 +226,19 @@ const translations = {
 
     'terminal.title': 'LSRR AI Agent CLI v3.0',
     'terminal.welcome': 'Welcome to LSRR Terminal v3.0. Type "help" for available commands.',
-    'terminal.prompt_label': 'Enter a command or prompt...'
+    'terminal.prompt_label': 'Enter a command or prompt...',
+
+    'proj.live_demo': 'Demo',
+
+    'cert.download': 'Download',
+    'cert.loading': 'Loading certificate...',
+    'cert.no_pdf': 'Certificate available on LinkedIn',
+
+    'demo.loading': 'Starting container on Render',
+    'demo.loading_sub': 'This may take up to 30 seconds on first load',
+
+    'pwa.online': 'PWA Online',
+    'pwa.offline': 'Offline Mode (PWA v3)'
   }
 };
 
