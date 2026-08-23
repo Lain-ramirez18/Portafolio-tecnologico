@@ -13,7 +13,7 @@ interface Cert {
  *  no reset-on-prop-change effect needed. */
 function CertBody({ cert, isOpen }: { cert: Cert; isOpen: boolean }) {
   const { t } = useLang();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !!cert.url);
   const [noPdf, setNoPdf] = useState(!cert.url);
   const [iframeVisible, setIframeVisible] = useState(false);
   const fallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

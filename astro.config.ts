@@ -90,7 +90,7 @@ export default defineConfig({
         ],
       },
       manifest: false, // manifest.json is hand-authored in public/
-      includeAssets: ['assets/img/*.svg', 'assets/img/favicon.png'],
+      includeAssets: ['assets/img/*.svg', 'assets/img/favicon-*.png'],
     }),
   ],
   vite: {
