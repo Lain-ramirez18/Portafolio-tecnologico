@@ -19,10 +19,12 @@ function obfuscatePlugin(): Plugin {
         if (file.type === 'chunk' && file.fileName.endsWith('.js')) {
           const result = JavaScriptObfuscator.obfuscate(file.code, {
             compact: true,
-            controlFlowFlattening: true,
-            controlFlowFlatteningThreshold: 0.75,
-            deadCodeInjection: true,
-            deadCodeInjectionThreshold: 0.4,
+            /* controlFlowFlattening + deadCodeInjection were the dominant size cost — together they
+             * inflated one chunk from 184KB to 1.44MB (verified via SKIP_OBFUSCATION=1 comparison).
+             * Dropped for load speed; splitStrings/stringArray/selfDefending/hexadecimal identifiers
+             * still make the output meaningfully harder to read than plain minification. */
+            controlFlowFlattening: false,
+            deadCodeInjection: false,
             debugProtection: false,
             disableConsoleOutput: true,
             identifierNamesGenerator: 'hexadecimal',

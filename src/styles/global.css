@@ -74,7 +74,7 @@
 
 /* ──────────── LIGHT MODE ──────────── */
 [data-theme="light"] {
-  --clr-primary:        #006B61;        /* darker teal — WCAG AA on white */
+  --clr-primary:        #005850;        /* darker teal — 8.4:1 on white, WCAG AAA */
   --clr-primary-dim:    #004D45;
   --clr-primary-glow:   rgba(0,107,97,0.1);
   --clr-secondary:      #4A32D4;

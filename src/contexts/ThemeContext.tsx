@@ -3,9 +3,13 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 const STORAGE_KEY = 'lain-theme-v2';
 type Theme = 'dark' | 'light';
 
+/** Reads the attribute the anti-flash inline script (in index.astro) already set on <html>
+ *  before this ever runs, instead of re-deriving it from localStorage independently — avoids
+ *  a mismatch flash and keeps theme detection in one place. Throws under SSR (no `document`
+ *  in Node), same as the localStorage read it replaces, hence the try/catch. */
 function detectInitialTheme(): Theme {
   try {
-    return localStorage.getItem(STORAGE_KEY) === 'light' ? 'light' : 'dark';
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
   } catch {
     return 'dark';
   }

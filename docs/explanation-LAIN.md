@@ -203,3 +203,13 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     - Los repos que aparecen no tienen una descripción optimizada para que la gente entienda rápido qué hacen ni palabras clave que ayuden a que te encuentren.
 
     Te paso por el chat una lista concreta de qué cambiar y te ayudo a hacerlo si querés.
+
+28. **Revisión completa del código y 3 arreglos (Fase 13, corrección):**
+
+    Me pediste que revisara la página a fondo por más bugs o mejoras. Encontré 3 cosas reales:
+
+    - **El ícono de sol/luna podía parpadear mal un instante al cargar:** si alguien había elegido el modo claro antes, el ícono del botón de tema podía mostrarse al revés por una fracción de segundo antes de corregirse solo. Era un detalle de "doble fuente de verdad" en el código (dos lugares distintos calculaban el tema de forma separada, y coincidían por casualidad). Ahora hay un solo lugar que decide, así no puede haber desacuerdo.
+    - **El color principal en modo claro no cumplía el estándar más alto de accesibilidad (AAA) que exige tu propio `CLAUDE.md`** — el propio código tenía un comentario admitiéndolo ("WCAG AA", no AAA). Lo oscurecí levemente (de un teal a otro muy similar) para que cumpla con margen cómodo, sin que se note el cambio a simple vista.
+    - **La ofuscación de tu código (para que no se pueda copiar fácil) estaba multiplicando el peso del archivo principal por 6-8 veces** — un archivo que pesa 184 KB sin ofuscar terminaba pesando 1.44 MB ofuscado. Es probablemente la causa real de por qué el aviso de "archivo muy pesado" seguía apareciendo incluso después de dividir los diálogos en la Fase 13. Te pregunté qué preferías y elegiste priorizar velocidad — reduje las dos opciones de ofuscación más pesadas (dejando las demás intactas) y el archivo bajó a 596 KB, sigue ofusfucado y protegido, solo menos "inflado" artificialmente.
+
+    También revisé y descarté a propósito otras dos cosas que parecían tentadoras pero no valían la pena tocar ahora (el canvas del hero en pantallas de alta resolución, y una regla de seguridad de imágenes ya suficientemente segura) — para no arriesgar nada sin necesidad real.
