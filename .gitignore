@@ -12,6 +12,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Astro / Vite build output
+dist/
+.astro/
+
 # Portfolio Specific
 portfolio_v8.zip
 portfolio2/

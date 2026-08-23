@@ -5,7 +5,9 @@ This file documents the technical skills and proficiencies implemented and showc
 ## Frontend & UI
 - **HTML5 Living Standard**: Semantic HTML, accessibility (ARIA), WCAG AAA compliance.
 - **CSS3 / MD3**: Material Design 3 guidelines, modern properties (custom properties, container queries, grid/flexbox), animations.
-- **JavaScript**: ES6+, modular architecture, performance optimization (obfuscation/minification).
+- **React 19 & TypeScript**: Strict-mode typed components, Context-based state, custom hooks architecture.
+- **Astro (SSG)**: Static-site generation with a hydrated React island, code-splitting, PWA integration.
+- **JavaScript**: ES6+, performance optimization (obfuscation/minification).
 
 ## Backend & Scripting
 - **Python**: Automation, backend scripting.

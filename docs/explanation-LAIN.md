@@ -8,15 +8,18 @@ He creado este documento en español, claro y sencillo, para que entiendas perfe
 
 Tu portafolio está estructurado de manera muy limpia y profesional. Aquí tienes la lista de carpetas y archivos principales y su función explicada de forma fácil:
 
-### 📁 Carpetas Principales
+> [!NOTE]
+> **Actualización (Fase 12):** desde la migración a React + TypeScript, las carpetas `css/` y `js/` de la raíz **ya no existen** — todo el código fuente ahora vive dentro de `src/`. Dejo la explicación de abajo como referencia histórica de qué hacía cada cosa; en el punto 19 (al final del documento) te explico exactamente a dónde se movió cada pieza y por qué.
+
+### 📁 Carpetas Principales (Estructura anterior — ver punto 19 para la actual)
 *   **`docs/`**: Contiene la documentación del proyecto (las explicaciones técnicas y para el usuario, como este mismo archivo).
-*   **`css/`**: Contiene la "pintura y decoración" de tu web.
-    *   `style.css`: Aquí están definidos los colores (modo claro y oscuro), las fuentes, el tamaño de los textos y las animaciones de tu sitio.
-*   **`js/`**: Contiene el "cerebro y la lógica" de tu web.
-    *   `main.js`: Controla las interacciones dinámicas (como el botón para cambiar de modo claro/oscuro, el menú del celular y las animaciones al hacer scroll).
-    *   `i18n.js`: Es el motor de traducción. Se encarga de cambiar instantáneamente todo el contenido de la web entre **Español** e **Inglés** cuando presionas el botón.
-*   **`assets/img/`**: Es el "baúl" de tus imágenes.
-    *   Aquí se encuentra tu foto de perfil (`profile.png`), tu favicon personalizado con iniciales (`favicon.png` y `favicon.svg`) y otros recursos gráficos.
+*   **`css/`** *(ya no existe, ver punto 19)*: Contenía la "pintura y decoración" de tu web.
+    *   `style.css`: Aquí estaban definidos los colores (modo claro y oscuro), las fuentes, el tamaño de los textos y las animaciones de tu sitio.
+*   **`js/`** *(ya no existe, ver punto 19)*: Contenía el "cerebro y la lógica" de tu web.
+    *   `main.js`: Controlaba las interacciones dinámicas (como el botón para cambiar de modo claro/oscuro, el menú del celular y las animaciones al hacer scroll).
+    *   `i18n.js`: Era el motor de traducción. Se encargaba de cambiar instantáneamente todo el contenido de la web entre **Español** e **Inglés** cuando presionas el botón.
+*   **`assets/img/`**: Es el "baúl" de tus imágenes (ahora vive dentro de `public/assets/img/`).
+    *   Aquí se encuentra tu foto de perfil (`profile.png`/`.webp`/`.avif`), tu favicon personalizado con iniciales (`favicon.png` y `favicon.svg`) y otros recursos gráficos.
 
 ---
 
@@ -28,7 +31,7 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
 | :--- | :--- | :--- |
 | **`GEMINI.md`** | Instrucciones para la IA (Memoria). | Contiene las reglas y flujos de trabajo que yo (la IA) debo seguir. |
 | **`index.html`** | El esqueleto de tu casa. | Contiene la estructura básica de la página: los textos, las secciones (Sobre mí, Habilidades, Proyectos, Contacto) y los enlaces. |
-| **`sw.js`** | El Service Worker (asistente offline). | Guarda una copia de tu página en el celular/computadora del visitante. Esto hace que tu web cargue **instantáneamente** en su segunda visita e incluso funcione sin internet. |
+| **`sw.js`** *(ahora generado automáticamente, ver punto 19)* | El Service Worker (asistente offline). | Guarda una copia de tu página en el celular/computadora del visitante. Esto hace que tu web cargue **instantáneamente** en su segunda visita e incluso funcione sin internet. |
 | **`manifest.json`** | La ficha técnica de tu App. | Le dice a los celulares Android/iOS que tu web se puede **"Instalar"** como una aplicación móvil, creando un icono de acceso directo en su pantalla. |
 | **`vercel.json`** | Las reglas para tu servidor (Vercel). | Configura la seguridad de tu página en la nube. Bloquea ataques de hackers y le dice a los servidores cómo guardar tus archivos para que carguen rápido. |
 | **`_headers`** | Reglas de seguridad extra. | Es un archivo de respaldo que le indica a los navegadores web qué políticas de seguridad aplicar al cargar tu sitio. |
@@ -119,3 +122,34 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     - **Demo en Vivo de ProAssist (Vista Previa Iframe):** La tarjeta del proyecto ProAssist tiene un nuevo botón "Demo". Al hacer clic, se abre una ventana flotante que simula un navegador real (con los tres puntitos de color como Chrome/Safari) y carga ProAssist directamente adentro, sin necesidad de abrir nuevas pestañas. En móvil pequeño, abre en pestaña nueva para una mejor experiencia.
     - **Indicador de Estado de Red y PWA:** En el pie de la página apareció un badge discreto con un LED verde pulsante que dice "PWA En Línea". Si el visitante pierde la conexión a internet, el LED cambia a amarillo parpadeante y el texto dice "Modo Offline" con una notificación Toast. Al reconectarse, el badge vuelve a verde y muestra "Conexión restablecida". El portafolio sigue funcionando perfectamente sin internet gracias a la PWA.
     - **Efectos de Sonido de UI (Web Audio):** Se agregó un botón 🔊 / 🔇 en el footer. Al activarlo, la web produce micro-sonidos suaves al abrir modales, cambiar el tema oscuro/claro, copiar al portapapeles y escribir en la terminal. Usa tecnología nativa del navegador (Web Audio API), por lo que no descarga ningún archivo de audio — ¡ocupa 0 KB adicionales! Está desactivado por defecto y el ajuste se guarda entre visitas.
+
+19. **Migración Completa a React + TypeScript (Fase 12):**
+
+    Este fue el cambio más grande hasta ahora: **reconstruimos todo el motor de tu portafolio por dentro**, sin cambiar cómo se ve ni se siente para tus visitantes. Es como si le hubiéramos cambiado el motor a un carro manteniendo exactamente la misma carrocería y pintura.
+
+    - **¿Por qué?** Pediste implementar "lo último que se pueda, como React con TypeScript" con las mejores prácticas de agosto de 2026. El código anterior (JavaScript "a mano", sin tipos) funcionaba, pero era más difícil de mantener y no tenía ninguna red de seguridad automática contra errores tontos (como escribir mal el nombre de una variable).
+    - **¿Qué es React?** Es la tecnología que usan Facebook, Instagram, Netflix y la mayoría de las apps web modernas del mundo para construir interfaces. En vez de manipular la página "a mano" (buscar un botón y decirle qué hacer paso a paso), ahora describimos **cómo se debe ver cada parte** y React se encarga de actualizar solo lo necesario cuando algo cambia — más rápido y con muchos menos bugs.
+    - **¿Qué es TypeScript?** Es JavaScript con "corrector ortográfico incorporado". Antes de subir cualquier cambio, una herramienta (`tsc`) revisa **todo** el código y te avisa si algo está mal escrito o si le falta una pieza — como una traducción a la que le falta una palabra — **antes** de que el visitante lo vea roto. Esto ya atrapó varios problemas reales durante la migración, antes de que llegaran a producción.
+    - **Tu diseño no cambió:** Los colores, las fuentes, las animaciones, el modo claro/oscuro, los modales, el terminal de IA, el filtro de habilidades — todo se ve y funciona exactamente igual. Lo que cambió es *cómo está construido por dentro*.
+    - **Carpetas nuevas — ¿a dónde se movió todo?**
+        - `css/style.css` → ahora es `src/styles/global.css` (mismos colores y animaciones, solo reorganizado).
+        - `js/main.js` y `js/i18n.js` → se dividieron en piezas pequeñas y organizadas dentro de `src/` (`hooks/`, `contexts/`, `components/`, `i18n/`). Cada botón, modal o animación ahora es un archivo propio, fácil de encontrar y de arreglar sin miedo a romper otra cosa.
+        - `public/` (que antes era una copia vieja del sitio, subida por error a GitHub) → ahora es solo la carpeta de "cosas que se copian tal cual" (imágenes, PDFs, `manifest.json`), como debe ser.
+        - `sw.js` (el asistente offline, antes escrito a mano) → ahora se **genera automáticamente** en cada build por una herramienta especializada (Workbox), porque los archivos nuevos llevan un código único en el nombre y una lista escrita a mano ya no podía mantenerse al día sola.
+    - **Bonus — arreglamos varios bugs reales de paso:**
+        1. La **Demo en Vivo de ProAssist** estaba bloqueada silenciosamente en producción por una regla de seguridad (CSP) que nunca se actualizó — ya funciona.
+        2. Había un **formulario de contacto fantasma**: código completo para enviar un formulario que ya no existía en la página (se reemplazó por las tarjetas de WhatsApp/email/LinkedIn hace tiempo) — se eliminó ese código muerto.
+        3. La **ofuscación de tu código JavaScript** (para que nadie pueda copiarlo fácilmente) estaba configurada pero nunca se ejecutaba realmente — ahora sí ofusca de verdad, lo verifiqué comparando el código fuente con el código final.
+        4. Había un **botón de menú hamburguesa** invisible que nunca se podía usar en ningún tamaño de pantalla (la barra inferior ya cubre el menú móvil) — se quitó.
+        5. Las animaciones con JavaScript (partículas del hero, cursor personalizado, inclinación 3D) ahora **respetan la preferencia de "reducir movimiento"** del sistema operativo, igual que ya lo hacían las animaciones de CSS, y el fondo de partículas **se pausa solo** cuando cambias de pestaña, ahorrando batería.
+    - **Red de seguridad nueva:** Se agregaron pruebas automáticas (con una herramienta llamada Vitest) que abren tu web "virtualmente" y comprueban que el modal de CV se abra y cierre, que la terminal de IA responda al comando `help`, y que el filtro de habilidades funcione — así, si algo se rompe en el futuro, lo sabremos antes de publicarlo.
+
+20. **Carga bajo demanda de los diálogos + Motor Astro para que Google vea tu contenido de inmediato (Fase 13):**
+
+    Después de la migración a React, te pregunté si valía la pena mejorar algo más reciente, y señalé dos cosas concretas. Dijiste que sí a ambas.
+
+    - **Los 5 diálogos (CV, Terminal IA, detalle de proyecto, certificado, demo en vivo) ahora cargan "bajo demanda":** antes, el código de los 5 se descargaba siempre, aunque el visitante nunca abriera ninguno. Ahora cada uno se descarga **solo la primera vez que lo abrís** — y una vez abierto, se queda listo para las siguientes veces (así el historial de comandos de la Terminal IA, por ejemplo, no se borra cada vez que la cerrás). Esto reduce lo que el navegador tiene que descargar y ejecutar antes de que la página esté lista para usarse.
+    - **Se agregó Astro, un motor que genera el HTML real de tu página en el momento de publicarla (`npm run build`)**, en vez de dejar que el navegador del visitante tenga que "armar" la página desde cero con JavaScript antes de mostrar nada. Antes (con React solo), la página llegaba vacía y JavaScript la rellenaba — ahora llega **ya con tu nombre, tu foto, tus secciones y tus textos visibles de entrada**, y React solo se encarga de hacerla interactiva (botones, modales, tema oscuro/claro) apenas termina de cargar. Esto es justo el problema que te mencioné cuando hablamos de SEO: Google y las redes sociales ahora ven tu contenido real de inmediato, sin depender de que su robot ejecute JavaScript.
+    - **Por qué no dividí la página en pedacitos independientes:** la forma "más pura" de usar Astro sería partir la página en trozos que cargan cada uno por su cuenta (por ejemplo, el menú por un lado, la sección de habilidades por otro). Pero tu web comparte información entre casi todos sus componentes (el idioma, el tema, los sonidos, qué diálogo está abierto) a través de un sistema central — partirla en pedacitos independientes habría significado reconstruir ese sistema central desde cero, con mucho más riesgo de romper algo, para una ganancia de velocidad marginal. Envolver toda la página como un solo bloque que Astro pre-renderiza fue el camino recomendado oficialmente por Astro para este caso, y consigue el objetivo real (que Google vea el contenido) con un cambio mucho más seguro.
+    - **Un bug real que encontré y arreglé en el camino:** al activar por primera vez el pre-renderizado, dos partes de tu web que leían "¿el visitante está conectado a internet?" y "¿en qué idioma prefiere leer?" fallaban silenciosamente durante la construcción de la página (porque esa lógica nunca antes había corrido fuera de un navegador real). El resultado, si no lo hubiera revisado, habría sido que **tu página se publicara mostrando por error el aviso de "Modo Offline" y el menú en inglés** para todo el mundo, sin importar su idioma o conexión real. Lo detecté revisando el HTML final generado (no solo confiando en que "no diera error"), y lo corregí para que la versión publicada siempre arranque en español y "en línea", como corresponde.
+    - **Resultado medible:** antes del cambio, tu paquete principal de JavaScript pesaba 1.8MB de un solo bloque. Ahora los 5 diálogos son piezas separadas (15–27 KB cada una) que solo se descargan si se usan, y el contenido de tu página ya no depende de que ese JavaScript termine de cargar para ser visible.
