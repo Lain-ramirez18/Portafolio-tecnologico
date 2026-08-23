@@ -19,6 +19,7 @@ export function useCustomCursor() {
     let cy = 0;
     let rafId = 0;
     let running = false;
+    let hasMoved = false;
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -48,6 +49,17 @@ export function useCustomCursor() {
       fy = e.clientY;
       cursor.style.left = `${e.clientX}px`;
       cursor.style.top = `${e.clientY}px`;
+      if (!hasMoved) {
+        /* Snap the ring straight to the cursor on the first move instead of
+         * lerping in from (0,0) — avoids a visible "fly-in" from the corner. */
+        hasMoved = true;
+        cx = fx;
+        cy = fy;
+        follower.style.left = `${cx}px`;
+        follower.style.top = `${cy}px`;
+      }
+      cursor.classList.add('cursor--visible');
+      follower.classList.add('cursor--visible');
       startLoop();
     };
     document.addEventListener('mousemove', onMouseMove, { passive: true });

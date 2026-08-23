@@ -254,8 +254,15 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
     /* translate set via JS directly — no CSS transition on position */
     transform: translate(-50%, -50%);
     display: block;
+    /* Hidden until the first mousemove gives it a real position — otherwise it
+       renders frozen at (0,0) on load, reading as a stuck cursor. */
+    visibility: hidden;
     will-change: left, top;
     transition: width var(--dur-fast), height var(--dur-fast), opacity var(--dur-fast);
+  }
+
+  .cursor.cursor--visible {
+    visibility: visible;
   }
 
   /* Ring follows with very short lerp — barely noticeable, feels snappy */
@@ -268,12 +275,17 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
     z-index: 9998;
     transform: translate(-50%, -50%);
     display: block;
+    visibility: hidden;
     will-change: left, top;
     opacity: 0.45;
     transition: width var(--dur-base) var(--ease-out),
                 height var(--dur-base) var(--ease-out),
                 opacity var(--dur-fast),
                 border-color var(--dur-fast);
+  }
+
+  .cursor-follower.cursor--visible {
+    visibility: visible;
   }
 
   /* Expand ring on interactive elements */

@@ -180,3 +180,9 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     Lo arreglé generando el ícono correctamente **desde tu logo vectorial** (el mismo círculo negro con las iniciales "LR" que ya tenías, que sí es perfectamente cuadrado) en los 4 tamaños exactos que necesita cada lugar donde aparece: la pestaña del navegador, el ícono al "instalar" la web en el celular, y la miniatura que usa Google en los resultados de búsqueda. Los archivos viejos y rotos (`favicon.png`, `logo.png`) ya no se usan y los eliminé.
 
     **Nota:** Google guarda en caché el ícono viejo por un tiempo — puede tardar unos días en actualizarse en los resultados de búsqueda aunque el sitio ya esté corregido, eso es normal y no depende de nosotros.
+
+25. **Arreglo: el cursor personalizado se quedaba "pegado" al cargar la página (Fase 13, corrección):**
+
+    Tu web tiene un puntito y un anillo decorativos que siguen al mouse en computadora (el cursor normal del sistema operativo se mantiene, esto es solo un efecto extra). El problema: esos dos elementos aparecían **ya dibujados en la esquina superior izquierda** desde el primer instante en que carga la página, y no se movían hasta que movías el mouse por primera vez — dando la sensación de que "el mouse se quedó pegado". La causa era simple: nunca se les daba una posición inicial, solo se posicionaban cuando el navegador detectaba el primer movimiento real del mouse.
+
+    Lo arreglé así: ahora el puntito y el anillo permanecen invisibles hasta el primer movimiento real del mouse, momento en el que aparecen ya en el lugar correcto — en vez de aparecer en la esquina y "volar" hacia donde estás. Se ve limpio e instantáneo.
