@@ -186,3 +186,20 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     Tu web tiene un puntito y un anillo decorativos que siguen al mouse en computadora (el cursor normal del sistema operativo se mantiene, esto es solo un efecto extra). El problema: esos dos elementos aparecían **ya dibujados en la esquina superior izquierda** desde el primer instante en que carga la página, y no se movían hasta que movías el mouse por primera vez — dando la sensación de que "el mouse se quedó pegado". La causa era simple: nunca se les daba una posición inicial, solo se posicionaban cuando el navegador detectaba el primer movimiento real del mouse.
 
     Lo arreglé así: ahora el puntito y el anillo permanecen invisibles hasta el primer movimiento real del mouse, momento en el que aparecen ya en el lugar correcto — en vez de aparecer en la esquina y "volar" hacia donde estás. Se ve limpio e instantáneo.
+
+26. **Favicon más nítido y ficha de Google mostrando "Vercel" en vez de tu nombre (Fase 13, corrección):**
+
+    Me pasaste una captura de cuando buscás tu nombre en Google: el ícono se veía borroso/delgado en tamaño chiquito, y al lado decía "Vercel" en vez de tu nombre.
+
+    - **El ícono borroso:** el logo usaba una fuente especial ("Space Grotesk") que solo está disponible cuando cargás la página completa en el navegador — pero cuando se genera el ícono pequeño para pestañas/buscadores, ese proceso no tiene acceso a esa fuente y usaba una alternativa genérica y delgada, que a tamaño diminuto (16 o 32 píxeles) se veía pobre. Lo cambié a una fuente estándar en negrita que se ve nítida y con buen contraste en cualquier tamaño, y regeneré todos los íconos — ahora el "LR" se lee claro incluso diminuto.
+    - **"Vercel" en vez de tu nombre:** le agregué a la página una segunda "ficha de identidad" específica para buscadores (llamada `WebSite`, en el formato que Google entiende) que le dice explícitamente "el nombre de este sitio es 'Lain Sthid Ramirez Rueda | Portafolio'". Es la forma correcta y recomendada de indicárselo a Google. **Aviso honesto:** no puedo garantizar al 100% que esto haga que Google deje de mostrar "Vercel" — es un problema conocido de los sitios que usan un subdominio gratuito de una plataforma (como `vercel.app`) en vez de un dominio propio (como `lainramirez.com`), y a veces Google prioriza el nombre de la plataforma sobre el tuyo justamente por eso. Te pregunté si querías que investigáramos conseguir un dominio propio (la solución más segura para esto) y preferiste seguir con `vercel.app` por ahora — quedó anotado por si cambiás de opinión más adelante.
+    - **Sobre ser el número 1 en Google, por encima de tu LinkedIn:** te lo digo con honestidad — es muy difícil de lograr. LinkedIn es un sitio gigantesco con muchísima más autoridad que cualquier portafolio personal, y eso Google lo pesa mucho al ordenar resultados. Lo que sí puedo seguir mejorando son las señales que si están bajo nuestro control (como el nombre del sitio, arreglado hoy), pero superar a LinkedIn específicamente no es realista solo con cambios en el código.
+
+27. **Revisé tu GitHub para ayudarte a mejorar su posicionamiento:**
+
+    Encontré lo siguiente (no toqué nada todavía, esto es solo lo que vi):
+    - Tu perfil de GitHub no tiene un "README de perfil" (esa tarjeta de presentación que aparece arriba de tus repositorios cuando alguien entra a tu perfil) — es una de las formas más efectivas de que tu perfil se vea profesional y aparezca mejor posicionado.
+    - Aparece un repositorio viejo llamado "Portfolio-2026" con una descripción desactualizada (dice que está hecho en JavaScript puro/SASS), que ya no es tu portafolio actual — este del que estamos hablando ahora se llama "Portafolio-tecnologico". Tener un repo viejo y desactualizado visible puede confundir a quien te busque.
+    - Los repos que aparecen no tienen una descripción optimizada para que la gente entienda rápido qué hacen ni palabras clave que ayuden a que te encuentren.
+
+    Te paso por el chat una lista concreta de qué cambiar y te ayudo a hacerlo si querés.

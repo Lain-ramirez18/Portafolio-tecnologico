@@ -35,6 +35,7 @@ import { App } from '../App';
     <meta name="color-scheme" content="dark light" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon-180.png" />
     <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
     <link rel="shortcut icon" href="/assets/img/favicon-32.png" />
@@ -96,6 +97,20 @@ import { App } from '../App';
           {"@type": "EducationalOccupationalCredential", "name": "Desarrollador Front-End", "credentialCategory": "Certificación"},
           {"@type": "EducationalOccupationalCredential", "name": "AI Certification", "credentialCategory": "Certificación", "recognizedBy": {"@type": "Organization", "name": "Anthropic"}}
         ]
+      }
+    </script>
+
+    <!-- Explicit WebSite entity — separate from the Person schema above — so Google has a strong,
+         unambiguous signal for the "site name" it shows in search results, instead of falling back to
+         inferring it from the vercel.app hosting subdomain. -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Lain Sthid Ramirez Rueda | Portafolio",
+        "url": "https://lainramirez.vercel.app/",
+        "inLanguage": "es",
+        "publisher": { "@type": "Person", "name": "Lain Sthid Ramirez Rueda" }
       }
     </script>
 
