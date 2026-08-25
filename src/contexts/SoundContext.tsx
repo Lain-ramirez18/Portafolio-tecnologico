@@ -28,13 +28,24 @@ interface SoundContextValue {
 const SoundContext = createContext<SoundContextValue | null>(null);
 
 export function SoundProvider({ children }: { children: ReactNode }) {
-  const [enabled, setEnabled] = useState(() => {
+  // Starts `false` to match the SSR default (`localStorage` doesn't exist during the static
+  // build) — reading the real stored value here instead would make the client's first render
+  // disagree with the server-rendered `aria-pressed`/icon class whenever sound was previously
+  // enabled, which is exactly the class of hydration mismatch fixed for `lang` in
+  // LangContext.tsx. Synced from `localStorage` a tick later, once hydration is safely done.
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
     try {
-      return localStorage.getItem(STORAGE_KEY) === '1';
+      // Intentional: syncing external localStorage into React state after mount, matching the
+      // same SSR-mismatch-avoidance pattern as LangContext.tsx's `detectClientLang` effect.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (localStorage.getItem(STORAGE_KEY) === '1') setEnabled(true);
     } catch {
-      return false;
+      /* localStorage unavailable */
     }
-  });
+  }, []);
+
   const ctxRef = useRef<AudioContext | null>(null);
   const enabledRef = useRef(enabled);
   useEffect(() => {

@@ -1,0 +1,44 @@
+/* Self-hosted Google Fonts — only the "latin" unicode-range subset (U+0000-00FF covers every
+   accented character Spanish/English text on this site actually uses: áéíóúñ¿¡). Google's own
+   css2 endpoint additionally serves "latin-ext" and "vietnamese" subsets this site never
+   renders, and — more importantly — being a separate origin (fonts.googleapis.com ->
+   fonts.gstatic.com) made that stylesheet a render-blocking request whose cost was almost
+   entirely cross-origin connection latency, not bytes (~761ms measured via Lighthouse's
+   render-blocking-insight audit on a throttled mobile profile, against a ~1.2KB response).
+   Self-hosting removes that origin hop entirely. DM Sans and Space Grotesk are true variable
+   fonts — Google resolves every requested static weight to the *same* file — so each gets one
+   @font-face with a `font-weight` range instead of four identical-file declarations. Space Mono
+   isn't variable, so its two weights are two real files. See docs/explanation-IA.md for the
+   exact URLs these were pulled from and how to re-fetch them if a weight/family is added. */
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/assets/fonts/dm-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/assets/fonts/space-grotesk-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/space-mono-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/space-mono-latin-700.woff2") format("woff2");
+}

@@ -23,6 +23,7 @@ export const translations = {
     'aria.theme_toggle': 'Alternar modo oscuro/claro',
     'aria.copy_email': 'Copiar correo electrónico',
     'aria.copy_phone': 'Copiar número de WhatsApp',
+    'aria.scroll_to_about': 'Ir a Sobre mí',
 
     'cv.dialog_title': 'Elige el idioma del CV',
     'cv.close_dialog': 'Cerrar modal',
@@ -149,6 +150,7 @@ export const translations = {
     'aria.theme_toggle': 'Toggle dark/light mode',
     'aria.copy_email': 'Copy email address',
     'aria.copy_phone': 'Copy WhatsApp number',
+    'aria.scroll_to_about': 'Go to About',
 
     'cv.dialog_title': 'Choose CV language',
     'cv.close_dialog': 'Close modal',

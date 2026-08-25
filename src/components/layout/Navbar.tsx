@@ -21,7 +21,7 @@ export function Navbar() {
   return (
     <header className={`navbar${scrolled ? ' scrolled' : ''}`} role="banner" id="navbar">
       <nav className="nav-inner" aria-label="Navegación principal">
-        <a href="#hero" className="nav-logo" aria-label="Lain Sthid Ramirez Rueda — Inicio">
+        <a href="#hero" className="nav-logo" aria-label="LSRR — Lain Sthid Ramirez Rueda, Inicio">
           <span className="logo-bracket">[</span>LSRR<span className="logo-bracket">]</span>
         </a>
 
@@ -41,7 +41,12 @@ export function Navbar() {
         </ul>
 
         <div className="nav-controls">
-          <button className="lang-toggle" id="lang-toggle" aria-label={t('aria.lang_toggle')} onClick={toggleLang}>
+          <button
+            className="lang-toggle"
+            id="lang-toggle"
+            aria-label={`${lang === 'es' ? 'EN' : 'ES'} — ${t('aria.lang_toggle')}`}
+            onClick={toggleLang}
+          >
             <span id="lang-label">{lang === 'es' ? 'EN' : 'ES'}</span>
           </button>
           <button

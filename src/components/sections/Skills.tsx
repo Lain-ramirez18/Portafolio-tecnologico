@@ -55,7 +55,7 @@ export function Skills() {
 
         <div
           className={`skills-filter-wrap reveal${filterWrapVisible ? ' visible' : ''}`}
-          role="tablist"
+          role="group"
           aria-label="Filtro de habilidades"
           ref={filterWrapRef}
         >
@@ -63,6 +63,7 @@ export function Skills() {
             <button
               key={f.filter}
               className={`skill-filter-btn${filter === f.filter ? ' active' : ''}`}
+              aria-pressed={filter === f.filter}
               onClick={() => setFilter(f.filter)}
             >
               {t(f.labelKey)}

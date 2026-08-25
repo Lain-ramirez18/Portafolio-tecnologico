@@ -2,12 +2,12 @@ import { useActiveSection } from '../../hooks/useActiveSection';
 import { useLang } from '../../i18n/LangContext';
 import { announceSection } from '../../utils/announce';
 
-const ITEMS: { href: string; icon: string; key: 'bb.home' | 'bb.about' | 'bb.skills' | 'bb.projects' | 'bb.contact'; label: string }[] = [
-  { href: '#hero', icon: 'fa-solid fa-house', key: 'bb.home', label: 'Inicio' },
-  { href: '#about', icon: 'fa-solid fa-user', key: 'bb.about', label: 'Sobre mí' },
-  { href: '#skills', icon: 'fa-solid fa-code', key: 'bb.skills', label: 'Habilidades' },
-  { href: '#projects', icon: 'fa-solid fa-folder-open', key: 'bb.projects', label: 'Proyectos' },
-  { href: '#contact', icon: 'fa-solid fa-paper-plane', key: 'bb.contact', label: 'Contacto' },
+const ITEMS: { href: string; icon: string; key: 'bb.home' | 'bb.about' | 'bb.skills' | 'bb.projects' | 'bb.contact' }[] = [
+  { href: '#hero', icon: 'fa-solid fa-house', key: 'bb.home' },
+  { href: '#about', icon: 'fa-solid fa-user', key: 'bb.about' },
+  { href: '#skills', icon: 'fa-solid fa-code', key: 'bb.skills' },
+  { href: '#projects', icon: 'fa-solid fa-folder-open', key: 'bb.projects' },
+  { href: '#contact', icon: 'fa-solid fa-paper-plane', key: 'bb.contact' },
 ];
 
 export function BottomBar() {
@@ -21,7 +21,7 @@ export function BottomBar() {
           key={item.href}
           href={item.href}
           className={`bb-item${active === item.href.slice(1) ? ' active' : ''}`}
-          aria-label={item.label}
+          aria-label={t(item.key)}
           onClick={() => announceSection(item.href)}
         >
           <i className={item.icon} aria-hidden="true" />

@@ -177,7 +177,7 @@ export function Hero() {
         </div>
       </div>
 
-      <a href="#about" className="scroll-indicator" aria-label="Ir a Sobre mí">
+      <a href="#about" className="scroll-indicator" aria-label={`${t('hero.scroll')} — ${t('aria.scroll_to_about')}`}>
         <span className="scroll-line" aria-hidden="true" />
         <span className="scroll-text">{t('hero.scroll')}</span>
       </a>

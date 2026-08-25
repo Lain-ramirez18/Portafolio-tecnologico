@@ -19,6 +19,18 @@ function obfuscatePlugin(): Plugin {
         if (file.type === 'chunk' && file.fileName.endsWith('.js')) {
           const result = JavaScriptObfuscator.obfuscate(file.code, {
             compact: true,
+            /* `stringArray`'s runtime needs a reference to the global object, and by default gets
+             * it via a `Function('return this')()`-style construction — which our CSP's
+             * `script-src` (correctly, no `'unsafe-eval'`) blocks. The obfuscator already wraps
+             * that call in try/catch with a `window` fallback (functionality was never actually
+             * broken — confirmed via a real headless-browser load with zero console/page errors),
+             * but Chrome still logs it as a blocked-eval "Issue" on every single chunk, which is
+             * exactly what Lighthouse's Best Practices `inspector-issues` audit dings. `target:
+             * 'browser-no-eval'` is the obfuscator's own purpose-built output mode for strict-CSP
+             * sites like this one — same string-array protection, no eval/Function construction
+             * at all, instead of us weakening the CSP with 'unsafe-eval' to silence a warning we
+             * caused ourselves. */
+            target: 'browser-no-eval',
             /* controlFlowFlattening + deadCodeInjection were the dominant size cost — together they
              * inflated one chunk from 184KB to 1.44MB (verified via SKIP_OBFUSCATION=1 comparison).
              * Dropped for load speed.
