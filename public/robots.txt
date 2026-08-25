@@ -3,7 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /assets/img/photo_b64.txt
 
 # Principales buscadores
 User-agent: Googlebot
@@ -26,3 +25,6 @@ User-agent: SemrushBot
 Crawl-delay: 10
 
 Sitemap: https://lainramirez.vercel.app/sitemap.xml
+
+# llms.txt (llmstxt.org) — structured summary for AI agents/crawlers
+# https://lainramirez.vercel.app/llms.txt

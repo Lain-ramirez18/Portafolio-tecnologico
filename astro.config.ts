@@ -21,29 +21,37 @@ function obfuscatePlugin(): Plugin {
             compact: true,
             /* controlFlowFlattening + deadCodeInjection were the dominant size cost — together they
              * inflated one chunk from 184KB to 1.44MB (verified via SKIP_OBFUSCATION=1 comparison).
-             * Dropped for load speed; splitStrings/stringArray/selfDefending/hexadecimal identifiers
-             * still make the output meaningfully harder to read than plain minification. */
+             * Dropped for load speed.
+             * selfDefending, numbersToExpressions and stringArrayCallsTransform were then found to be
+             * the dominant *runtime* cost instead of size: selfDefending runs continuous tamper/
+             * formatting self-checks, numbersToExpressions re-derives every number literal via
+             * arithmetic on each execution (this app re-runs numeric-heavy code every animation
+             * frame — cursor follower, card tilt), and stringArrayCallsTransform/chained-calls add an
+             * extra indirection layer per string access. All three inflate mobile Total Blocking
+             * Time for no size benefit, so they're off. hexadecimal identifiers + a shuffled/rotated
+             * base64 string array (with a longer split-chunk length, since short chunks meant more
+             * runtime concatenation per string) still keep the output meaningfully harder to read
+             * than plain minification — just without paying for it on every frame. */
             controlFlowFlattening: false,
             deadCodeInjection: false,
             debugProtection: false,
             disableConsoleOutput: true,
             identifierNamesGenerator: 'hexadecimal',
             log: false,
-            numbersToExpressions: true,
+            numbersToExpressions: false,
             renameGlobals: false,
-            selfDefending: true,
+            selfDefending: false,
             simplify: true,
             splitStrings: true,
-            splitStringsChunkLength: 10,
+            splitStringsChunkLength: 30,
             stringArray: true,
-            stringArrayCallsTransform: true,
-            stringArrayCallsTransformThreshold: 0.5,
+            stringArrayCallsTransform: false,
             stringArrayEncoding: ['base64'],
             stringArrayIndexShift: true,
             stringArrayRotate: true,
             stringArrayShuffle: true,
             stringArrayWrappersCount: 1,
-            stringArrayWrappersChainedCalls: true,
+            stringArrayWrappersChainedCalls: false,
             stringArrayWrappersParametersMaxCount: 2,
             stringArrayWrappersType: 'variable',
             stringArrayThreshold: 0.75,

@@ -6,8 +6,8 @@
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://lainramirez.vercel.app/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://lainramirez.vercel.app/"/>
+    <!-- Single-URL SPA with client-side i18n — only x-default is correct per Google guidelines
+         (matches the hreflang decision in src/pages/index.astro's <head>). -->
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lainramirez.vercel.app/"/>
   </url>
 </urlset>

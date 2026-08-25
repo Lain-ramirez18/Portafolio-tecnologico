@@ -1,0 +1,30 @@
+# Lain Sthid Ramirez Rueda
+
+> Analista y Desarrollador de Software graduado del SENA (Colombia), especializado en
+> elicitación de requisitos, automatización con IA, Python y diseño UI/UX. Este es un
+> portafolio de página única (SPA) con selector de idioma ES/EN en el propio sitio; todas
+> las secciones viven en la misma URL bajo anclas.
+
+## Perfil
+- Rol: Analista y Desarrollador de Software.
+- Formación: SENA — Diplomado en Fundamentos de Full Stack, certificación Desarrollador
+  Front-End, certificación de IA (Anthropic).
+- Áreas: Python, HTML, CSS, Prompt Engineering, Automatización con IA, Diseño UI/UX,
+  Elicitación de Requisitos, Git, Docker, Groq API, Claude AI, Gemini.
+- Contacto: lainramirez18@gmail.com · https://wa.me/573209735859
+- GitHub: https://github.com/Lain-ramirez18
+- LinkedIn: https://www.linkedin.com/in/lain-sthid-ramirez-rueda
+
+## Secciones (https://lainramirez.vercel.app/)
+- [Inicio](https://lainramirez.vercel.app/#hero): presentación, botones de descarga de CV (ES/EN) y contacto directo por WhatsApp.
+- [Sobre mí](https://lainramirez.vercel.app/#about): trayectoria, certificaciones y diplomados.
+- [Habilidades](https://lainramirez.vercel.app/#skills): lenguajes, herramientas, IA y automatización, habilidades blandas.
+- [Proyectos](https://lainramirez.vercel.app/#projects): APPFOCUS (terminal de productividad offline-first) y ProAssist (chatbot de IA bilingüe sobre LLaMA 3.3-70B sirviendo por Groq, contenerizado con Docker en Render).
+- [Contacto](https://lainramirez.vercel.app/#contact): formulario de contacto y enlaces directos (email, WhatsApp, LinkedIn, GitHub).
+
+## Notas para agentes
+- El contenido de cada sección se sirve pre-renderizado como HTML estático (Astro SSG); no
+  hace falta ejecutar JavaScript para leer el texto de la página.
+- El idioma por defecto es español; hay un selector ES/EN client-side que no cambia la URL.
+- No existe una API pública ni un servidor MCP en este dominio — usa el CV descargable
+  (enlazado desde #hero) o el email de contacto para información estructurada adicional.

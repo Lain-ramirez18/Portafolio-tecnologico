@@ -4,6 +4,8 @@
    Dark/Light Mode | Fully Responsive | Bottom Bar
 ================================================================ */
 
+@import "./fontawesome.css";
+
 /* ──────────── 1. CUSTOM PROPERTIES ──────────── */
 :root {
   /* MD3 Color Palette — Dark (default) */
