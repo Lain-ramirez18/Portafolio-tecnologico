@@ -140,7 +140,10 @@ import { App } from '../App';
   </head>
 
   <body>
-    <App client:idle />
+    <!-- timeout bounds hydration under a busy main thread (e.g. the Hero canvas's continuous
+         rAF loop starving requestIdleCallback) — without it client:idle can wait indefinitely
+         for a truly idle window that may not come for seconds on a loaded/low-end device. -->
+    <App client:idle={{ timeout: 1500 }} />
 
     <!-- Vercel Web Analytics -->
     <script defer src="https://cdn.vercel-insights.com/v1/script.js" is:inline></script>

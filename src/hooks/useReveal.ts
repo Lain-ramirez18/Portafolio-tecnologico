@@ -13,12 +13,7 @@ export function useReveal<T extends HTMLElement>() {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            const reveal = () => setVisible(true);
-            if ('scheduler' in window && typeof window.scheduler?.postTask === 'function') {
-              window.scheduler.postTask(reveal, { priority: 'background' });
-            } else {
-              reveal();
-            }
+            setVisible(true);
             observer.unobserve(entry.target);
           }
         }
