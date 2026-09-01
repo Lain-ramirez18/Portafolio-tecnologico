@@ -13,7 +13,7 @@
   --clr-primary:        #00E5C3;
   --clr-primary-dim:    #00B89B;
   --clr-primary-glow:   rgba(0,229,195,0.18);
-  --clr-secondary:      #7B61FF;
+  --clr-secondary:      #A493FF; /* lightened from #7B61FF — 7.25:1 on --clr-surface-1, WCAG AAA */
   --clr-secondary-glow: rgba(123,97,255,0.12);
   --clr-tertiary:       #FF6B6B;
   --clr-surface:        #0B0D12;
@@ -834,10 +834,17 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 [data-theme="light"] .float-chip { background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 
-.chip-python { top: 6px; right: -80px; color: #3776AB; border-color: rgba(55,118,171,0.3); animation: chipF1 4.2s ease-in-out infinite; }
+/* chip-python/chip-git use fixed (non-themed) brand colors, so each needs its own light-theme
+   override below — unlike chip-elicit/chip-adapt, which already ride --clr-primary/--clr-secondary's
+   per-theme AAA-safe values. Base colors here are the dark-theme-safe variant (7.2:1+ on #10131A). */
+.chip-python { top: 6px; right: -80px; color: #73A7D2; border-color: rgba(55,118,171,0.3); animation: chipF1 4.2s ease-in-out infinite; }
 .chip-elicit { top: 70px; right: -100px; color: var(--clr-primary); border-color: var(--clr-border-hover); animation: chipF2 5.2s ease-in-out infinite 1.1s; font-size: 0.68rem; }
-.chip-git    { bottom: 60px; right: -78px; color: #F05032; border-color: rgba(240,80,50,0.3); animation: chipF1 4.7s ease-in-out infinite 0.5s; }
+.chip-git    { bottom: 60px; right: -78px; color: #F4806A; border-color: rgba(240,80,50,0.3); animation: chipF1 4.7s ease-in-out infinite 0.5s; }
 .chip-adapt  { bottom: 8px; left: -70px; color: var(--clr-secondary); border-color: rgba(123,97,255,0.3); animation: chipF3 5.5s ease-in-out infinite 0.8s; font-size: 0.68rem; }
+
+/* Fixed brand colors darkened for AAA (7.2:1+) against the light theme's white chip background. */
+[data-theme="light"] .chip-python { color: #2A5A83; }
+[data-theme="light"] .chip-git    { color: #A7250C; }
 
 @keyframes chipF1 { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-9px) rotate(1.5deg)} }
 @keyframes chipF2 { 0%,100%{transform:translateY(0) rotate(1deg)} 50%{transform:translateY(-11px) rotate(-2deg)} }

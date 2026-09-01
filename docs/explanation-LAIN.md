@@ -265,3 +265,25 @@ Estos archivos están sueltos en la raíz del proyecto porque los navegadores, G
     - **WCAG AAA (accesibilidad):** corrí la herramienta automática que revisa accesibilidad en todo el código — **cero errores**. Los ajustes de contraste de color y de etiquetas para lectores de pantalla que ya habíamos hecho en fases anteriores siguen cubriendo lo esencial. Tampoco encontré nada nuevo para corregir acá.
 
     **No hice commit de estos cambios todavía** — igual que las fases anteriores, quedan guardados localmente hasta que me digas que sí.
+
+32. **Bajé un Chrome de verdad y medí tu web en vivo para arreglar los dos puntos que faltaban (Fase 17):**
+
+    Me pasaste el link real de PageSpeed pidiendo dos cosas: 4% más de accesibilidad en computador, y 21% más de rendimiento en celular, "sin dañar lo que está bien". Como ya me había pasado antes, la API pública de Google seguía sin darme acceso (límite diario en cero), así que instalé un Chrome de prueba yo mismo y corrí el análisis real contra tu web en vivo, para tener números de verdad y no adivinar.
+
+    **Accesibilidad en computador — encontrado y arreglado, ahora en 100/100:**
+
+    El único problema real: dos de las cuatro "etiquetas flotantes" alrededor de tu foto de perfil (la de "Python" y la de "Adaptabilidad") tenían el texto en un color muy parecido al fondo — se ven, pero a alguien con baja visión le cuesta leerlas. Son decorativas (un lector de pantalla las ignora), pero eso no las exime de la regla de contraste, que es sobre lo que se ve, no sobre lo que se lee en voz alta. Les ajusté el color a una versión un poquito más clara (en modo oscuro) o más oscura (en modo claro) de la misma familia de color — se ven prácticamente igual a simple vista, pero ahora superan cómodamente el nivel AAA que exige tu proyecto. Ya lo comprobé con el Chrome real: 100/100.
+
+    **Rendimiento en celular — encontré la causa exacta, no era "peso de archivos":**
+
+    El reporte real me mostró algo muy específico: el título grande de tu página (que ya está listo en el HTML antes de que cargue nada de JavaScript) tardaba **2.76 segundos en pintarse en pantalla** — no porque tardara en descargarse, sino porque el navegador estaba demasiado ocupado ejecutando el bloque gigante de React (el mismo tema que ya te había anotado en fases anteriores) como para tener un respiro y mostrarlo. Es la misma causa raíz de siempre, medida ahora con un número concreto.
+
+    Ya me habías dicho "no por ahora" a dividir la página en islas separadas (el cambio grande y arriesgado). Así que usé una técnica distinta, mucho más chica y seria: en vez de crear "islas" nuevas, dejé todo dentro del mismo bloque único de React (nada cambia en cómo se comparten el tema oscuro/idioma/sonido), pero le dije a las tres secciones de más abajo (Habilidades, Proyectos, Contacto) que **se carguen como piezas separadas**, en vez de venir todas pegadas al bloque principal desde el primer segundo. Es la misma técnica que ya usábamos para las ventanas emergentes (CV, certificados, etc.) — cargar solo lo necesario, cuando hace falta.
+
+    **Antes de dar esto por bueno, lo probé de verdad** — exactamente el tipo de cambio que, si sale mal, puede volver a causar el bug de "contenido que no aparece" que arreglamos la sesión pasada, así que no me quise confiar. Armé el sitio completo y revisé el HTML final con lupa: las tres secciones siguen apareciendo completas, con todo su texto real, exactamente igual que antes — nada quedó oculto ni depende de más JavaScript del que ya dependía.
+
+    **Resultado medible y confirmado:** el bloque principal de código que se activa de entrada bajó de 84 KB a 60 KB (un 29% menos) — esa es una reducción real y comprobable, no una promesa. Lo que no pude confirmar con un número limpio de PageSpeed es el puntaje final exacto: corrí la misma versión ya arreglada tres veces seguidas en mi máquina y me dio 65, 62 y 62 — la máquina donde pruebo comparte procesador con otras cosas (ya lo había avisado en una fase anterior), así que el número exacto salta demasiado como para confiar en él. Lo que sí es sólido y no depende de esa máquina ruidosa es la reducción real de 24 KB menos de código que tu celular tiene que procesar de entrada — eso ayuda en cualquier dispositivo real, aunque mi prueba local no me deje ponerle un número limpio hoy.
+
+    Corrí las pruebas automáticas después de este cambio y una fallaba — no porque algo se rompiera, sino porque la prueba revisaba las tres secciones nuevas "al instante" y ahora, correctamente, cargan un instante después. La ajusté para que espere lo que tiene que esperar, y las 10 pruebas vuelven a pasar, junto con la build de producción sin errores.
+
+    **No hice commit de estos cambios todavía** — quedan guardados localmente hasta que me digas que sí.

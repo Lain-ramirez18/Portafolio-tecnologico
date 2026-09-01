@@ -14,9 +14,17 @@ import { BackToTop } from './components/layout/BackToTop';
 
 import { Hero } from './components/sections/Hero';
 import { About } from './components/sections/About';
-import { Skills } from './components/sections/Skills';
-import { Projects } from './components/sections/Projects';
-import { Contact } from './components/sections/Contact';
+
+// Below-the-fold sections are code-split (React.lazy), not hydrated as separate Astro islands —
+// they stay inside the single client:idle App tree, so ThemeContext/LangContext/SoundContext/
+// ToastContext/DialogsContext are still shared unbroken across the whole page. This only shrinks
+// what's eagerly bundled/executed in the initial hydration commit; Astro's SSR still resolves
+// each Suspense boundary at build time, so the sections' real content ships in the static HTML
+// exactly as before (verified: id="skills"/"projects"/"contact" and real item text present in
+// `dist/index.html`) — nothing here is gated behind client JS that wasn't already gated before.
+const Skills = lazy(() => import('./components/sections/Skills').then((m) => ({ default: m.Skills })));
+const Projects = lazy(() => import('./components/sections/Projects').then((m) => ({ default: m.Projects })));
+const Contact = lazy(() => import('./components/sections/Contact').then((m) => ({ default: m.Contact })));
 
 import { ToastContainer } from './components/ui/ToastContainer';
 import { PwaUpdater } from './components/PwaUpdater';
@@ -99,9 +107,11 @@ function PageContent() {
       <main id="main-content">
         <Hero />
         <About />
-        <Skills />
-        <Projects />
-        <Contact />
+        <Suspense fallback={null}>
+          <Skills />
+          <Projects />
+          <Contact />
+        </Suspense>
       </main>
 
       <BottomBar />

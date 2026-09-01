@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { App } from './App';
 
 describe('App', () => {
@@ -11,14 +11,16 @@ describe('App', () => {
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
   });
 
-  it('renders all main sections', () => {
+  it('renders all main sections', async () => {
     render(<App />);
 
     expect(document.getElementById('hero')).toBeInTheDocument();
     expect(document.getElementById('about')).toBeInTheDocument();
-    expect(document.getElementById('skills')).toBeInTheDocument();
-    expect(document.getElementById('projects')).toBeInTheDocument();
-    expect(document.getElementById('contact')).toBeInTheDocument();
+    // Skills/Projects/Contact are React.lazy (code-split below-the-fold sections) — their chunk
+    // resolves asynchronously even in this client-only render, so wait for them like real code.
+    await waitFor(() => expect(document.getElementById('skills')).toBeInTheDocument());
+    await waitFor(() => expect(document.getElementById('projects')).toBeInTheDocument());
+    await waitFor(() => expect(document.getElementById('contact')).toBeInTheDocument());
   });
 
   it('renders the footer with the current year', () => {
