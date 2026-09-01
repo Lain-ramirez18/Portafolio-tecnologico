@@ -14,17 +14,25 @@ import { BackToTop } from './components/layout/BackToTop';
 
 import { Hero } from './components/sections/Hero';
 import { About } from './components/sections/About';
+import { Skills } from './components/sections/Skills';
+import { Projects } from './components/sections/Projects';
+import { Contact } from './components/sections/Contact';
 
-// Below-the-fold sections are code-split (React.lazy), not hydrated as separate Astro islands —
-// they stay inside the single client:idle App tree, so ThemeContext/LangContext/SoundContext/
-// ToastContext/DialogsContext are still shared unbroken across the whole page. This only shrinks
-// what's eagerly bundled/executed in the initial hydration commit; Astro's SSR still resolves
-// each Suspense boundary at build time, so the sections' real content ships in the static HTML
-// exactly as before (verified: id="skills"/"projects"/"contact" and real item text present in
-// `dist/index.html`) — nothing here is gated behind client JS that wasn't already gated before.
-const Skills = lazy(() => import('./components/sections/Skills').then((m) => ({ default: m.Skills })));
-const Projects = lazy(() => import('./components/sections/Projects').then((m) => ({ default: m.Projects })));
-const Contact = lazy(() => import('./components/sections/Contact').then((m) => ({ default: m.Contact })));
+// NOTE: Skills/Projects/Contact were briefly made React.lazy (code-split, Suspense-wrapped)
+// to shrink the initial hydration bundle. Reverted — Astro's React SSR resolves a Suspense
+// boundary that needs real content at build time via React's *streaming* SSR APIs, which emit
+// per-build dynamic inline `<script>` "segment replacement" tags ($RS/$RC/$RV, React-internal).
+// Their content isn't stable across builds, so it can't be hash-pinned in this project's strict
+// CSP (script-src: only 3 fixed sha256 hashes, no 'unsafe-inline', no nonce — output:'static'
+// has no per-request server to mint one). The CSP correctly blocks them, which stops the
+// replacement script from ever swapping the real content in, and React's hydrator then throws
+// "error #419" and discards the SSR'd DOM to re-render that whole subtree client-side from
+// scratch — strictly worse than not code-splitting at all. The dialogs below don't hit this:
+// they render `null` during SSR (never opened yet at build time), so no Suspense boundary ever
+// needs resolving during the static build — their lazy-loading only ever resolves client-side,
+// which streaming SSR is never involved in. Confirmed via a CDP Audits.issueAdded capture
+// against a real throttled load: 5 blocked ContentSecurityPolicyIssues, one per $RS/$RB/$RV
+// script, plus the "Minified React error #419" pageerror — gone once reverted to eager imports.
 
 import { ToastContainer } from './components/ui/ToastContainer';
 import { PwaUpdater } from './components/PwaUpdater';
@@ -107,11 +115,9 @@ function PageContent() {
       <main id="main-content">
         <Hero />
         <About />
-        <Suspense fallback={null}>
-          <Skills />
-          <Projects />
-          <Contact />
-        </Suspense>
+        <Skills />
+        <Projects />
+        <Contact />
       </main>
 
       <BottomBar />
